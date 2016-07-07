@@ -18,7 +18,7 @@ class Data:
         self.x = None
         self.y = None
         self.label = None
-        self.units = {'x_units': None, 'y_units': None}
+        #self.units = {'x_units': None, 'y_units': None}
         self.style_dict = {}
 
     @property
@@ -27,3 +27,10 @@ class Data:
         out.update(self.style_dict)
         out['label'] = self.label
         return out
+
+class DataGlobal:
+    """
+    Contains data that is pertinent across all plots
+    """
+    def __init__(self):
+        self.labels = {'x_label': None, 'y_label': None, 'title': None}
