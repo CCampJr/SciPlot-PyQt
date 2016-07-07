@@ -49,6 +49,7 @@ from sciplot.ui.models.fillbetween import (TableModelFillBetween as
                                            EditDelegateFillBetween as
                                            _EditDelegateFillBetween)
 
+from sciplot.data.generic import DataGlobal as _DataGlobal
 from sciplot.data.lines import DataLine as _DataLine
 from sciplot.data.special import DataFillBetween as _DataFillBetween
 
@@ -81,6 +82,9 @@ class SciPlotUI(_QMainWindow):
         self.ui.setupUi(self)
         self.setSizePolicy(_QSizePolicy.Expanding,
                            _QSizePolicy.Expanding)
+
+        # Global "data" i.e., title, x-label, y-label, etc
+        self._global_data = _DataGlobal()
 
         # This list will house objects containing all plot-data (i.e. the \
         # actual data and all elements that will be placed within models)
@@ -128,6 +132,11 @@ class SciPlotUI(_QMainWindow):
 
         # Signals & Slots
 
+        # Global labels
+        self.ui.lineEditTitle.editingFinished.connect(self.updateLabelsFromLineEdit)
+        self.ui.lineEditXLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
+        self.ui.lineEditYLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
+
         # Lines
         # Make use of double-clicking within table
         self.tableViewLine.doubleClicked.connect(
@@ -147,7 +156,7 @@ class SciPlotUI(_QMainWindow):
         self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
 
 
-    def plot(self, x, y, label=None, x_units=None, y_units=None, **kwargs):
+    def plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
 
@@ -162,10 +171,10 @@ class SciPlotUI(_QMainWindow):
         label : str
             Label of plot
 
-        x_units : str
+        x_label : str
             X-axis label (units)
 
-        y_units : str
+        y_label : str
             Y-axis label (units)
 
         kwargs : dict
@@ -178,14 +187,15 @@ class SciPlotUI(_QMainWindow):
         plot_data.x = x
         plot_data.y = y
         plot_data.label = label
-        plot_data.units['x_units'] = x_units
-        plot_data.units['y_units'] = y_units
 
         # Plot outputs a line object
         line_out = self.mpl_widget.axes.plot(x, y, label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
-        self.mpl_widget.axes.set_xlabel(plot_data.units['x_units'])
-        self.mpl_widget.axes.set_ylabel(plot_data.units['y_units'])
+
+        # If labels are provided, update the global data and the linEdits
+        if x_label is not None or y_label is not None:
+            self.updateAllLabels(x_label=x_label, y_label=y_label)
+
         self.mpl_widget.fig.tight_layout()
 
         # Since the plot was not fed style-info (unless kwargs were used)
@@ -199,6 +209,78 @@ class SciPlotUI(_QMainWindow):
         # Update model
         self.modelLine._model_data.append(plot_data.model_style)
         self.modelLine.layoutChanged.emit()
+
+    def updateMplLabels(self, x_label=None, y_label=None, title=None):
+        """
+        Within the MPL widget, update the x- and y-labels and the title
+        """
+        if x_label is not None:
+            self.mpl_widget.axes.set_xlabel(x_label)
+
+        if y_label is not None:
+            self.mpl_widget.axes.set_ylabel(y_label)
+
+        if title is not None:
+            self.mpl_widget.axes.set_title(title)
+        self.mpl_widget.fig.tight_layout()
+        self.mpl_widget.draw()
+
+    def updateDataLabels(self, x_label=None, y_label=None, title=None):
+        """
+        Within the global data container, update the x- and y-labels and the \
+        title
+        """
+        if x_label is not None:
+            self._global_data.labels['x_label'] = x_label
+
+        if y_label is not None:
+            self._global_data.labels['y_label'] = y_label
+
+        if title is not None:
+            self._global_data.labels['title'] = title
+
+    def updateLineEditLabels(self, x_label=None, y_label=None, title=None):
+        """
+        Within the pyQT lineEdit widgets, update the x- and y-labels and the \
+        title
+        """
+        if x_label is not None:
+            self.ui.lineEditXLabel.setText(x_label)
+
+        if y_label is not None:
+            self.ui.lineEditYLabel.setText(y_label)
+
+        if title is not None:
+            self.ui.lineEditTitle.setText(title)
+
+    def updateAllLabels(self, x_label=None, y_label=None, title=None):
+        """
+        Update the x- and y-labels and the title in the MPL widget, the \
+        lineEdit boxes, and the global data container
+        """
+        self.updateMplLabels(x_label=x_label, y_label=y_label, title=title)
+        self.updateDataLabels(x_label=x_label, y_label=y_label, title=title)
+        self.updateLineEditLabels(x_label=x_label, y_label=y_label,
+                                  title=title)
+
+    def updateLabelsFromLineEdit(self):
+        """
+        From the linEdit widgets, update the x- and y-labels and the title \
+        in the MPL widget and the global data container
+        """
+        title = None
+        x_label = None
+        y_label = None
+
+        sender = self.sender()
+        if sender == self.ui.lineEditTitle:
+            title = self.ui.lineEditTitle.text()
+        elif sender == self.ui.lineEditXLabel:
+            x_label = self.ui.lineEditXLabel.text()
+        elif sender == self.ui.lineEditYLabel:
+            y_label = self.ui.lineEditYLabel.text()
+        self.updateDataLabels(x_label=x_label, y_label=y_label, title=title)
+        self.updateMplLabels(x_label=x_label, y_label=y_label, title=title)
 
     def updatePlotDataStyle(self):
         """
@@ -225,6 +307,7 @@ class SciPlotUI(_QMainWindow):
         # Clear axis -- in the future, maybe clear figure and recreate axis
         self.mpl_widget.axes.clear()
 
+        # Lines
         # Check to see if any plots even are remaining (maybe all were deleted)
         if len(self._plot_data) > 0:
             self.mpl_widget.axes.hold(True)
@@ -237,6 +320,8 @@ class SciPlotUI(_QMainWindow):
                                           marker=itm.style_dict['marker'],
                                           markersize=itm.style_dict['markersize'])
 
+        # Fill between
+        # Check to see if any plots even are remaining (maybe all were deleted)
         if len(self._fill_between_data) > 0:
             self.mpl_widget.axes.hold(True)
             for itm in self._fill_between_data:
@@ -247,12 +332,23 @@ class SciPlotUI(_QMainWindow):
                                                   alpha=itm.style_dict['alpha'],
                                                   linewidth=itm.style_dict['linewidth'])
 
+        # Only add a legend if a plot exists
+        if len(self._fill_between_data) + len(self._plot_data) > 0:
             self.mpl_widget.axes.legend(loc='best')
 
+        # Apply x- and y-labels and a title if they are set
+        if self._global_data.labels['title'] is not None:
+            self.mpl_widget.axes.set_title(self._global_data.labels['title'])
+        if self._global_data.labels['x_label'] is not None:
+            self.mpl_widget.axes.set_xlabel(self._global_data.labels['x_label'])
+        if self._global_data.labels['y_label'] is not None:
+            self.mpl_widget.axes.set_ylabel(self._global_data.labels['y_label'])
+
+        self.mpl_widget.fig.tight_layout()
         self.mpl_widget.draw()
 
-    def fill_between(self, x, y_low, y_high, label=None, x_units=None,
-                     y_units=None, **kwargs):
+    def fill_between(self, x, y_low, y_high, label=None, x_label=None,
+                     y_label=None, **kwargs):
         """
         MPL-like fill_between plotting functionality
 
@@ -270,10 +366,10 @@ class SciPlotUI(_QMainWindow):
         label : str
             Label of plot
 
-        x_units : str
+        x_label : str
             X-axis label (units)
 
-        y_units : str
+        y_label : str
             Y-axis label (units)
 
         kwargs : dict
@@ -287,15 +383,11 @@ class SciPlotUI(_QMainWindow):
         fill_between_data.y_low = y_low
         fill_between_data.y_high = y_high
         fill_between_data.label = label
-        fill_between_data.units['x_units'] = x_units
-        fill_between_data.units['y_units'] = y_units
 
         # Fill between outputs a polycollection
         pc_out = self.mpl_widget.axes.fill_between(x, y_low, y_high,
                                                    label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
-        self.mpl_widget.axes.set_xlabel(fill_between_data.units['x_units'])
-        self.mpl_widget.axes.set_ylabel(fill_between_data.units['y_units'])
         self.mpl_widget.fig.tight_layout()
 
         # Since the fill_between was not fed style-info (unless kwargs were used)
@@ -337,7 +429,7 @@ if __name__ == '__main__':
     x = _np.arange(100)
     y = x**2
 
-    winPlotter.plot(x, y, label='Test1')
+    winPlotter.plot(x, y, x_label='X', label='Test1')
     winPlotter.plot(x, y**1.1, label='Test2')
     winPlotter.fill_between(x, y-1000, y+1000, label='Test3')
     winPlotter.show()
