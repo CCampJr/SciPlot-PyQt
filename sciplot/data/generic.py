@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """
+Generic data containers
+
 Created on Thu Jul  7 10:31:43 2016
 
 @author: chc

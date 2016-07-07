@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 """
+Create generic MPL canvas, toolbar, figure, axis.
+
+Heavily borrowed from:
+    matplotlib.org/examples/user_interfaces/embedding_in_qt5.html
+
 Created on Thu Jun 30 15:41:35 2016
 
 @author: chc
@@ -32,21 +37,25 @@ class MplCanvas(FigureCanvas):
         else:
             _mpl.style.use(style)
 
+        # Create figure and axes
         self.fig = _Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
 
+        # Not really used, but could be used to have some sort of initial plot
         self.compute_initial_figure()
 
-        #
+        # Initialize the canvas
         FigureCanvas.__init__(self, self.fig)
         self.setParent(parent)
 
+        # Set canvas size policies and geometry
         FigureCanvas.setSizePolicy(self, _QtWidgets.QSizePolicy.Expanding,
                                    _QtWidgets.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
+        # Create the toolbar and connect to canvas (self)
         self.toolbar = _NavigationToolbar(self, None)
 
     def compute_initial_figure(self):
