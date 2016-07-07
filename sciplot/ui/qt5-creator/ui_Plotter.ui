@@ -55,7 +55,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="lineEditTitle"/>
           </item>
           <item>
            <widget class="QLabel" name="label_2">
@@ -65,7 +65,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_2"/>
+           <widget class="QLineEdit" name="lineEditXLabel"/>
           </item>
           <item>
            <widget class="QLabel" name="label_3">
@@ -75,7 +75,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_3"/>
+           <widget class="QLineEdit" name="lineEditYLabel"/>
           </item>
           <item>
            <spacer name="verticalSpacer_2">
