@@ -44,7 +44,14 @@ from sciplot.utils.mplstyle import MplStyleSheets, MplMarkers, MplLines
 from sciplot.ui.models.lines import (TableModelLines as _TableModelLines,
                                      EditDelegateLines as _EditDelegateLines)
 
+from sciplot.ui.models.fillbetween import (TableModelFillBetween as
+                                               _TableModelFillBetween,
+                                           EditDelegateFillBetween as
+                                           _EditDelegateFillBetween)
+
 from sciplot.data.lines import DataLine as _DataLine
+from sciplot.data.special import DataFillBetween as _DataFillBetween
+
 # Generic imports for MPL-incorporation
 import matplotlib as _mpl
 _mpl.use('Qt5Agg')
@@ -64,7 +71,7 @@ class SciPlotUI(_QMainWindow):
 
     updatePlotDataDelete : Remove a plot when deleted from model-table
 
-    refreshPlots : Delete all plots and re-plot
+    refreshAllPlots : Delete all plots and re-plot
     """
     def __init__(self, parent=None):
 
@@ -79,6 +86,9 @@ class SciPlotUI(_QMainWindow):
         # actual data and all elements that will be placed within models)
         self._plot_data = []
 
+        # fill_between data-- similar to plot_data above
+        self._fill_between_data = []
+
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
         self.mpl_widget.axes.hold(True)
@@ -88,7 +98,7 @@ class SciPlotUI(_QMainWindow):
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget.toolbar)
         self.mpl_widget.draw()
 
-        # Insert Combo Box
+        # Insert TabWidget
         self.ui.modelTabWidget = _QTabWidget()
         self.ui.verticalLayout.insertWidget(-1, self.ui.modelTabWidget)
 
@@ -96,15 +106,29 @@ class SciPlotUI(_QMainWindow):
         self.tableViewLine = _QTableView()
         self.ui.modelTabWidget.addTab(self.tableViewLine, 'Lines')
 
+        # Initial and insert table view for fill_between plots
+        self.tableViewFillBetween = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewFillBetween,
+                                      'Fill Between')
+
         # Set model and delegates
+        # Lines
         self.modelLine = _TableModelLines()
         self.delegateLine = _EditDelegateLines()
         self.tableViewLine.setModel(self.modelLine)
         self.tableViewLine.setItemDelegate(self.delegateLine)
         self.tableViewLine.show()
 
+        # Fill Betweeb
+        self.modelFillBetween = _TableModelFillBetween()
+        self.delegateFillBetween = _EditDelegateFillBetween()
+        self.tableViewFillBetween.setModel(self.modelFillBetween)
+        self.tableViewFillBetween.setItemDelegate(self.delegateFillBetween)
+        self.tableViewFillBetween.show()
+
         # Signals & Slots
 
+        # Lines
         # Make use of double-clicking within table
         self.tableViewLine.doubleClicked.connect(
             self.modelLine.doubleClickCheck)
@@ -112,6 +136,15 @@ class SciPlotUI(_QMainWindow):
         # When a model (table) elements changes or is deleted
         self.modelLine.dataChanged.connect(self.updatePlotDataStyle)
         self.modelLine.dataDeleted.connect(self.updatePlotDataDelete)
+
+        # Fill Between
+        # Make use of double-clicking within table
+        self.tableViewFillBetween.doubleClicked.connect(
+            self.modelFillBetween.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelFillBetween.dataChanged.connect(self.updateFillBetweenDataStyle)
+        self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
 
 
     def plot(self, x, y, label=None, x_units=None, y_units=None, **kwargs):
@@ -174,7 +207,7 @@ class SciPlotUI(_QMainWindow):
         """
         for num, style_info in enumerate(self.modelLine._model_data):
             self._plot_data[num].model_style = style_info
-        self.refreshPlots()
+        self.refreshAllPlots()
 
     def updatePlotDataDelete(self, row):
         """
@@ -182,11 +215,11 @@ class SciPlotUI(_QMainWindow):
         remove the corresponding plot data
         """
         self._plot_data.pop(row)
-        self.refreshPlots()
+        self.refreshAllPlots()
 
-    def refreshPlots(self):
+    def refreshAllPlots(self):
         """
-        Clear and re-plot all plot data
+        Clear and re-plot all plot data of all types
         """
 
         # Clear axis -- in the future, maybe clear figure and recreate axis
@@ -204,9 +237,96 @@ class SciPlotUI(_QMainWindow):
                                           marker=itm.style_dict['marker'],
                                           markersize=itm.style_dict['markersize'])
 
+        if len(self._fill_between_data) > 0:
+            self.mpl_widget.axes.hold(True)
+            for itm in self._fill_between_data:
+                self.mpl_widget.axes.fill_between(itm.x, itm.y_low, itm.y_high,
+                                                  label=itm.label,
+                                                  facecolor=itm.style_dict['facecolor'],
+                                                  edgecolor=itm.style_dict['edgecolor'],
+                                                  alpha=itm.style_dict['alpha'],
+                                                  linewidth=itm.style_dict['linewidth'])
+
             self.mpl_widget.axes.legend(loc='best')
 
         self.mpl_widget.draw()
+
+    def fill_between(self, x, y_low, y_high, label=None, x_units=None,
+                     y_units=None, **kwargs):
+        """
+        MPL-like fill_between plotting functionality
+
+        Parameters
+        ----------
+        x : ndarray (1D)
+            X-axis data
+
+        y_low : ndarray (1D, for now)
+            Low Y-axis data
+
+        y_high : ndarray (1D, for now)
+            High Y-axis data
+
+        label : str
+            Label of plot
+
+        x_units : str
+            X-axis label (units)
+
+        y_units : str
+            Y-axis label (units)
+
+        kwargs : dict
+            Other parameters sent directly to mpl-fill_between
+
+        """
+
+        # Temporary fill_between-data
+        fill_between_data = _DataFillBetween()
+        fill_between_data.x = x
+        fill_between_data.y_low = y_low
+        fill_between_data.y_high = y_high
+        fill_between_data.label = label
+        fill_between_data.units['x_units'] = x_units
+        fill_between_data.units['y_units'] = y_units
+
+        # Fill between outputs a polycollection
+        pc_out = self.mpl_widget.axes.fill_between(x, y_low, y_high,
+                                                   label=label, **kwargs)
+        self.mpl_widget.axes.legend(loc='best')
+        self.mpl_widget.axes.set_xlabel(fill_between_data.units['x_units'])
+        self.mpl_widget.axes.set_ylabel(fill_between_data.units['y_units'])
+        self.mpl_widget.fig.tight_layout()
+
+        # Since the fill_between was not fed style-info (unless kwargs were used)
+        # we rely on the mpl stylesheet to setup color, linewidth, etc.
+        # Thus, we plot, then retrieve what the style info was
+        fill_between_data.retrieve_style_from_polycollection(pc_out)
+
+        # Append this specific plot data to out list of all plots
+        self._fill_between_data.append(fill_between_data)
+
+        # Update model
+        self.modelFillBetween._model_data.append(fill_between_data.model_style)
+        self.modelFillBetween.layoutChanged.emit()
+
+    def updateFillBetweenDataStyle(self):
+        """
+        Something style-related changed in the model; thus, need to change \
+        these elements in the fill_between data
+        """
+        for num, style_info in enumerate(self.modelFillBetween._model_data):
+            self._fill_between_data[num].model_style = style_info
+        self.refreshAllPlots()
+
+    def updateFillBetweenDataDelete(self, row):
+        """
+        A plot was deleted (likely from within the model); thus, need to \
+        remove the corresponding plot data
+        """
+        self._fill_between_data.pop(row)
+        self.refreshAllPlots()
+
 
 if __name__ == '__main__':
 
@@ -219,6 +339,7 @@ if __name__ == '__main__':
 
     winPlotter.plot(x, y, label='Test1')
     winPlotter.plot(x, y**1.1, label='Test2')
+    winPlotter.fill_between(x, y-1000, y+1000, label='Test3')
     winPlotter.show()
 
 
