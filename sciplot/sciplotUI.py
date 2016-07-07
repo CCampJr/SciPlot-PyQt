@@ -23,7 +23,8 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QLineEdit as _QLineEdit,
                              QStyledItemDelegate as _QStyledItemDelegate,
                              QTableView as _QTableView,
-                             QSizePolicy as _QSizePolicy)
+                             QSizePolicy as _QSizePolicy,
+                             QTabWidget as _QTabWidget)
 
 from PyQt5.QtCore import (QAbstractTableModel as _QAbstractTableModel,
                           QModelIndex as _QModelIndex,
@@ -87,9 +88,13 @@ class SciPlotUI(_QMainWindow):
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget.toolbar)
         self.mpl_widget.draw()
 
+        # Insert Combo Box
+        self.ui.modelTabWidget = _QTabWidget()
+        self.ui.verticalLayout.insertWidget(-1, self.ui.modelTabWidget)
+
         # Initial  and insert table view for line plots
         self.tableViewLine = _QTableView()
-        self.ui.verticalLayout.insertWidget(-1, self.tableViewLine)
+        self.ui.modelTabWidget.addTab(self.tableViewLine, 'Lines')
 
         # Set model and delegates
         self.modelLine = _TableModelLines()
