@@ -1,0 +1,100 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.ipynb_checkpoints/
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Scrap
+Scrap/
+*Scrap*
+
+# Backups
+*~
+
+# H5 Files
+*.h5
+*.hdf5
+
+# Fonts
+*.ttf
+
+# Pickle file
+*.pickle
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_0.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_1.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_10.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_11.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_2.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_3.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_4.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_5.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_6.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_7.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_8.py
+crikit/tests/AutoProcess_160627_2010_Pr_020_pos_9.py
+crikit/tests/AutoProcess_160628_2010_Pr_020_pos_0.py
+crikit/tests/AutoProcess_160628_2010_Pr_020_pos_1.py
+crikit/tests/AutoProcess_160628_2010_Pr_020_pos_2.py
+crikit/tests/AutoProcess_160628_2010_Pr_020_pos_3.py
+crikit/tests/AutoProcess_160628_2010_Pr_020_pos_4.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_0.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_1.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_2.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_3.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_4.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_5.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_6.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_7.py
+crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_8.py

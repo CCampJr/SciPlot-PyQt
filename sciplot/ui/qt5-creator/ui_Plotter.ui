@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1104</width>
+    <height>892</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1104</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFormat">
+    <property name="title">
+     <string>Format</string>
+    </property>
+    <widget class="QMenu" name="menuFigure_Width_Format">
+     <property name="title">
+      <string>Figure Width Format</string>
+     </property>
+     <addaction name="actionSingle_Column"/>
+     <addaction name="actionDouble_Column"/>
+    </widget>
+    <addaction name="actionStyle"/>
+    <addaction name="menuFigure_Width_Format"/>
+    <addaction name="separator"/>
+    <addaction name="actionJournal_Styles"/>
+    <addaction name="actionMacro_Schema"/>
+   </widget>
+   <addaction name="menuFormat"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionStyle">
+   <property name="text">
+    <string>Color Scheme</string>
+   </property>
+  </action>
+  <action name="actionSingle_Column">
+   <property name="text">
+    <string>Single-Column</string>
+   </property>
+  </action>
+  <action name="actionDouble_Column">
+   <property name="text">
+    <string>Double-Column</string>
+   </property>
+  </action>
+  <action name="actionJournal_Styles">
+   <property name="text">
+    <string>Journal Styles</string>
+   </property>
+  </action>
+  <action name="actionMacro_Schema">
+   <property name="text">
+    <string>Macro Schema</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
