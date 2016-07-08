@@ -154,6 +154,7 @@ class SciPlotUI(_QMainWindow):
         self.ui.lineEditTitle.editingFinished.connect(self.updateLabelsFromLineEdit)
         self.ui.lineEditXLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
         self.ui.lineEditYLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
+        self.ui.comboBoxAspect.currentIndexChanged.connect(self.updateLabelsFromLineEdit)
 
         # Lines
         # Make use of double-clicking within table
@@ -172,6 +173,15 @@ class SciPlotUI(_QMainWindow):
         # When a model (table) elements changes or is deleted
         self.modelFillBetween.dataChanged.connect(self.updateFillBetweenDataStyle)
         self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
+
+        # Images
+        # Make use of double-clicking within table
+        self.tableViewImages.doubleClicked.connect(
+            self.modelImages.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelImages.dataChanged.connect(self.updateImagesDataStyle)
+        self.modelImages.dataDeleted.connect(self.updateImagesDataDelete)
 
 
     def plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
@@ -324,6 +334,17 @@ class SciPlotUI(_QMainWindow):
 
         # Clear axis -- in the future, maybe clear figure and recreate axis
         self.mpl_widget.axes.clear()
+
+        # Images
+        # Check to see if any images even remain (maybe all were deleted)
+        if len(self._images_data) > 0:
+            self.mpl_widget.axes.hold(True)
+            for itm in self._images_data:
+                self.mpl_widget.axes.imshow(itm.img, label=itm.label,
+                                            interpolation='none',
+                                            cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
+                                            alpha=itm.style_dict['alpha'],
+                                            clim=itm.style_dict['clim'])
 
         # Lines
         # Check to see if any plots even are remaining (maybe all were deleted)
@@ -497,6 +518,23 @@ class SciPlotUI(_QMainWindow):
         # Update model
         self.modelImages._model_data.append(image_data.model_style)
         self.modelImages.layoutChanged.emit()
+
+    def updateImagesDataStyle(self):
+        """
+        Something style-related changed in the model; thus, need to change \
+        these elements in the fill_between data
+        """
+        for num, style_info in enumerate(self.modelImages._model_data):
+            self._images_data[num].model_style = style_info
+        self.refreshAllPlots()
+
+    def updateImagesDataDelete(self, row):
+        """
+        A plot was deleted (likely from within the model); thus, need to \
+        remove the corresponding plot data
+        """
+        self._images_data.pop(row)
+        self.refreshAllPlots()
 
 if __name__ == '__main__':
 
