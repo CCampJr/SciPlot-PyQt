@@ -128,7 +128,7 @@ class TableModelImages(_AbstractTableModelMpl):
             elif col == TableModelImages._COL_CLIM_LOW:
                 self._model_data[row]['clim_low'] = float(value)
             elif col == TableModelImages._COL_CLIM_HIGH:
-                self._model_data[row]['smap_high'] = float(value)
+                self._model_data[row]['clim_high'] = float(value)
             elif col == TableModelImages._COL_LABEL:
                 self._model_data[row]['label'] = value
             elif col == TableModelImages._COL_DELETE:

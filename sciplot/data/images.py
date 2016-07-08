@@ -72,4 +72,4 @@ class DataImages(_Data2D, ImageStyle):
         self.style_dict['alpha'] = value['alpha']
 
         # clim broken out into high and low in model
-        self.style_dict['clim'] = list(value['clim_low'], value['clim_high'])
+        self.style_dict['clim'] = list((value['clim_low'], value['clim_high']))
