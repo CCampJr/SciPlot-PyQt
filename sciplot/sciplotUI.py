@@ -49,8 +49,12 @@ from sciplot.ui.models.fillbetween import (TableModelFillBetween as
                                            EditDelegateFillBetween as
                                            _EditDelegateFillBetween)
 
+from sciplot.ui.models.images import (TableModelImages as _TableModelImages,
+                                     EditDelegateImages as _EditDelegateImages)
+
 from sciplot.data.generic import DataGlobal as _DataGlobal
 from sciplot.data.lines import DataLine as _DataLine
+from sciplot.data.images import DataImages as _DataImages
 from sciplot.data.special import DataFillBetween as _DataFillBetween
 
 # Generic imports for MPL-incorporation
@@ -93,6 +97,9 @@ class SciPlotUI(_QMainWindow):
         # fill_between data-- similar to plot_data above
         self._fill_between_data = []
 
+        # images data-- similar to plot_data above
+        self._images_data = []
+
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
         self.mpl_widget.axes.hold(True)
@@ -115,6 +122,10 @@ class SciPlotUI(_QMainWindow):
         self.ui.modelTabWidget.addTab(self.tableViewFillBetween,
                                       'Fill Between')
 
+        # Initial  and insert table view for images
+        self.tableViewImages = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewImages, 'Images')
+
         # Set model and delegates
         # Lines
         self.modelLine = _TableModelLines()
@@ -129,6 +140,13 @@ class SciPlotUI(_QMainWindow):
         self.tableViewFillBetween.setModel(self.modelFillBetween)
         self.tableViewFillBetween.setItemDelegate(self.delegateFillBetween)
         self.tableViewFillBetween.show()
+
+        # Images
+        self.modelImages = _TableModelImages()
+        self.delegateImages = _EditDelegateImages()
+        self.tableViewImages.setModel(self.modelImages)
+        self.tableViewImages.setItemDelegate(self.delegateImages)
+        self.tableViewImages.show()
 
         # Signals & Slots
 
@@ -419,6 +437,66 @@ class SciPlotUI(_QMainWindow):
         self._fill_between_data.pop(row)
         self.refreshAllPlots()
 
+    def imshow(self, img, x=None, y=None, label=None,
+               x_label=None, y_label=None, **kwargs):
+        """
+        MPL-like plotting functionality
+
+        Parameters
+        ----------
+        img : ndarray (2D)
+            Image data
+
+        x : ndarray (1D)
+            X-axis data
+
+        y : ndarray (1D, for now)
+            Y-axis data
+
+        label : str
+            Label of plot
+
+        x_label : str
+            X-axis label (units)
+
+        y_label : str
+            Y-axis label (units)
+
+        kwargs : dict
+            Other parameters sent directly to mpl-imshow
+
+        """
+
+        # Temporary plot-data
+        image_data = _DataImages()
+        image_data.img = img
+        image_data.x = x
+        image_data.y = y
+        image_data.label = label
+
+        # Imshow outputs an image object
+        image_out = self.mpl_widget.axes.imshow(img, interpolation='None',
+                                                aspect='auto', label=label,
+                                                **kwargs)
+        self.mpl_widget.axes.legend(loc='best')
+
+        # If labels are provided, update the global data and the linEdits
+        if x_label is not None or y_label is not None:
+            self.updateAllLabels(x_label=x_label, y_label=y_label)
+
+        self.mpl_widget.fig.tight_layout()
+
+        # Since the image was not fed style-info (unless kwargs were used)
+        # we rely on the mpl stylesheet to setup cmap, etc.
+        # Thus, we plot, then retrieve what the style info was
+        image_data.retrieve_style_from_image(image_out)
+
+        # Append this specific plot data to out list of all plots
+        self._images_data.append(image_data)
+
+        # Update model
+        self.modelImages._model_data.append(image_data.model_style)
+        self.modelImages.layoutChanged.emit()
 
 if __name__ == '__main__':
 
@@ -432,6 +510,7 @@ if __name__ == '__main__':
     winPlotter.plot(x, y, x_label='X', label='Test1')
     winPlotter.plot(x, y**1.1, label='Test2')
     winPlotter.fill_between(x, y-1000, y+1000, label='Test3')
+    winPlotter.imshow(_np.random.randn(100,100))
     winPlotter.show()
 
 
