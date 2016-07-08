@@ -61,7 +61,7 @@ class DataImages(_Data2D, ImageStyle):
         # clim broken out into high and low in model
         clim = out.pop('clim')
         out['clim_low'] = _np.min(clim)
-        out['clim_max'] = _np.max(clim)
+        out['clim_high'] = _np.max(clim)
         out['label'] = self.label
         return out
 

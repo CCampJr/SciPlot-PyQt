@@ -5,6 +5,8 @@ Created on Fri Jul  8 14:11:40 2016
 @author: chc
 """
 
+import matplotlib as _mpl
+
 from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QMainWindow as _QMainWindow,
                              QColorDialog as _QColorDialog,
@@ -69,9 +71,9 @@ class TableModelImages(_AbstractTableModelMpl):
 
     def doubleClickCheck(self, index):
         col = index.column()
-#        if col == TableModelLines._COL_CMAP:  # CMAP
+#        if col == TableModelImages._COL_CMAP:  # CMAP
 #            self.changeColor(index)
-        if col == TableModelLines._COL_DELETE:  # Delete?
+        if col == TableModelImages._COL_DELETE:  # Delete?
             self.deleteData(index)
 
     def deleteData(self, index):
@@ -97,17 +99,17 @@ class TableModelImages(_AbstractTableModelMpl):
         col = index.column()
 
         if role == _Qt.DisplayRole:
-            if col == TableModelLines._COL_CMAP:
+            if col == TableModelImages._COL_CMAP:
                 return str(self._model_data[row]['cmap_name'])
-            elif col == TableModelLines._COL_ALPHA:
+            elif col == TableModelImages._COL_ALPHA:
                 return str(self._model_data[row]['alpha'])
-            elif col == TableModelLines._COL_CMAP_LOW:
-                return str(self._model_data[row]['cmap_low'])
-            elif col == TableModelLines._COL_CMAP_HIGH:
-                return str(self._model_data[row]['cmap_high'])
-            elif col == TableModelLines._COL_LABEL:
+            elif col == TableModelImages._COL_CLIM_LOW:
+                return str(self._model_data[row]['clim_low'])
+            elif col == TableModelImages._COL_CLIM_HIGH:
+                return str(self._model_data[row]['clim_high'])
+            elif col == TableModelImages._COL_LABEL:
                 return str(self._model_data[row]['label'])
-            elif col == TableModelLines._COL_DELETE:
+            elif col == TableModelImages._COL_DELETE:
                 return '<Dbl-Click to Delete>'
         elif role == _Qt.DecorationRole:
             pass
@@ -119,17 +121,17 @@ class TableModelImages(_AbstractTableModelMpl):
             row = index.row()
             col = index.column()
 
-            if col == TableModelLines._COL_CMAP:
+            if col == TableModelImages._COL_CMAP:
                 self._model_data[row]['cmap_name'] = value
-            elif col == TableModelLines._COL_ALPHA:
+            elif col == TableModelImages._COL_ALPHA:
                 self._model_data[row]['alpha'] = float(value)
-            elif col == TableModelLines._COL_CMAP_LOW:
-                self._model_data[row]['cmap_low'] = float(value)
-            elif col == TableModelLines._COL_CMAP_HIGH:
+            elif col == TableModelImages._COL_CLIM_LOW:
+                self._model_data[row]['clim_low'] = float(value)
+            elif col == TableModelImages._COL_CLIM_HIGH:
                 self._model_data[row]['smap_high'] = float(value)
-            elif col == TableModelLines._COL_LABEL:
+            elif col == TableModelImages._COL_LABEL:
                 self._model_data[row]['label'] = value
-            elif col == TableModelLines._COL_DELETE:
+            elif col == TableModelImages._COL_DELETE:
                 if value:
                     self._model_data.pop(row)
                     self.layoutChanged.emit()
@@ -146,31 +148,31 @@ class EditDelegateImages(_AbstractEditDelegateMpl):
     def createEditor(self, parent, option, index):
             col = index.column()
 
-            if col == TableModelLines._COL_ALPHA:
+            if col == TableModelImages._COL_ALPHA:
                 spinBoxSize = _QDoubleSpinBox(parent)
                 spinBoxSize.setMinimum(0)
                 spinBoxSize.setMaximum(1)
                 spinBoxSize.setSingleStep(.1)
                 return spinBoxSize
-            # cmap_low, cmap_high
-            elif (col == TableModelLines._COL_CMAP_LOW or
-                  col == TableModelLines._COL_SMAP_HIGH):
+            # clim_low, clim_high
+            elif (col == TableModelImages._COL_CLIM_LOW or
+                  col == TableModelImages._COL_CLIM_HIGH):
                 spinBoxSize = _QDoubleSpinBox(parent)
                 spinBoxSize.setMinimum(-1e10)
                 spinBoxSize.setMaximum(1e10)
                 spinBoxSize.setSingleStep(.5)
                 return spinBoxSize
-            elif col == TableModelLines._COL_CMAP:  # cmaps
+            elif col == TableModelImages._COL_CMAP:  # cmaps
                 comboBoxCmapNames = _QComboBox(parent)
-                list_cmaps = _mpl.cm.cmap_d.keys()
+                list_cmaps = list(_mpl.cm.cmap_d.keys())
                 list_cmaps.sort()
                 for cmap_name in list_cmaps:
                     comboBoxCmapNames.addItem(cmap_name)
                 return comboBoxCmapNames
-            elif col == TableModelLines._COL_LABEL:  # Label
+            elif col == TableModelImages._COL_LABEL:  # Label
                 lineEditLabel = _QLineEdit(parent)
                 return lineEditLabel
-            elif col == TableModelLines._COL_DELETE:  # Delete?
+            elif col == TableModelImages._COL_DELETE:  # Delete?
                 pass
             else:
                 return _QVariant()
@@ -178,12 +180,12 @@ class EditDelegateImages(_AbstractEditDelegateMpl):
     def setEditorData(self, editor, index):
         col = index.column()
         item = index.data(_Qt.DisplayRole)
-        if (col == TableModelLines._COL_ALPHA or
-              col == TableModelLines._COL_CMAP_LOW or
-              col == TableModelLines._COL_CMAP_HIGH):
+        if (col == TableModelImages._COL_ALPHA or
+              col == TableModelImages._COL_CLIM_LOW or
+              col == TableModelImages._COL_CLIM_HIGH):
             item_float = float(item)
             editor.setValue(item_float)
-        elif col == TableModelLines._COL_LABEL:  # Label
+        elif col == TableModelImages._COL_LABEL:  # Label
             editor.setText(item)
         else:
             pass
@@ -192,17 +194,17 @@ class EditDelegateImages(_AbstractEditDelegateMpl):
         col = index.column()
 
         # Alpha or clim's
-        if (col == TableModelLines._COL_ALPHA or
-                col == TableModelLines._COL_CMAP_LOW or
-                col == TableModelLines._COL_CMAP_HIGH):
+        if (col == TableModelImages._COL_ALPHA or
+                col == TableModelImages._COL_CLIM_LOW or
+                col == TableModelImages._COL_CLIM_HIGH):
             value = editor.value()
             model.setData(index, value)
-        elif col == TableModelLines._COL_CMAP:  # cmap
-            list_cmaps = _mpl.cm.cmap_d.keys()
+        elif col == TableModelImages._COL_CMAP:  # cmap
+            list_cmaps = list(_mpl.cm.cmap_d.keys())
             list_cmaps.sort()
             idx = editor.currentIndex()
             cmap_name = list_cmaps[idx]
             model.setData(index, cmap_name)
-        elif col == TableModelLines._COL_LABEL:  # Label
+        elif col == TableModelImages._COL_LABEL:  # Label
             label = editor.text()
             model.setData(index, label)
