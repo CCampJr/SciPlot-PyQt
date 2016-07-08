@@ -5,7 +5,7 @@ Created on Fri Jul  8 13:52:57 2016
 @author: chc
 """
 
-from sciplot.data.generic import Data as _Data
+from sciplot.data.generic import Data2D as _Data2D
 import matplotlib as _mpl
 import numpy as _np
 
@@ -48,7 +48,7 @@ class ImageStyle:
         self.style_dict['clim'] = image.get_clim()
 
 
-class DataImages(_Data, ImageStyle):
+class DataImages(_Data2D, ImageStyle):
     def __init__(self):
         self._setupData()
         self._setupImageStyle()
