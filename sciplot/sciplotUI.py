@@ -49,8 +49,12 @@ from sciplot.ui.models.fillbetween import (TableModelFillBetween as
                                            EditDelegateFillBetween as
                                            _EditDelegateFillBetween)
 
+from sciplot.ui.models.images import (TableModelImages as _TableModelImages,
+                                     EditDelegateImages as _EditDelegateImages)
+
 from sciplot.data.generic import DataGlobal as _DataGlobal
 from sciplot.data.lines import DataLine as _DataLine
+from sciplot.data.images import DataImages as _DataImages
 from sciplot.data.special import DataFillBetween as _DataFillBetween
 
 # Generic imports for MPL-incorporation
@@ -93,6 +97,9 @@ class SciPlotUI(_QMainWindow):
         # fill_between data-- similar to plot_data above
         self._fill_between_data = []
 
+        # images data-- similar to plot_data above
+        self._images_data = []
+
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
         self.mpl_widget.axes.hold(True)
@@ -115,6 +122,10 @@ class SciPlotUI(_QMainWindow):
         self.ui.modelTabWidget.addTab(self.tableViewFillBetween,
                                       'Fill Between')
 
+        # Initial  and insert table view for images
+        self.tableViewImages = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewImages, 'Images')
+
         # Set model and delegates
         # Lines
         self.modelLine = _TableModelLines()
@@ -130,12 +141,23 @@ class SciPlotUI(_QMainWindow):
         self.tableViewFillBetween.setItemDelegate(self.delegateFillBetween)
         self.tableViewFillBetween.show()
 
+        # Images
+        self.modelImages = _TableModelImages()
+        self.delegateImages = _EditDelegateImages()
+        self.tableViewImages.setModel(self.modelImages)
+        self.tableViewImages.setItemDelegate(self.delegateImages)
+        self.tableViewImages.show()
+
         # Signals & Slots
 
         # Global labels
         self.ui.lineEditTitle.editingFinished.connect(self.updateLabelsFromLineEdit)
         self.ui.lineEditXLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
         self.ui.lineEditYLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
+
+        # Non-tracked (not saved) properties
+        self.ui.comboBoxAspect.currentIndexChanged.connect(self.axisAspect)
+        self.ui.comboBoxAxisScaling.currentIndexChanged.connect(self.axisScaling)
 
         # Lines
         # Make use of double-clicking within table
@@ -155,6 +177,14 @@ class SciPlotUI(_QMainWindow):
         self.modelFillBetween.dataChanged.connect(self.updateFillBetweenDataStyle)
         self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
 
+        # Images
+        # Make use of double-clicking within table
+        self.tableViewImages.doubleClicked.connect(
+            self.modelImages.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelImages.dataChanged.connect(self.updateImagesDataStyle)
+        self.modelImages.dataDeleted.connect(self.updateImagesDataDelete)
 
     def plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
         """
@@ -197,6 +227,8 @@ class SciPlotUI(_QMainWindow):
             self.updateAllLabels(x_label=x_label, y_label=y_label)
 
         self.mpl_widget.fig.tight_layout()
+        self.mpl_widget.draw()
+
 
         # Since the plot was not fed style-info (unless kwargs were used)
         # we rely on the mpl stylesheet to setup color, linewidth, etc.
@@ -307,6 +339,18 @@ class SciPlotUI(_QMainWindow):
         # Clear axis -- in the future, maybe clear figure and recreate axis
         self.mpl_widget.axes.clear()
 
+        # Images
+        # Check to see if any images even remain (maybe all were deleted)
+        if len(self._images_data) > 0:
+            self.mpl_widget.axes.hold(True)
+            for itm in self._images_data:
+                self.mpl_widget.axes.imshow(itm.img, label=itm.label,
+                                            interpolation='none',
+                                            origin='lower',
+                                            cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
+                                            alpha=itm.style_dict['alpha'],
+                                            clim=itm.style_dict['clim'])
+
         # Lines
         # Check to see if any plots even are remaining (maybe all were deleted)
         if len(self._plot_data) > 0:
@@ -389,6 +433,7 @@ class SciPlotUI(_QMainWindow):
                                                    label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
         self.mpl_widget.fig.tight_layout()
+        self.mpl_widget.draw()
 
         # Since the fill_between was not fed style-info (unless kwargs were used)
         # we rely on the mpl stylesheet to setup color, linewidth, etc.
@@ -419,12 +464,111 @@ class SciPlotUI(_QMainWindow):
         self._fill_between_data.pop(row)
         self.refreshAllPlots()
 
+    def imshow(self, img, x=None, y=None, label=None,
+               x_label=None, y_label=None, **kwargs):
+        """
+        MPL-like plotting functionality
+
+        Parameters
+        ----------
+        img : ndarray (2D)
+            Image data
+
+        x : ndarray (1D)
+            X-axis data
+
+        y : ndarray (1D, for now)
+            Y-axis data
+
+        label : str
+            Label of plot
+
+        x_label : str
+            X-axis label (units)
+
+        y_label : str
+            Y-axis label (units)
+
+        kwargs : dict
+            Other parameters sent directly to mpl-imshow
+
+        """
+
+        # Temporary plot-data
+        image_data = _DataImages()
+        image_data.img = img
+        image_data.x = x
+        image_data.y = y
+        image_data.label = label
+
+        # Imshow outputs an image object
+        image_out = self.mpl_widget.axes.imshow(img, interpolation='None',
+                                                origin='lower',
+                                                label=label,
+                                                **kwargs)
+#        self.mpl_widget.axes.legend(loc='best')
+
+        # If labels are provided, update the global data and the linEdits
+        if x_label is not None or y_label is not None:
+            self.updateAllLabels(x_label=x_label, y_label=y_label)
+
+        self.mpl_widget.fig.tight_layout()
+        self.mpl_widget.draw()
+
+        # Since the image was not fed style-info (unless kwargs were used)
+        # we rely on the mpl stylesheet to setup cmap, etc.
+        # Thus, we plot, then retrieve what the style info was
+        image_data.retrieve_style_from_image(image_out)
+
+        # Append this specific plot data to out list of all plots
+        self._images_data.append(image_data)
+
+        # Update model
+        self.modelImages._model_data.append(image_data.model_style)
+        self.modelImages.layoutChanged.emit()
+
+
+    def updateImagesDataStyle(self):
+        """
+        Something style-related changed in the model; thus, need to change \
+        these elements in the fill_between data
+        """
+        for num, style_info in enumerate(self.modelImages._model_data):
+            self._images_data[num].model_style = style_info
+        self.refreshAllPlots()
+
+    def updateImagesDataDelete(self, row):
+        """
+        A plot was deleted (likely from within the model); thus, need to \
+        remove the corresponding plot data
+        """
+        self._images_data.pop(row)
+        self.refreshAllPlots()
+
+    def axisAspect(self):
+        """
+        Set axis aspect ratio property
+        """
+        aspect = self.ui.comboBoxAspect.currentText()
+        self.mpl_widget.axes.set_aspect(aspect)
+        self.mpl_widget.fig.tight_layout()
+        self.mpl_widget.draw()
+
+    def axisScaling(self):
+        """
+        Set axis scaling property
+        """
+        ratio = self.ui.comboBoxAxisScaling.currentText()
+        self.mpl_widget.axes.axis(ratio)
+        self.mpl_widget.fig.tight_layout()
+        self.mpl_widget.draw()
 
 if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)
 
     winPlotter = SciPlotUI()
+    winPlotter.show()
 
     x = _np.arange(100)
     y = x**2
@@ -432,7 +576,8 @@ if __name__ == '__main__':
     winPlotter.plot(x, y, x_label='X', label='Test1')
     winPlotter.plot(x, y**1.1, label='Test2')
     winPlotter.fill_between(x, y-1000, y+1000, label='Test3')
-    winPlotter.show()
+
+    winPlotter.imshow(_np.random.randn(100,100), label='Test4')
 
 
 
