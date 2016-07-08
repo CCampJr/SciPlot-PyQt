@@ -53,7 +53,7 @@ class TableModelImages(_AbstractTableModelMpl):
     def __init__(self, parent=None):
 
         super(_QAbstractTableModel, self).__init__(parent)
-        self.headers = TableModelLines._HEADERS
+        self.headers = TableModelImages._HEADERS
         self._model_data = []
 
     def rowCount(self, parent=_QModelIndex()):
