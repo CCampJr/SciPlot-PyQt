@@ -88,6 +88,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.label_5)
         self.checkBoxAxisVisible = QtWidgets.QCheckBox(self.AxisParameters)
         self.checkBoxAxisVisible.setText("")
+        self.checkBoxAxisVisible.setChecked(True)
         self.checkBoxAxisVisible.setObjectName("checkBoxAxisVisible")
         self.verticalLayout_3.addWidget(self.checkBoxAxisVisible)
         self.label_6 = QtWidgets.QLabel(self.AxisParameters)

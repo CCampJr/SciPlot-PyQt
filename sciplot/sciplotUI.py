@@ -104,9 +104,11 @@ class SciPlotUI(_QMainWindow):
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
         self.mpl_widget.axes.hold(True)
 
+
         # Insert MPL widget and toolbar
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget)
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget.toolbar)
+        self.updateAxisParameters()
         self.mpl_widget.draw()
 
         # Insert TabWidget
@@ -158,6 +160,11 @@ class SciPlotUI(_QMainWindow):
         # Non-tracked (not saved) properties
         self.ui.comboBoxAspect.currentIndexChanged.connect(self.axisAspect)
         self.ui.comboBoxAxisScaling.currentIndexChanged.connect(self.axisScaling)
+        self.ui.checkBoxAxisVisible.stateChanged.connect(self.axisVisible)
+        self.ui.lineEditXLimMin.editingFinished.connect(self.axisLimits)
+        self.ui.lineEditXLimMax.editingFinished.connect(self.axisLimits)
+        self.ui.lineEditYLimMin.editingFinished.connect(self.axisLimits)
+        self.ui.lineEditYLimMax.editingFinished.connect(self.axisLimits)
 
         # Lines
         # Make use of double-clicking within table
@@ -227,6 +234,7 @@ class SciPlotUI(_QMainWindow):
             self.updateAllLabels(x_label=x_label, y_label=y_label)
 
         self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
         self.mpl_widget.draw()
 
 
@@ -389,6 +397,7 @@ class SciPlotUI(_QMainWindow):
             self.mpl_widget.axes.set_ylabel(self._global_data.labels['y_label'])
 
         self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
         self.mpl_widget.draw()
 
     def fill_between(self, x, y_low, y_high, label=None, x_label=None,
@@ -433,6 +442,7 @@ class SciPlotUI(_QMainWindow):
                                                    label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
         self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
         self.mpl_widget.draw()
 
         # Since the fill_between was not fed style-info (unless kwargs were used)
@@ -513,6 +523,7 @@ class SciPlotUI(_QMainWindow):
             self.updateAllLabels(x_label=x_label, y_label=y_label)
 
         self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
         self.mpl_widget.draw()
 
         # Since the image was not fed style-info (unless kwargs were used)
@@ -552,6 +563,7 @@ class SciPlotUI(_QMainWindow):
         aspect = self.ui.comboBoxAspect.currentText()
         self.mpl_widget.axes.set_aspect(aspect)
         self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
         self.mpl_widget.draw()
 
     def axisScaling(self):
@@ -561,7 +573,53 @@ class SciPlotUI(_QMainWindow):
         ratio = self.ui.comboBoxAxisScaling.currentText()
         self.mpl_widget.axes.axis(ratio)
         self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
         self.mpl_widget.draw()
+
+    def axisVisible(self):
+        """
+        Set whether axis is on or off
+        """
+        state = self.ui.checkBoxAxisVisible.isChecked()
+        if state:
+            state = 'on'
+        else:
+            state = 'off'
+
+        self.mpl_widget.axes.axis(state)
+        self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
+        self.mpl_widget.draw()
+
+    def axisLimits(self):
+        """
+        Set axis limits
+        """
+        if self.sender() == self.ui.lineEditXLimMin:
+            value = float(self.ui.lineEditXLimMin.text())
+            self.mpl_widget.axes.axis(xmin=value)
+        elif self.sender() == self.ui.lineEditXLimMax:
+            value = float(self.ui.lineEditXLimMax.text())
+            self.mpl_widget.axes.axis(xmax=value)
+        elif self.sender() == self.ui.lineEditYLimMin:
+            value = float(self.ui.lineEditYLimMin.text())
+            self.mpl_widget.axes.axis(ymin=value)
+        elif self.sender() == self.ui.lineEditYLimMax:
+            value = float(self.ui.lineEditYLimMax.text())
+            self.mpl_widget.axes.axis(ymax=value)
+
+        self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
+        self.mpl_widget.draw()
+
+    def updateAxisParameters(self):
+        axis_visible = self.mpl_widget.axes.axison
+        self.ui.checkBoxAxisVisible.setChecked(axis_visible)
+        xmin, xmax, ymin, ymax = self.mpl_widget.axes.axis()
+        self.ui.lineEditXLimMin.setText(str(xmin))
+        self.ui.lineEditXLimMax.setText(str(xmax))
+        self.ui.lineEditYLimMin.setText(str(ymin))
+        self.ui.lineEditYLimMax.setText(str(ymax))
 
 if __name__ == '__main__':
 
