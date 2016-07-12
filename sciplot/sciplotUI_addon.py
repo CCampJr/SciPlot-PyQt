@@ -27,9 +27,9 @@ class SciPlotAddon(_SciPlotUI):
     Trivial example of using SciPlot with addons (or building another \
     application on top of SciPlot).
     """
-    def __init__(self, parent=None):
+    def __init__(self, limit_to=None, parent=None):
         # Setup SciPlot window
-        self.setup(parent=parent)
+        self.setup(limit_to=limit_to, parent=parent)
 
         # Add a calendar to the tabs and have it displayed initially
         cal1 = _QCalendarWidget()
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)
 
-    winPlotter = SciPlotAddon()
+    winPlotter = SciPlotAddon(limit_to=['bars'])
 
     winPlotter.show()
 
