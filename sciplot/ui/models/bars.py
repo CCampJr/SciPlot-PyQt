@@ -40,7 +40,7 @@ class TableModelBars(_AbstractTableModelMpl):
                 'Alpha',
                 'Edgecolor',
                 'Line Width',
-                'Width Fraction',
+                'Width Factor',
                 'Label',
                 'Delete']
 
@@ -48,7 +48,7 @@ class TableModelBars(_AbstractTableModelMpl):
     _COL_ALPHA = _HEADERS.index('Alpha')
     _COL_EDGECOLOR = _HEADERS.index('Edgecolor')
     _COL_LINEWIDTH = _HEADERS.index('Line Width')
-    _COL_WIDTH_FRACTION = _HEADERS.index('Width Fraction')
+    _COL_WIDTH_FACTOR = _HEADERS.index('Width Factor')
     _COL_LABEL = _HEADERS.index('Label')
     _COL_DELETE = _HEADERS.index('Delete')
 
@@ -115,8 +115,8 @@ class TableModelBars(_AbstractTableModelMpl):
                 return str(self._model_data[row]['edgecolor'])
             elif col == TableModelBars._COL_LINEWIDTH:
                 return str(self._model_data[row]['linewidth'])
-            elif col == TableModelBars._COL_WIDTH_FRACTION:
-                return str(self._model_data[row]['width_fraction'])
+            elif col == TableModelBars._COL_WIDTH_FACTOR:
+                return str(self._model_data[row]['width_factor'])
             elif col == TableModelBars._COL_LABEL:
                 return str(self._model_data[row]['label'])
             elif col == TableModelBars._COL_DELETE:
@@ -158,8 +158,8 @@ class TableModelBars(_AbstractTableModelMpl):
                 self._model_data[row]['alpha'] = float(value)
             elif col == TableModelBars._COL_LINEWIDTH:
                 self._model_data[row]['linewidth'] = float(value)
-            elif col == TableModelBars._COL_WIDTH_FRACTION:
-                self._model_data[row]['width_fraction'] = float(value)
+            elif col == TableModelBars._COL_WIDTH_FACTOR:
+                self._model_data[row]['width_factor'] = float(value)
             elif col == TableModelBars._COL_LABEL:
                 self._model_data[row]['label'] = value
             elif col == TableModelBars._COL_DELETE:
@@ -192,10 +192,10 @@ class EditDelegateBars(_AbstractEditDelegateMpl):
                 spinBoxSize.setSingleStep(.1)
                 return spinBoxSize
             # Width Fraction
-            elif col == TableModelBars._COL_WIDTH_FRACTION:
+            elif col == TableModelBars._COL_WIDTH_FACTOR:
                 spinBoxSize = _QDoubleSpinBox(parent)
                 spinBoxSize.setMinimum(0)
-                spinBoxSize.setMaximum(2)
+                spinBoxSize.setMaximum(1000000000)
                 spinBoxSize.setSingleStep(.1)
                 return spinBoxSize
 
@@ -224,7 +224,7 @@ class EditDelegateBars(_AbstractEditDelegateMpl):
         # LineWidth or MarkerSize or Alpha
         elif (col == TableModelBars._COL_LINEWIDTH or
               col == TableModelBars._COL_ALPHA or
-              col == TableModelBars._COL_WIDTH_FRACTION):
+              col == TableModelBars._COL_WIDTH_FACTOR):
             item_float = float(item)
             editor.setValue(item_float)
         elif col == TableModelBars._COL_LABEL:  # Label
@@ -243,7 +243,7 @@ class EditDelegateBars(_AbstractEditDelegateMpl):
         # LineWidth or MarkerSize or Alpha
         elif (col == TableModelBars._COL_LINEWIDTH or
               col == TableModelBars._COL_ALPHA or
-              col == TableModelBars._COL_WIDTH_FRACTION):
+              col == TableModelBars._COL_WIDTH_FACTOR):
             value = editor.value()
             model.setData(index, value)
         elif col == TableModelBars._COL_LABEL:  # Label

@@ -21,7 +21,7 @@ class BarStyle:
                            'alpha': None,
                            'edgecolor': None,
                            'linewidth': None,
-                           'width_fraction': None}
+                           'width_factor': None}
 
     def retrieve_style_from_bar(self, bar):
         """
@@ -76,6 +76,9 @@ class DataBar(_Data, BarStyle):
         self.style_dict['alpha'] = value['alpha']
         self.style_dict['edgecolor'] = value['edgecolor']
         self.style_dict['linewidth'] = value['linewidth']
-        self.style_dict['width_fraction'] = value['width_fraction']
-        self._width = self._gap*self.style_dict['width_fraction']
+        self.style_dict['width_factor'] = value['width_factor']
+        if self._gap is not None:
+            self._width = self._gap*self.style_dict['width_factor']
+        else:
+            self._width = self.style_dict['width_factor']
         self._left = self.x - self._width/2

@@ -596,8 +596,8 @@ class SciPlotUI(_QMainWindow):
         self.refreshAllPlots()
 
 
-    def bar(self, x, y, width_fraction=1.0, label=None, x_label=None,
-            y_label=None, **kwargs):
+    def bar(self, x, y, width_factor=1.0, label=None,
+            x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
 
@@ -614,9 +614,10 @@ class SciPlotUI(_QMainWindow):
         y : ndarray (1D, for now)
             Y-axis data
 
-        width_fraction: float
-            Fraction of space between bars taken up by bar (e.g. 1.0 leads to \
-            bars that tough)
+        width_factor: float
+            If legnth of y>1, fraction of space between bars taken up by bar \
+            (e.g. 1.0 leads to bars that tough). If y is a single-value, is \
+            the width of the bar.
 
         label : str
             Label of plot
@@ -638,16 +639,41 @@ class SciPlotUI(_QMainWindow):
         bar_data.y = y
         bar_data.label = label
 
-        bar_data._gap = _np.abs(x[1]-x[0])
+        bar_data.style_dict['width_factor'] = width_factor
 
-        bar_data.style_dict['width_fraction']=width_fraction
+        _multi_value = None
 
-        bar_data._width = bar_data._gap*bar_data.style_dict['width_fraction']
+        if isinstance(y, (int, float)):
+            _multi_value = False
+        if isinstance(y, _np.ndarray):
+            if y.size == 1:
+                _multi_value = False
+            else:
+                _multi_value = True
+        if isinstance(y, (list, tuple)):
+            if len(y) == 1:
+                _multi_value = False
+            else:
+                _multi_value = True
+
+        if _multi_value:
+            # Distance between bars
+            bar_data._gap = _np.abs(x[1]-x[0])
+
+            # Width of a bar is a fraction of the gap
+            bar_data._width = bar_data._gap*bar_data.style_dict['width_factor']
+
+        else:
+            # Single-valued: no gap
+            bar_data._gap = None
+            bar_data._width = width_factor
+
+        # MPL-bar uses left-edge rather than center
         bar_data._left = bar_data.x - bar_data._width/2
 
         # Plot outputs a list of patch objects
         bar_out = self.mpl_widget.axes.bar(bar_data._left, y,
-                                           width = bar_data._width,
+                                           width=bar_data._width,
                                            label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
 
@@ -701,7 +727,7 @@ class SciPlotUI(_QMainWindow):
         gap = _np.abs(lefts[1] - lefts[0])
         offset = gap/2
 
-        self.bar(lefts[:-1]+offset, counts, width_fraction=1.0, label=label,
+        self.bar(lefts[:-1]+offset, counts, width_factor=1.0, label=label,
                  x_label=x_label, y_label=y_label, **kwargs)
 
     def updateBarsDataStyle(self):
@@ -796,12 +822,13 @@ if __name__ == '__main__':
     x = _np.arange(100)
     y = x**2
 
-    winPlotter.plot(x, y, x_label='X', label='Plot')
-    winPlotter.plot(x, y**1.1, label='Plot 2')
-    winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
+#    winPlotter.plot(x, y, x_label='X', label='Plot')
+#    winPlotter.plot(x, y**1.1, label='Plot 2')
+#    winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
+#
+#    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
+#    winPlotter.bar(x[::10],y[::10],label='Bar')
+#    winPlotter.hist(y,label='Hist')
 
-    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
-    winPlotter.bar(x[::10],y[::10],label='Bar')
-    winPlotter.hist(y,label='Hist')
-
+    winPlotter.bar(0,10, label='Bar: single-value')
     _sys.exit(app.exec_())
