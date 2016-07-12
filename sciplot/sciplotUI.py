@@ -52,9 +52,13 @@ from sciplot.ui.models.fillbetween import (TableModelFillBetween as
 from sciplot.ui.models.images import (TableModelImages as _TableModelImages,
                                      EditDelegateImages as _EditDelegateImages)
 
+from sciplot.ui.models.bars import (TableModelBars as _TableModelBars,
+                                     EditDelegateBars as _EditDelegateBars)
+
 from sciplot.data.generic import DataGlobal as _DataGlobal
 from sciplot.data.lines import DataLine as _DataLine
 from sciplot.data.images import DataImages as _DataImages
+from sciplot.data.bars import DataBar as _DataBar
 from sciplot.data.special import DataFillBetween as _DataFillBetween
 
 # Generic imports for MPL-incorporation
@@ -100,6 +104,9 @@ class SciPlotUI(_QMainWindow):
         # images data-- similar to plot_data above
         self._images_data = []
 
+        # bar data-- similar to plot_data above
+        self._bar_data = []
+
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
         self.mpl_widget.axes.hold(True)
@@ -128,6 +135,10 @@ class SciPlotUI(_QMainWindow):
         self.tableViewImages = _QTableView()
         self.ui.modelTabWidget.addTab(self.tableViewImages, 'Images')
 
+        # Initial  and insert table view for bars
+        self.tableViewBars = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewBars, 'Bars')
+
         # Set model and delegates
         # Lines
         self.modelLine = _TableModelLines()
@@ -136,7 +147,7 @@ class SciPlotUI(_QMainWindow):
         self.tableViewLine.setItemDelegate(self.delegateLine)
         self.tableViewLine.show()
 
-        # Fill Betweeb
+        # Fill Between
         self.modelFillBetween = _TableModelFillBetween()
         self.delegateFillBetween = _EditDelegateFillBetween()
         self.tableViewFillBetween.setModel(self.modelFillBetween)
@@ -149,6 +160,13 @@ class SciPlotUI(_QMainWindow):
         self.tableViewImages.setModel(self.modelImages)
         self.tableViewImages.setItemDelegate(self.delegateImages)
         self.tableViewImages.show()
+
+        # Bars/Bars
+        self.modelBars = _TableModelBars()
+        self.delegateBars = _EditDelegateBars()
+        self.tableViewBars.setModel(self.modelBars)
+        self.tableViewBars.setItemDelegate(self.delegateBars)
+        self.tableViewBars.show()
 
         # Signals & Slots
 
@@ -192,6 +210,15 @@ class SciPlotUI(_QMainWindow):
         # When a model (table) elements changes or is deleted
         self.modelImages.dataChanged.connect(self.updateImagesDataStyle)
         self.modelImages.dataDeleted.connect(self.updateImagesDataDelete)
+
+        # Bars
+        # Make use of double-clicking within table
+        self.tableViewBars.doubleClicked.connect(
+            self.modelBars.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelBars.dataChanged.connect(self.updateBarsDataStyle)
+        self.modelBars.dataDeleted.connect(self.updateBarsDataDelete)
 
     def plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
         """
@@ -359,6 +386,17 @@ class SciPlotUI(_QMainWindow):
                                             alpha=itm.style_dict['alpha'],
                                             clim=itm.style_dict['clim'])
 
+        # Bars
+        # Check to see if any images even remain (maybe all were deleted)
+        if len(self._bar_data) > 0:
+            self.mpl_widget.axes.hold(True)
+            for itm in self._bar_data:
+                self.mpl_widget.axes.bar(itm._left, itm.y, width=itm._width,
+                                         label=itm.label,
+                                         facecolor=itm.style_dict['facecolor'],
+                                         alpha=itm.style_dict['alpha'],
+                                         edgecolor=itm.style_dict['edgecolor'],
+                                         linewidth=itm.style_dict['linewidth'])
         # Lines
         # Check to see if any plots even are remaining (maybe all were deleted)
         if len(self._plot_data) > 0:
@@ -385,7 +423,8 @@ class SciPlotUI(_QMainWindow):
                                                   linewidth=itm.style_dict['linewidth'])
 
         # Only add a legend if a plot exists
-        if len(self._fill_between_data) + len(self._plot_data) > 0:
+        if len(self._fill_between_data) + len(self._plot_data) + \
+                len(self._bar_data) > 0:
             self.mpl_widget.axes.legend(loc='best')
 
         # Apply x- and y-labels and a title if they are set
@@ -556,6 +595,132 @@ class SciPlotUI(_QMainWindow):
         self._images_data.pop(row)
         self.refreshAllPlots()
 
+
+    def bar(self, x, y, width_fraction=1.0, label=None, x_label=None,
+            y_label=None, **kwargs):
+        """
+        MPL-like plotting functionality
+
+        Note
+        ----
+        Unlike MPL bar, this method uses centered data. Thus, x is the center \
+        position of the bar
+
+        Parameters
+        ----------
+        x : ndarray (1D)
+            X-axis data (center of bars)
+
+        y : ndarray (1D, for now)
+            Y-axis data
+
+        width_fraction: float
+            Fraction of space between bars taken up by bar (e.g. 1.0 leads to \
+            bars that tough)
+
+        label : str
+            Label of plot
+
+        x_label : str
+            X-axis label (units)
+
+        y_label : str
+            Y-axis label (units)
+
+        kwargs : dict
+            Other parameters sent directly to mpl-plot
+
+        """
+
+        # Temporary plot-data
+        bar_data = _DataBar()
+        bar_data.x = x
+        bar_data.y = y
+        bar_data.label = label
+
+        bar_data._gap = _np.abs(x[1]-x[0])
+
+        bar_data.style_dict['width_fraction']=width_fraction
+
+        bar_data._width = bar_data._gap*bar_data.style_dict['width_fraction']
+        bar_data._left = bar_data.x - bar_data._width/2
+
+        # Plot outputs a list of patch objects
+        bar_out = self.mpl_widget.axes.bar(bar_data._left, y,
+                                           width = bar_data._width,
+                                           label=label, **kwargs)
+        self.mpl_widget.axes.legend(loc='best')
+
+        # If labels are provided, update the global data and the linEdits
+        if x_label is not None or y_label is not None:
+            self.updateAllLabels(x_label=x_label, y_label=y_label)
+
+        self.mpl_widget.fig.tight_layout()
+        self.updateAxisParameters()
+        self.mpl_widget.draw()
+
+
+        # Since the plot was not fed style-info (unless kwargs were used)
+        # we rely on the mpl stylesheet to setup color, linewidth, etc.
+        # Thus, we plot, then retrieve what the style info was
+        bar_data.retrieve_style_from_bar(bar_out[0])
+
+        # Append this specific plot data to out list of all plots
+        self._bar_data.append(bar_data)
+        # Update model
+        self.modelBars._model_data.append(bar_data.model_style)
+        self.modelBars.layoutChanged.emit()
+
+    def hist(self, data, bins=10, label=None, x_label=None,
+             y_label='Counts', **kwargs):
+        """
+        MPL-like histogram plotting
+
+        Parameters
+        ----------
+        data : ndarray (1D, for now)
+            Data (center of bars)
+
+        bins : int
+            Number of histogram bins
+
+        label : str
+            Label of plot
+
+        x_label : str
+            X-axis label (units)
+
+        y_label : str
+            Y-axis label (units)
+
+        kwargs : dict
+            Other parameters sent directly to mpl-plot
+
+        """
+        counts, lefts = _np.histogram(data, bins=bins)
+        gap = _np.abs(lefts[1] - lefts[0])
+        offset = gap/2
+
+        self.bar(lefts[:-1]+offset, counts, width_fraction=1.0, label=label,
+                 x_label=x_label, y_label=y_label, **kwargs)
+
+    def updateBarsDataStyle(self):
+        """
+        Something style-related changed in the model; thus, need to change \
+        these elements in the fill_between data
+        """
+        for num, style_info in enumerate(self.modelBars._model_data):
+            self._bar_data[num].model_style = style_info
+        self.refreshAllPlots()
+
+    def updateBarsDataDelete(self, row):
+        """
+        A plot was deleted (likely from within the model); thus, need to \
+        remove the corresponding plot data
+        """
+        self._bar_data.pop(row)
+        self.refreshAllPlots()
+
     def axisAspect(self):
         """
         Set axis aspect ratio property
@@ -631,13 +796,12 @@ if __name__ == '__main__':
     x = _np.arange(100)
     y = x**2
 
-    winPlotter.plot(x, y, x_label='X', label='Test1')
-    winPlotter.plot(x, y**1.1, label='Test2')
-    winPlotter.fill_between(x, y-1000, y+1000, label='Test3')
+    winPlotter.plot(x, y, x_label='X', label='Plot')
+    winPlotter.plot(x, y**1.1, label='Plot 2')
+    winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
 
-    winPlotter.imshow(_np.random.randn(100,100), label='Test4')
+    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
+    winPlotter.bar(x[::10],y[::10],label='Bar')
+    winPlotter.hist(y,label='Hist')
 
-
-
-#    print('Here: {}'.format(winPlotter._data.spectra_list[0].meta_dict['label']))
     _sys.exit(app.exec_())
