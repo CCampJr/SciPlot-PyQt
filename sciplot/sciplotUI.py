@@ -83,6 +83,9 @@ class SciPlotUI(_QMainWindow):
     refreshAllPlots : Delete all plots and re-plot
     """
     def __init__(self, parent=None):
+        self.setup(parent=parent)
+
+    def setup(self, parent=None):
 
         # Generic start to any pyQT program
         super(SciPlotUI, self).__init__(parent)
