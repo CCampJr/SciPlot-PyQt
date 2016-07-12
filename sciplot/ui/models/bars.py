@@ -120,7 +120,7 @@ class TableModelBars(_AbstractTableModelMpl):
             elif col == TableModelBars._COL_LABEL:
                 return str(self._model_data[row]['label'])
             elif col == TableModelBars._COL_DELETE:
-                return '<Dbl-Click to Delete>'
+                return ''
         elif role == _Qt.DecorationRole:
             if col == TableModelBars._COL_FACECOLOR:
                 color = self._model_data[row]['facecolor']
@@ -128,6 +128,14 @@ class TableModelBars(_AbstractTableModelMpl):
                 color = self._model_data[row]['edgecolor']
             if (col == TableModelBars._COL_FACECOLOR or
                     col == TableModelBars._COL_EDGECOLOR):
+                color_256 = [color[0]*255, color[1]*255, color[2]*255]
+                qcolor = _QColor(color_256[0], color_256[1], color_256[2])
+                pm = _QPixmap(20, 20)
+                pm.fill(qcolor)
+                icon = _QIcon(pm)
+                return icon
+            elif col == TableModelBars._COL_DELETE:
+                color = [1, 0, 0]
                 color_256 = [color[0]*255, color[1]*255, color[2]*255]
                 qcolor = _QColor(color_256[0], color_256[1], color_256[2])
                 pm = _QPixmap(20, 20)

@@ -110,9 +110,16 @@ class TableModelImages(_AbstractTableModelMpl):
             elif col == TableModelImages._COL_LABEL:
                 return str(self._model_data[row]['label'])
             elif col == TableModelImages._COL_DELETE:
-                return '<Dbl-Click to Delete>'
+                return ''
         elif role == _Qt.DecorationRole:
-            pass
+            if col == TableModelImages._COL_DELETE:
+                color = [1, 0, 0]
+                color_256 = [color[0]*255, color[1]*255, color[2]*255]
+                qcolor = _QColor(color_256[0], color_256[1], color_256[2])
+                pm = _QPixmap(20, 20)
+                pm.fill(qcolor)
+                icon = _QIcon(pm)
+                return icon
         else:
             return _QVariant()
 

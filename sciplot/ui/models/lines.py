@@ -16,7 +16,8 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QLineEdit as _QLineEdit,
                              QStyledItemDelegate as _QStyledItemDelegate,
                              QTableView as _QTableView,
-                             QSizePolicy as _QSizePolicy)
+                             QSizePolicy as _QSizePolicy,
+                             QHBoxLayout as _QHBoxLayout)
 
 from PyQt5.QtCore import (QAbstractTableModel as _QAbstractTableModel,
                           QVariant as _QVariant,
@@ -121,10 +122,19 @@ class TableModelLines(_AbstractTableModelMpl):
             elif col == TableModelLines._COL_LABEL:
                 return str(self._model_data[row]['label'])
             elif col == TableModelLines._COL_DELETE:
-                return '<Dbl-Click to Delete>'
+                return ''
+
         elif role == _Qt.DecorationRole:
             if col == TableModelLines._COL_COLOR:
                 color = self._model_data[row]['color']
+                color_256 = [color[0]*255, color[1]*255, color[2]*255]
+                qcolor = _QColor(color_256[0], color_256[1], color_256[2])
+                pm = _QPixmap(20, 20)
+                pm.fill(qcolor)
+                icon = _QIcon(pm)
+                return icon
+            elif col == TableModelLines._COL_DELETE:
+                color = [1, 0, 0]
                 color_256 = [color[0]*255, color[1]*255, color[2]*255]
                 qcolor = _QColor(color_256[0], color_256[1], color_256[2])
                 pm = _QPixmap(20, 20)

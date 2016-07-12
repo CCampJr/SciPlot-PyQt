@@ -200,6 +200,29 @@ class SciPlotUI(_QMainWindow):
         self.tableViewLine.setItemDelegate(self.delegateLine)
         self.tableViewLine.show()
 
+
+        # RESIZE COLUMNS
+        header = self.tableViewLine.horizontalHeader()
+        # alpha
+        col = self.modelLine._COL_ALPHA
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewLine.setColumnWidth(col, new_width)
+
+        # linewidth
+        col = self.modelLine._COL_LINEWIDTH
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewLine.setColumnWidth(col, new_width)
+
+        # markersize
+        col = self.modelLine._COL_MARKERSIZE
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewLine.setColumnWidth(col, new_width)
+
+        # delete
+        col = self.modelLine._COL_DELETE
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewLine.setColumnWidth(col, new_width)
+
         # SIGNALS AND SLOTS
 
         # Make use of double-clicking within table
@@ -235,6 +258,23 @@ class SciPlotUI(_QMainWindow):
         self.tableViewFillBetween.setItemDelegate(self.delegateFillBetween)
         self.tableViewFillBetween.show()
 
+        # RESIZE COLUMNS
+        header = self.tableViewFillBetween.horizontalHeader()
+        # alpha
+        col = self.modelFillBetween._COL_ALPHA
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewFillBetween.setColumnWidth(col, new_width)
+
+        # linewidth
+        col = self.modelFillBetween._COL_LINEWIDTH
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewFillBetween.setColumnWidth(col, new_width)
+
+        # delete
+        col = self.modelFillBetween._COL_DELETE
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewFillBetween.setColumnWidth(col, new_width)
+
         # SIGNALS AND SLOTS
 
         # Make use of double-clicking within table
@@ -268,6 +308,28 @@ class SciPlotUI(_QMainWindow):
         self.tableViewImages.setModel(self.modelImages)
         self.tableViewImages.setItemDelegate(self.delegateImages)
         self.tableViewImages.show()
+
+        # RESIZE COLUMNS
+        header = self.tableViewImages.horizontalHeader()
+        # alpha
+        col = self.modelImages._COL_ALPHA
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewImages.setColumnWidth(col, new_width)
+
+        # clim low
+        col = self.modelImages._COL_CLIM_LOW
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewImages.setColumnWidth(col, new_width)
+
+        # clim high
+        col = self.modelImages._COL_CLIM_HIGH
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewImages.setColumnWidth(col, new_width)
+
+        # delete
+        col = self.modelImages._COL_DELETE
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewImages.setColumnWidth(col, new_width)
 
         # SIGNALS AND SLOTS
 
@@ -304,6 +366,28 @@ class SciPlotUI(_QMainWindow):
         self.tableViewBars.setModel(self.modelBars)
         self.tableViewBars.setItemDelegate(self.delegateBars)
         self.tableViewBars.show()
+
+        # RESIZE COLUMNS
+        header = self.tableViewBars.horizontalHeader()
+        # alpha
+        col = self.modelBars._COL_ALPHA
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewBars.setColumnWidth(col, new_width)
+
+        # linewidth
+        col = self.modelBars._COL_LINEWIDTH
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewBars.setColumnWidth(col, new_width)
+
+        # widthfactor
+        col = self.modelBars._COL_WIDTH_FACTOR
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewBars.setColumnWidth(col, new_width)
+
+        # delete
+        col = self.modelBars._COL_DELETE
+        new_width = int(1.1*header.sectionSizeHint(col))
+        self.tableViewBars.setColumnWidth(col, new_width)
 
         # SIGNALS AND SLOTS
 
@@ -976,19 +1060,20 @@ if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)
 
-    winPlotter = SciPlotUI(limit_to=['bars', 'fill betweens'])
+    winPlotter = SciPlotUI(limit_to=['lines','bars', 'fill betweens',
+                                     'images'])
     winPlotter.show()
 
     x = _np.arange(100)
     y = x**2
 
-#    winPlotter.plot(x, y, x_label='X', label='Plot')
+    winPlotter.plot(x, y, x_label='X', label='Plot')
 #    winPlotter.plot(x, y**1.1, label='Plot 2')
     winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
 #
-#    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
+    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
     winPlotter.bar(x[::10],y[::10],label='Bar')
-    winPlotter.hist(y,label='Hist')
+#    winPlotter.hist(y,label='Hist')
 
 #    winPlotter.bar(0,10, label='Bar: single-value')
     _sys.exit(app.exec_())
