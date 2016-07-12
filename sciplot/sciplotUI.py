@@ -71,21 +71,240 @@ class SciPlotUI(_QMainWindow):
     Scientific plotting user-interface for creating publication-quality plots
     and images
 
+    Parameters
+    ----------
+
+    limit_to : list, optional (default = None)
+        Limit the application to implement only certain functionality. Default \
+        is all elements turned ON. See Notes for options.
+
     Methods
     -------
     plot : MPL-like plotting functionality
 
+    imshow : MPL-like imshow
+
+    bar : MPL-like bar plot EXCEPT centered (rather than left-edge defined)
+
+    hist : MPL-like histogram
+
+    fill_between : MPL-like fill_between
+
+    Internal Methods
+    ----------------
     updatePlotDataStyle : Make updates to plots (lines) when a stylistic \
     change is made within the model-table
 
     updatePlotDataDelete : Remove a plot when deleted from model-table
 
-    refreshAllPlots : Delete all plots and re-plot
-    """
-    def __init__(self, parent=None):
-        self.setup(parent=parent)
+    updateFillBetweenDataStyle : Make updates to fill between's when a \
+    stylistic change is made within the model-table
 
-    def setup(self, parent=None):
+    updateFillBetweenDataDelete : Remove a fill between when deleted from \
+    model-table
+
+    updateImagesDataStyle : Make updates to images when a stylistic \
+    change is made within the model-table
+
+    updateImageDataDelete : Remove an image when deleted from model-table
+
+    updateBarsDataStyle : Make updates to bars plots when a stylistic \
+    change is made within the model-table
+
+    updateBarsDataDelete : Remove a bar plot when deleted from model-table
+
+    refreshAllPlots : Delete all plots and re-plot
+
+    updateAllLabels : Update all labels (x-, y-, title, etc) on MPL widget, \
+        in model, in data container, and in UI lineEdits
+
+    updateLineEditLabels : Update all labels (x-, y-, title, etc) in UI \
+        lineEdits
+
+    updateDataLabels : Update all labels (x-, y-, title, etc) in data \
+    container
+
+    updateMplLabels : Update all labels (x-, y-, title, etc) on MPL widget
+
+    updateLabelsFromLineEdit : Update all labels (x-, y-, title, etc) on MPL \
+        widget, in model, and in data container. Edits came from lineEdits.
+
+    axisAspect : Set MPL-axis aspect ratio setting
+
+    axisScaling : Set MPL-axis scaling ratio setting
+
+    axisVisible : Set MPL-axis on or off
+
+    axisLimits : Set MPL-axis limits
+
+    updateAxisParameters : Query and update UI lineEdits related to axis \
+        properties such as limits, visibility (on/off), scaling, and aspect \
+        ratio
+
+    Notes
+    -----
+    * limit_to options: 'lines', 'fill betweens', 'bars', images'
+    """
+    def __init__(self, limit_to=None, parent=None):
+        self.setup(limit_to=limit_to, parent=parent)
+
+    def _tabAvailability(self, limit_to=None):
+        """
+        If limit_to is provided, limits the tabs (elements) that are available.
+
+        May be useful for built-upon applications.
+        """
+        if limit_to is None:
+            self.elements = ['lines', 'fill betweens', 'images', 'bars']
+            self._to_setup = [self.setupLines, self.setupFillBetweens,
+                              self.setupImages, self.setupBars]
+        else:
+            self._to_setup = []
+            self.elements = []
+            if limit_to.count('lines'):
+                self.elements.append('lines')
+                self._to_setup.append(self.setupLines)
+            if limit_to.count('fill betweens'):
+                self.elements.append('fill betweens')
+                self._to_setup.append(self.setupFillBetweens)
+            if limit_to.count('images'):
+                self.elements.append('images')
+                self._to_setup.append(self.setupImages)
+            if limit_to.count('bars'):
+                self.elements.append('bars')
+                self._to_setup.append(self.setupBars)
+
+
+    def setupLines(self):
+        """
+        Enable and setup line plotting
+        """
+
+        # Enable line plotting
+        self.plot = self.__plot
+        self.updatePlotDataStyle = self.__updatePlotDataStyle
+        self.updatePlotDataDelete = self.__updatePlotDataDelete
+
+        # This list will house objects containing all plot-data (i.e. the \
+        # actual data and all elements that will be placed within models)
+        self._plot_data = []
+
+        # Initial  and insert table view for line plots
+        self.tableViewLine = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewLine, 'Lines')
+
+        # Set model and delegates
+        # Lines
+        self.modelLine = _TableModelLines()
+        self.delegateLine = _EditDelegateLines()
+        self.tableViewLine.setModel(self.modelLine)
+        self.tableViewLine.setItemDelegate(self.delegateLine)
+        self.tableViewLine.show()
+
+        # SIGNALS AND SLOTS
+
+        # Make use of double-clicking within table
+        self.tableViewLine.doubleClicked.connect(
+            self.modelLine.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelLine.dataChanged.connect(self.updatePlotDataStyle)
+        self.modelLine.dataDeleted.connect(self.updatePlotDataDelete)
+
+    def setupFillBetweens(self):
+        # Enable fill_between plotting
+        self.fill_between = self.__fill_between
+        self.updateFillBetweenDataStyle = self.__updateFillBetweenDataStyle
+        self.updateFillBetweenDataDelete = self.__updateFillBetweenDataDelete
+
+        # fill_between data-- similar to plot_data above
+        self._fill_between_data = []
+
+        # Initial and insert table view for fill_between plots
+        self.tableViewFillBetween = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewFillBetween,
+                                      'Fill Between')
+
+        # Fill Between
+        self.modelFillBetween = _TableModelFillBetween()
+        self.delegateFillBetween = _EditDelegateFillBetween()
+        self.tableViewFillBetween.setModel(self.modelFillBetween)
+        self.tableViewFillBetween.setItemDelegate(self.delegateFillBetween)
+        self.tableViewFillBetween.show()
+
+        # SIGNALS AND SLOTS
+
+        # Make use of double-clicking within table
+        self.tableViewFillBetween.doubleClicked.connect(
+            self.modelFillBetween.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelFillBetween.dataChanged.connect(self.updateFillBetweenDataStyle)
+        self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
+
+    def setupImages(self):
+        # Enable imaging
+        self.imshow = self.__imshow
+        self.updateImagesDataStyle = self.__updateImagesDataStyle
+        self.updateImagesDataDelete = self.__updateImagesDataDelete
+
+        # images data-- similar to plot_data above
+        self._images_data = []
+
+        # Initial  and insert table view for images
+        self.tableViewImages = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewImages, 'Images')
+
+        # Images
+        self.modelImages = _TableModelImages()
+        self.delegateImages = _EditDelegateImages()
+        self.tableViewImages.setModel(self.modelImages)
+        self.tableViewImages.setItemDelegate(self.delegateImages)
+        self.tableViewImages.show()
+
+        # SIGNALS AND SLOTS
+
+        # Make use of double-clicking within table
+        self.tableViewImages.doubleClicked.connect(
+            self.modelImages.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelImages.dataChanged.connect(self.updateImagesDataStyle)
+        self.modelImages.dataDeleted.connect(self.updateImagesDataDelete)
+
+    def setupBars(self):
+        # Enable bar plotting
+        self.bar = self.__bar
+        self.hist = self.__hist
+        self.updateBarsDataStyle = self.__updateBarsDataStyle
+        self.updateBarsDataDelete = self.__updateBarsDataDelete
+
+        # bar data-- similar to plot_data above
+        self._bar_data = []
+
+        # Initial  and insert table view for bars
+        self.tableViewBars = _QTableView()
+        self.ui.modelTabWidget.addTab(self.tableViewBars, 'Bars')
+
+
+        # Bars/Bars
+        self.modelBars = _TableModelBars()
+        self.delegateBars = _EditDelegateBars()
+        self.tableViewBars.setModel(self.modelBars)
+        self.tableViewBars.setItemDelegate(self.delegateBars)
+        self.tableViewBars.show()
+
+        # SIGNALS AND SLOTS
+
+        # Make use of double-clicking within table
+        self.tableViewBars.doubleClicked.connect(
+            self.modelBars.doubleClickCheck)
+
+        # When a model (table) elements changes or is deleted
+        self.modelBars.dataChanged.connect(self.updateBarsDataStyle)
+        self.modelBars.dataDeleted.connect(self.updateBarsDataDelete)
+
+    def setup(self, limit_to=None, parent=None):
 
         # Generic start to any pyQT program
         super(SciPlotUI, self).__init__(parent)
@@ -97,23 +316,9 @@ class SciPlotUI(_QMainWindow):
         # Global "data" i.e., title, x-label, y-label, etc
         self._global_data = _DataGlobal()
 
-        # This list will house objects containing all plot-data (i.e. the \
-        # actual data and all elements that will be placed within models)
-        self._plot_data = []
-
-        # fill_between data-- similar to plot_data above
-        self._fill_between_data = []
-
-        # images data-- similar to plot_data above
-        self._images_data = []
-
-        # bar data-- similar to plot_data above
-        self._bar_data = []
-
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
         self.mpl_widget.axes.hold(True)
-
 
         # Insert MPL widget and toolbar
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget)
@@ -125,53 +330,12 @@ class SciPlotUI(_QMainWindow):
         self.ui.modelTabWidget = _QTabWidget()
         self.ui.verticalLayout.insertWidget(-1, self.ui.modelTabWidget)
 
-        # Initial  and insert table view for line plots
-        self.tableViewLine = _QTableView()
-        self.ui.modelTabWidget.addTab(self.tableViewLine, 'Lines')
+        # Setup what tabs are available:
+        self._tabAvailability(limit_to)
+        for count in self._to_setup:
+            count()
 
-        # Initial and insert table view for fill_between plots
-        self.tableViewFillBetween = _QTableView()
-        self.ui.modelTabWidget.addTab(self.tableViewFillBetween,
-                                      'Fill Between')
-
-        # Initial  and insert table view for images
-        self.tableViewImages = _QTableView()
-        self.ui.modelTabWidget.addTab(self.tableViewImages, 'Images')
-
-        # Initial  and insert table view for bars
-        self.tableViewBars = _QTableView()
-        self.ui.modelTabWidget.addTab(self.tableViewBars, 'Bars')
-
-        # Set model and delegates
-        # Lines
-        self.modelLine = _TableModelLines()
-        self.delegateLine = _EditDelegateLines()
-        self.tableViewLine.setModel(self.modelLine)
-        self.tableViewLine.setItemDelegate(self.delegateLine)
-        self.tableViewLine.show()
-
-        # Fill Between
-        self.modelFillBetween = _TableModelFillBetween()
-        self.delegateFillBetween = _EditDelegateFillBetween()
-        self.tableViewFillBetween.setModel(self.modelFillBetween)
-        self.tableViewFillBetween.setItemDelegate(self.delegateFillBetween)
-        self.tableViewFillBetween.show()
-
-        # Images
-        self.modelImages = _TableModelImages()
-        self.delegateImages = _EditDelegateImages()
-        self.tableViewImages.setModel(self.modelImages)
-        self.tableViewImages.setItemDelegate(self.delegateImages)
-        self.tableViewImages.show()
-
-        # Bars/Bars
-        self.modelBars = _TableModelBars()
-        self.delegateBars = _EditDelegateBars()
-        self.tableViewBars.setModel(self.modelBars)
-        self.tableViewBars.setItemDelegate(self.delegateBars)
-        self.tableViewBars.show()
-
-        # Signals & Slots
+        # SIGNALS AND SLOTS
 
         # Global labels
         self.ui.lineEditTitle.editingFinished.connect(self.updateLabelsFromLineEdit)
@@ -187,43 +351,7 @@ class SciPlotUI(_QMainWindow):
         self.ui.lineEditYLimMin.editingFinished.connect(self.axisLimits)
         self.ui.lineEditYLimMax.editingFinished.connect(self.axisLimits)
 
-        # Lines
-        # Make use of double-clicking within table
-        self.tableViewLine.doubleClicked.connect(
-            self.modelLine.doubleClickCheck)
-
-        # When a model (table) elements changes or is deleted
-        self.modelLine.dataChanged.connect(self.updatePlotDataStyle)
-        self.modelLine.dataDeleted.connect(self.updatePlotDataDelete)
-
-        # Fill Between
-        # Make use of double-clicking within table
-        self.tableViewFillBetween.doubleClicked.connect(
-            self.modelFillBetween.doubleClickCheck)
-
-        # When a model (table) elements changes or is deleted
-        self.modelFillBetween.dataChanged.connect(self.updateFillBetweenDataStyle)
-        self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
-
-        # Images
-        # Make use of double-clicking within table
-        self.tableViewImages.doubleClicked.connect(
-            self.modelImages.doubleClickCheck)
-
-        # When a model (table) elements changes or is deleted
-        self.modelImages.dataChanged.connect(self.updateImagesDataStyle)
-        self.modelImages.dataDeleted.connect(self.updateImagesDataDelete)
-
-        # Bars
-        # Make use of double-clicking within table
-        self.tableViewBars.doubleClicked.connect(
-            self.modelBars.doubleClickCheck)
-
-        # When a model (table) elements changes or is deleted
-        self.modelBars.dataChanged.connect(self.updateBarsDataStyle)
-        self.modelBars.dataDeleted.connect(self.updateBarsDataDelete)
-
-    def plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
+    def __plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
 
@@ -352,7 +480,7 @@ class SciPlotUI(_QMainWindow):
         self.updateDataLabels(x_label=x_label, y_label=y_label, title=title)
         self.updateMplLabels(x_label=x_label, y_label=y_label, title=title)
 
-    def updatePlotDataStyle(self):
+    def __updatePlotDataStyle(self):
         """
         Something style-related changed in the model; thus, need to change \
         these elements in the plot data
@@ -361,7 +489,7 @@ class SciPlotUI(_QMainWindow):
             self._plot_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def updatePlotDataDelete(self, row):
+    def __updatePlotDataDelete(self, row):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
@@ -379,55 +507,67 @@ class SciPlotUI(_QMainWindow):
 
         # Images
         # Check to see if any images even remain (maybe all were deleted)
-        if len(self._images_data) > 0:
-            self.mpl_widget.axes.hold(True)
-            for itm in self._images_data:
-                self.mpl_widget.axes.imshow(itm.img, label=itm.label,
-                                            interpolation='none',
-                                            origin='lower',
-                                            cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
-                                            alpha=itm.style_dict['alpha'],
-                                            clim=itm.style_dict['clim'])
+        if self.elements.count('images'):
+            if len(self._images_data) > 0:
+                self.mpl_widget.axes.hold(True)
+                for itm in self._images_data:
+                    self.mpl_widget.axes.imshow(itm.img, label=itm.label,
+                                                interpolation='none',
+                                                origin='lower',
+                                                cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
+                                                alpha=itm.style_dict['alpha'],
+                                                clim=itm.style_dict['clim'])
 
         # Bars
         # Check to see if any images even remain (maybe all were deleted)
-        if len(self._bar_data) > 0:
-            self.mpl_widget.axes.hold(True)
-            for itm in self._bar_data:
-                self.mpl_widget.axes.bar(itm._left, itm.y, width=itm._width,
-                                         label=itm.label,
-                                         facecolor=itm.style_dict['facecolor'],
-                                         alpha=itm.style_dict['alpha'],
-                                         edgecolor=itm.style_dict['edgecolor'],
-                                         linewidth=itm.style_dict['linewidth'])
+        if self.elements.count('bars'):
+            if len(self._bar_data) > 0:
+                self.mpl_widget.axes.hold(True)
+                for itm in self._bar_data:
+                    self.mpl_widget.axes.bar(itm._left, itm.y, width=itm._width,
+                                             label=itm.label,
+                                             facecolor=itm.style_dict['facecolor'],
+                                             alpha=itm.style_dict['alpha'],
+                                             edgecolor=itm.style_dict['edgecolor'],
+                                             linewidth=itm.style_dict['linewidth'])
         # Lines
         # Check to see if any plots even are remaining (maybe all were deleted)
-        if len(self._plot_data) > 0:
-            self.mpl_widget.axes.hold(True)
-            for itm in self._plot_data:
-                self.mpl_widget.axes.plot(itm.x, itm.y, label=itm.label,
-                                          color=itm.style_dict['color'],
-                                          alpha=itm.style_dict['alpha'],
-                                          linewidth=itm.style_dict['linewidth'],
-                                          linestyle=itm.style_dict['linestyle'],
-                                          marker=itm.style_dict['marker'],
-                                          markersize=itm.style_dict['markersize'])
+        if self.elements.count('lines'):
+            if len(self._plot_data) > 0:
+                self.mpl_widget.axes.hold(True)
+                for itm in self._plot_data:
+                    self.mpl_widget.axes.plot(itm.x, itm.y, label=itm.label,
+                                              color=itm.style_dict['color'],
+                                              alpha=itm.style_dict['alpha'],
+                                              linewidth=itm.style_dict['linewidth'],
+                                              linestyle=itm.style_dict['linestyle'],
+                                              marker=itm.style_dict['marker'],
+                                              markersize=itm.style_dict['markersize'])
 
         # Fill between
         # Check to see if any plots even are remaining (maybe all were deleted)
-        if len(self._fill_between_data) > 0:
-            self.mpl_widget.axes.hold(True)
-            for itm in self._fill_between_data:
-                self.mpl_widget.axes.fill_between(itm.x, itm.y_low, itm.y_high,
-                                                  label=itm.label,
-                                                  facecolor=itm.style_dict['facecolor'],
-                                                  edgecolor=itm.style_dict['edgecolor'],
-                                                  alpha=itm.style_dict['alpha'],
-                                                  linewidth=itm.style_dict['linewidth'])
+        if self.elements.count('fill betweens'):
+            if len(self._fill_between_data) > 0:
+                self.mpl_widget.axes.hold(True)
+                for itm in self._fill_between_data:
+                    self.mpl_widget.axes.fill_between(itm.x, itm.y_low, itm.y_high,
+                                                      label=itm.label,
+                                                      facecolor=itm.style_dict['facecolor'],
+                                                      edgecolor=itm.style_dict['edgecolor'],
+                                                      alpha=itm.style_dict['alpha'],
+                                                      linewidth=itm.style_dict['linewidth'])
 
         # Only add a legend if a plot exists
-        if len(self._fill_between_data) + len(self._plot_data) + \
-                len(self._bar_data) > 0:
+        # Only certain objects provide labels
+        label_object_count = 0
+        if self.elements.count('lines'):
+            label_object_count += len(self._plot_data)
+        if self.elements.count('fill betweens'):
+            label_object_count += len(self._fill_between_data)
+        if self.elements.count('bars'):
+            label_object_count += len(self._bar_data)
+
+        if label_object_count > 0:
             self.mpl_widget.axes.legend(loc='best')
 
         # Apply x- and y-labels and a title if they are set
@@ -442,7 +582,7 @@ class SciPlotUI(_QMainWindow):
         self.updateAxisParameters()
         self.mpl_widget.draw()
 
-    def fill_between(self, x, y_low, y_high, label=None, x_label=None,
+    def __fill_between(self, x, y_low, y_high, label=None, x_label=None,
                      y_label=None, **kwargs):
         """
         MPL-like fill_between plotting functionality
@@ -499,7 +639,7 @@ class SciPlotUI(_QMainWindow):
         self.modelFillBetween._model_data.append(fill_between_data.model_style)
         self.modelFillBetween.layoutChanged.emit()
 
-    def updateFillBetweenDataStyle(self):
+    def __updateFillBetweenDataStyle(self):
         """
         Something style-related changed in the model; thus, need to change \
         these elements in the fill_between data
@@ -508,7 +648,7 @@ class SciPlotUI(_QMainWindow):
             self._fill_between_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def updateFillBetweenDataDelete(self, row):
+    def __updateFillBetweenDataDelete(self, row):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
@@ -516,7 +656,7 @@ class SciPlotUI(_QMainWindow):
         self._fill_between_data.pop(row)
         self.refreshAllPlots()
 
-    def imshow(self, img, x=None, y=None, label=None,
+    def __imshow(self, img, x=None, y=None, label=None,
                x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
@@ -581,7 +721,7 @@ class SciPlotUI(_QMainWindow):
         self.modelImages.layoutChanged.emit()
 
 
-    def updateImagesDataStyle(self):
+    def __updateImagesDataStyle(self):
         """
         Something style-related changed in the model; thus, need to change \
         these elements in the fill_between data
@@ -590,7 +730,7 @@ class SciPlotUI(_QMainWindow):
             self._images_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def updateImagesDataDelete(self, row):
+    def __updateImagesDataDelete(self, row):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
@@ -599,7 +739,7 @@ class SciPlotUI(_QMainWindow):
         self.refreshAllPlots()
 
 
-    def bar(self, x, y, width_factor=1.0, label=None,
+    def __bar(self, x, y, width_factor=1.0, label=None,
             x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
@@ -700,7 +840,7 @@ class SciPlotUI(_QMainWindow):
         self.modelBars._model_data.append(bar_data.model_style)
         self.modelBars.layoutChanged.emit()
 
-    def hist(self, data, bins=10, label=None, x_label=None,
+    def __hist(self, data, bins=10, label=None, x_label=None,
              y_label='Counts', **kwargs):
         """
         MPL-like histogram plotting
@@ -733,7 +873,7 @@ class SciPlotUI(_QMainWindow):
         self.bar(lefts[:-1]+offset, counts, width_factor=1.0, label=label,
                  x_label=x_label, y_label=y_label, **kwargs)
 
-    def updateBarsDataStyle(self):
+    def __updateBarsDataStyle(self):
         """
         Something style-related changed in the model; thus, need to change \
         these elements in the fill_between data
@@ -742,7 +882,7 @@ class SciPlotUI(_QMainWindow):
             self._bar_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def updateBarsDataDelete(self, row):
+    def __updateBarsDataDelete(self, row):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
@@ -807,6 +947,9 @@ class SciPlotUI(_QMainWindow):
         self.mpl_widget.draw()
 
     def updateAxisParameters(self):
+        """
+        Query current state of axis settings and update appropriate lineEdit's
+        """
         axis_visible = self.mpl_widget.axes.axison
         self.ui.checkBoxAxisVisible.setChecked(axis_visible)
         xmin, xmax, ymin, ymax = self.mpl_widget.axes.axis()
@@ -819,7 +962,7 @@ if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)
 
-    winPlotter = SciPlotUI()
+    winPlotter = SciPlotUI(limit_to=['bars', 'fill betweens'])
     winPlotter.show()
 
     x = _np.arange(100)
@@ -827,11 +970,11 @@ if __name__ == '__main__':
 
 #    winPlotter.plot(x, y, x_label='X', label='Plot')
 #    winPlotter.plot(x, y**1.1, label='Plot 2')
-#    winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
+    winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
 #
 #    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
-#    winPlotter.bar(x[::10],y[::10],label='Bar')
-#    winPlotter.hist(y,label='Hist')
+    winPlotter.bar(x[::10],y[::10],label='Bar')
+    winPlotter.hist(y,label='Hist')
 
-    winPlotter.bar(0,10, label='Bar: single-value')
+#    winPlotter.bar(0,10, label='Bar: single-value')
     _sys.exit(app.exec_())
