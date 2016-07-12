@@ -75,8 +75,8 @@ class SciPlotUI(_QMainWindow):
     ----------
 
     limit_to : list, optional (default = None)
-        Limit the application to implement only certain functionality. Default \
-        is all elements turned ON. See Notes for options.
+        Limit the application to implement only certain functionality. \
+        Default is all elements turned ON. See Notes for options.
 
     Methods
     -------
@@ -174,7 +174,6 @@ class SciPlotUI(_QMainWindow):
                 self.elements.append('bars')
                 self._to_setup.append(self.setupBars)
 
-
     def setupLines(self):
         """
         Enable and setup line plotting
@@ -212,6 +211,10 @@ class SciPlotUI(_QMainWindow):
         self.modelLine.dataDeleted.connect(self.updatePlotDataDelete)
 
     def setupFillBetweens(self):
+        """
+        Enable and setup fill between plotting
+        """
+
         # Enable fill_between plotting
         self.fill_between = self.__fill_between
         self.updateFillBetweenDataStyle = self.__updateFillBetweenDataStyle
@@ -243,6 +246,10 @@ class SciPlotUI(_QMainWindow):
         self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
 
     def setupImages(self):
+        """
+        Enable and setup image plotting
+        """
+
         # Enable imaging
         self.imshow = self.__imshow
         self.updateImagesDataStyle = self.__updateImagesDataStyle
@@ -273,6 +280,10 @@ class SciPlotUI(_QMainWindow):
         self.modelImages.dataDeleted.connect(self.updateImagesDataDelete)
 
     def setupBars(self):
+        """
+        Enable and setup bar and histogram plotting
+        """
+
         # Enable bar plotting
         self.bar = self.__bar
         self.hist = self.__hist
@@ -305,6 +316,9 @@ class SciPlotUI(_QMainWindow):
         self.modelBars.dataDeleted.connect(self.updateBarsDataDelete)
 
     def setup(self, limit_to=None, parent=None):
+        """
+        Basic UI setup
+        """
 
         # Generic start to any pyQT program
         super(SciPlotUI, self).__init__(parent)
