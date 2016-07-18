@@ -837,7 +837,7 @@ class SciPlotUI(_QMainWindow):
         self.refreshAllPlots()
 
 
-    def __bar(self, x, y, width_factor=1.0, label=None,
+    def __bar(self, x, y, width_factor=1.0, use_real_width=False, label=None,
             x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
@@ -857,9 +857,12 @@ class SciPlotUI(_QMainWindow):
 
         width_factor: float
             If legnth of y>1, fraction of space between bars taken up by bar \
-            (e.g. 1.0 leads to bars that tough). If y is a single-value, is \
-            the width of the bar.
+            (e.g. 1.0 leads to bars that tough). If y is a single-value OR \
+            use_real_width is True), is the width of the bar.
 
+        use_real_width : bool, optional (default=False):
+            If True, width_factor is the real width (in x-units)
+            
         label : str
             Label of plot
 
@@ -897,7 +900,7 @@ class SciPlotUI(_QMainWindow):
             else:
                 _multi_value = True
 
-        if _multi_value:
+        if _multi_value and use_real_width == False:
             # Distance between bars
             bar_data._gap = _np.abs(x[1]-x[0])
 
