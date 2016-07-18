@@ -14,6 +14,10 @@ if __name__ == '__main__':
 
 import numpy as _np
 
+# Generic imports for MPL-incorporation
+import matplotlib as _mpl
+_mpl.use('Qt5Agg')
+
 # Generic imports for QT-based programs
 from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QMainWindow as _QMainWindow,
@@ -61,9 +65,7 @@ from sciplot.data.images import DataImages as _DataImages
 from sciplot.data.bars import DataBar as _DataBar
 from sciplot.data.special import DataFillBetween as _DataFillBetween
 
-# Generic imports for MPL-incorporation
-import matplotlib as _mpl
-_mpl.use('Qt5Agg')
+
 
 
 class SciPlotUI(_QMainWindow):
