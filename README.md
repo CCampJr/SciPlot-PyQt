@@ -23,8 +23,7 @@ pip install -e .
 ## Usage ##
 ```Python
 import sciplot
-sp = sciplot.SciPlotUI()
-sp.show()
+sp = sciplot.main()
 ```
 
 ## Example ##
@@ -32,6 +31,8 @@ sp.show()
 sp.plot((0,1),(2,3),label='Line', x_label='X', y_label='Y', ls='--')
 sp.fill_between((0,1),(1,2),(3,4),label='Fill Between', color='r', alpha=0.25)
 ```
+![Screenshot.png](./Screenshot.png)
+
 ## Dependencies##
 
 Note: These are the developmental system specs. Older versions of certain
