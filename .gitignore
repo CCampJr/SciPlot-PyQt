@@ -98,3 +98,4 @@ crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_5.py
 crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_6.py
 crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_7.py
 crikit/tests/AutoProcess_160628_2010_Pr_025_NED_pos_8.py
+*.pypirc
