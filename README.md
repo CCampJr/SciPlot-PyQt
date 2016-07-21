@@ -1,18 +1,46 @@
-Scientific Plotting for pyQt5
+# SciPlot-PyQt: Publication-ready scientific plotting for Python #
 
-# README #
+SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with
+PyQt5 that allows interactive plotting through an embedded matplotlib canvas.
+It enables fast and easy publication-ready plots and images:
+* Interactive plotting
+* Theme and style editing (TODO)
+* Figure saving and opening for later editing (TODO)
 
-###Summary ###
-TBD
+## Installation ##
+```
+# Make new directory for crikit2 and enter it
+# Clone from github
+git clone https://github.com/CCampJr/SciPlot-PyQt.git
 
-###Setup###
-TBD
+# Install (mainly check installation)
+pip install -e .
 
-###Dependencies###
+# IMPORTANT: You will need to manually install PyQt5 and Qt5
+# These packages are not pip-installable at this time
+```
 
-Note: These are the developmental system specs. Older versions of certain packages may work.
+## Usage ##
+```Python
+import sciplot
+sp = sciplot.SciPlotUI()
+sp.show()
+```
 
-Python (REQUIRED): Python >= 3.4; Numpy (1.9.3), PyQT5 (5.5.1), matplotlib (1.5.0rc3)
+## Example ##
+```Python
+sp.plot((0,1),(2,3),label='Line', x_label='X', y_label='Y', ls='--')
+sp.fill_between((0,1),(1,2),(3,4),label='Fill Between', color='r', alpha=0.25)
+```
+## Dependencies##
+
+Note: These are the developmental system specs. Older versions of certain
+packages may work.
+
+* Python >= 3.4
+* Numpy (1.9.3)
+* PyQT5 (5.5.1)
+* Matplotlib (1.5.0rc3)
 
 ### NONLICENSE ###
 This software was developed at the National Institute of Standards and Technology (NIST) by
@@ -27,10 +55,6 @@ to perform technology transfer and collaboration. In no case does such identific
 recommendation or endorsement by the National Institute of Standards and Technology, nor
 does it imply that the products identified are necessarily the best available for the
 purpose.
-
-### CITATION ###
-TBD
-
 
 ### Contact ###
 Charles H Camp Jr: [charles.camp@nist.gov](mailto:charles.camp@nist.gov)
