@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_Plotter.ui'
+# Form implementation generated from reading ui file '.\ui_Plotter.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
@@ -180,7 +180,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "SciPlot PyQt"))
         self.label.setText(_translate("MainWindow", "Title"))
         self.label_2.setText(_translate("MainWindow", "X Label"))
         self.label_3.setText(_translate("MainWindow", "Y Label"))
