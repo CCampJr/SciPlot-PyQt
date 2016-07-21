@@ -39,6 +39,11 @@ sp.hist(r, bins=100, label='Histogram', color=[0, .2, .3],
 ```
 ![Screenshot2.png](./Screenshot2.png)
 
+```Python
+sp.imshow(r, clim=[25,75], cmap='viridis', label='Imshow', x_label='X (pix)', 
+          y_label='Y (pix)')
+```
+![Screenshot3.png](./Screenshot3.png)
 ## Dependencies##
 
 Note: These are the developmental system specs. Older versions of certain
