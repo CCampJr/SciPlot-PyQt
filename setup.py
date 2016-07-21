@@ -5,7 +5,7 @@ Created on Thu Jul 21 01:11:04 2016
 @author: chc
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='sciplot-pyqt',
       version = '0.1',
@@ -15,7 +15,7 @@ setup(name='sciplot-pyqt',
       author = 'Charles H. Camp Jr.',
       author_email = 'charles.camp@nist.gov',
       license = 'NONLICENSE',
-      packages = ['sciplot'],
+      packages = find_packages(),
       zip_safe = False,
       include_package_data = True,
       install_requires=['numpy','matplotlib'],
