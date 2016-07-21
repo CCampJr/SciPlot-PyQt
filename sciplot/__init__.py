@@ -46,8 +46,8 @@ import os as _os
 
 _sys.path.append(_os.path.abspath('../'))
 
-# M.N.P.Q (Major, Minor, Year, Month)
-__version__ = '0.1.16.07'
+# M.N.P.Q (Major, Minor, Subminor)
+__version__ = '0.1.1'
 
 __all__ = ['SciPlotUI']
 
