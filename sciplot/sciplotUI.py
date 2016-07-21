@@ -1,17 +1,48 @@
 # -*- coding: utf-8 -*-
 """
+SciPlot-PyQt: Publication-ready scientific plotting for Python
+==============================================================
 
-Created on Wed Jul  6 22:37:39 2016
+SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with 
+PyQt5 that allows interactive plotting through an embedded matplotlib canvas. 
+It enables fast and easy publication-ready plots and images:
+    
+    * Interactive plotting
+    * Theme and style editing (TODO)
+    * Figure saving and opening for later editing (TODO)
+    
+Supported Plot Types
+---------------------
+Line plots : plot
 
-@author: chc
+Bar plots : bar, hist
+
+Polycollections : fill_between
+
+Images : imshow
+
+Notes
+-----
+SciPlot has a lot of advances/improvements to make. Feel free to contact me--
+help is always welcome!
+
+Usage
+-----
+import sciplot
+sp = sciplot.SciPlotUI()
+sp.show()
+
+Example
+-------
+sp.plot((0,1),(2,3),label='Line', x_label='X', y_label='Y', ls='--')
+sp.fill_between((0,1),(1,2),(3,4),label='Fill Between', color='r', alpha=0.25)
+
+Authors
+-------
+* Charles H. Camp Jr. <charles.camp@nist.gov>
 """
 
-# Append sys path
 import sys as _sys
-import os as _os
-if __name__ == '__main__':
-    _sys.path.append(_os.path.abspath('../'))
-
 import numpy as _np
 
 # Generic imports for MPL-incorporation
@@ -21,30 +52,14 @@ _mpl.use('Qt5Agg')
 # Generic imports for QT-based programs
 from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QMainWindow as _QMainWindow,
-                             QColorDialog as _QColorDialog,
-                             QDoubleSpinBox as _QDoubleSpinBox,
-                             QComboBox as _QComboBox,
-                             QLineEdit as _QLineEdit,
-                             QStyledItemDelegate as _QStyledItemDelegate,
                              QTableView as _QTableView,
                              QSizePolicy as _QSizePolicy,
                              QTabWidget as _QTabWidget)
 
-from PyQt5.QtCore import (QAbstractTableModel as _QAbstractTableModel,
-                          QModelIndex as _QModelIndex,
-                          QVariant as _QVariant,
-                          Qt as _Qt,
-                          pyqtSignal as _pyqtSignal,
-                          QObject as _QObject)
-
-from PyQt5.QtGui import (QPixmap as _QPixmap,
-                         QIcon as _QIcon,
-                         QColor as _QColor)
-
 # Import from Designer-based GUI
 from sciplot.ui.qt_Plotter import Ui_MainWindow as Ui_Plotter
 from sciplot.ui.widget_mpl import MplCanvas as _MplCanvas
-from sciplot.utils.mplstyle import MplStyleSheets, MplMarkers, MplLines
+#from sciplot.utils.mplstyle import MplStyleSheets, MplMarkers, MplLines
 from sciplot.ui.models.lines import (TableModelLines as _TableModelLines,
                                      EditDelegateLines as _EditDelegateLines)
 
@@ -64,9 +79,6 @@ from sciplot.data.lines import DataLine as _DataLine
 from sciplot.data.images import DataImages as _DataImages
 from sciplot.data.bars import DataBar as _DataBar
 from sciplot.data.special import DataFillBetween as _DataFillBetween
-
-
-
 
 class SciPlotUI(_QMainWindow):
     """
@@ -148,7 +160,9 @@ class SciPlotUI(_QMainWindow):
     * limit_to options: 'lines', 'fill betweens', 'bars', images'
     """
     def __init__(self, limit_to=None, parent=None):
+        self.app = _QApplication(_sys.argv)
         self.setup(limit_to=limit_to, parent=parent)
+        self.show()
 
     def _tabAvailability(self, limit_to=None):
         """
@@ -485,7 +499,10 @@ class SciPlotUI(_QMainWindow):
 
         # Plot outputs a line object
         line_out = self.mpl_widget.axes.plot(x, y, label=label, **kwargs)
-        self.mpl_widget.axes.legend(loc='best')
+        try:
+            self.mpl_widget.axes.legend(loc='best')
+        except:
+            pass
 
         # If labels are provided, update the global data and the linEdits
         if x_label is not None or y_label is not None:
@@ -1063,8 +1080,6 @@ class SciPlotUI(_QMainWindow):
 
 if __name__ == '__main__':
 
-    app = _QApplication(_sys.argv)
-
     winPlotter = SciPlotUI(limit_to=['lines','bars', 'fill betweens',
                                      'images'])
     winPlotter.show()
@@ -1081,4 +1096,4 @@ if __name__ == '__main__':
 #    winPlotter.hist(y,label='Hist')
 
 #    winPlotter.bar(0,10, label='Bar: single-value')
-    _sys.exit(app.exec_())
+    _sys.exit(winPlotter.app.exec_())
