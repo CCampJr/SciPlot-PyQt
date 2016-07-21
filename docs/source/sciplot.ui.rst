@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     sciplot.ui.models
+    sciplot.ui.qt5-creator
 
 Submodules
 ----------

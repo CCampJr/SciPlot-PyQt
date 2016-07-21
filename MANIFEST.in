@@ -1,4 +1,5 @@
 include *.rst
-recursive-include docs *
+recursive-include docs/*
+prune docs/build
 include NONLICENSE.md
 include README.md

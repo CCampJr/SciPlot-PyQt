@@ -6,7 +6,9 @@ Subpackages
 
 .. toctree::
 
+    sciplot.data
     sciplot.ui
+    sciplot.utils
 
 Submodules
 ----------
