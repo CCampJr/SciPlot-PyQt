@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul 21 01:11:04 2016
+
+@author: chc
+"""
+
+from setuptools import setup
+
+setup(name='sciplot-pyqt',
+      version = '0.1',
+      description = 'A small matplotlib wrapper/UI for creating \
+                     publication-ready plots, graphs, and images',
+      url = 'http://github.com/CCampJr/SciPlot-PyQt',
+      author = 'Charles H. Camp Jr.',
+      author_email = 'charles.camp@nist.gov',
+      license = 'NONLICENSE',
+      packages = ['sciplot'],
+      zip_safe = False,
+      include_package_data = True,
+      install_requires=['numpy','matplotlib'],
+      classifiers=['Development Status :: 2 - Pre-Alpha',
+                   'Intended Audience :: Developers',
+                   'Intended Audience :: Science/Research',
+                   'Operating System :: OS Independent',
+                   'Environment :: X11 Applications :: Qt',
+                   'Programming Language :: Python :: 3 :: Only',
+                   'Programming Language :: Python :: 3.4',
+                   'Topic :: Scientific/Engineering :: Visualization'])
