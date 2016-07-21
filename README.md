@@ -33,6 +33,12 @@ sp.fill_between((0,1),(1,2),(3,4),label='Fill Between', color='r', alpha=0.25)
 ```
 ![Screenshot.png](./Screenshot.png)
 
+```Python
+sp.hist(r, bins=100, label='Histogram', color=[0, .2, .3],
+        x_label='Amplitude', y_label='Counts', alpha=0.5)
+```
+![Screenshot2.png](./Screenshot2.png)
+
 ## Dependencies##
 
 Note: These are the developmental system specs. Older versions of certain
