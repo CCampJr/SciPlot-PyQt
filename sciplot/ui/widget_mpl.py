@@ -31,16 +31,18 @@ _mpl.use('Qt5Agg')
 class MplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
 
-    def __init__(self, parent=None, width=5, height=4, dpi=100, style=None):
+    def __init__(self, parent=None, width=5, height=4, dpi=100, 
+                 figfacecolor=3*[0.941], style=None, **kwargs):
         if style is None:
             pass
         else:
             _mpl.style.use(style)
 
         # Create figure and axes
-        self.fig = _Figure(figsize=(width, height), dpi=dpi)
+        self.fig = _Figure(figsize=(width, height), dpi=dpi, 
+                           facecolor=figfacecolor, **kwargs)
         
-        self.setupAx()
+        self.setupAx(**kwargs)
         
         # Not really used, but could be used to have some sort of initial plot
         self.compute_initial_figure()
@@ -57,8 +59,8 @@ class MplCanvas(FigureCanvas):
         # Create the toolbar and connect to canvas (self)
         self.toolbar = _NavigationToolbar(self, None)
         
-    def setupAx(self):
-        self.ax = self.fig.add_subplot(111)
+    def setupAx(self, **kwargs):
+        self.ax = self.fig.add_subplot(111, **kwargs)
         self.ax.hold(False)
 
     def compute_initial_figure(self):
