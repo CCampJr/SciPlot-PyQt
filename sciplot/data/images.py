@@ -50,6 +50,7 @@ class ImageStyle:
 
 class DataImages(_Data2D, ImageStyle):
     def __init__(self):
+        self.cbar = {'obj' : None, 'show' : False}
         self._setupData()
         self._setupImageStyle()
 
@@ -63,6 +64,7 @@ class DataImages(_Data2D, ImageStyle):
         out['clim_low'] = _np.min(clim)
         out['clim_high'] = _np.max(clim)
         out['label'] = self.label
+        out['colorbar'] = self.cbar['show']
         return out
 
     @model_style.setter
@@ -73,3 +75,6 @@ class DataImages(_Data2D, ImageStyle):
 
         # clim broken out into high and low in model
         self.style_dict['clim'] = list((value['clim_low'], value['clim_high']))
+        
+        # colobar
+        self.cbar['show'] = value['colorbar']

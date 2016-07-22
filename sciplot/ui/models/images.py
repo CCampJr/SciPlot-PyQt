@@ -10,6 +10,7 @@ import matplotlib as _mpl
 from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QMainWindow as _QMainWindow,
                              QColorDialog as _QColorDialog,
+                             QCheckBox as _QCheckBox,
                              QDoubleSpinBox as _QDoubleSpinBox,
                              QComboBox as _QComboBox,
                              QLineEdit as _QLineEdit,
@@ -41,12 +42,14 @@ class TableModelImages(_AbstractTableModelMpl):
                 'Clim Low',
                 'Clim High',
                 'Label',
+                'Colorbar',
                 'Delete']
 
     _COL_CMAP = _HEADERS.index('Cmap')
     _COL_ALPHA = _HEADERS.index('Alpha')
     _COL_CLIM_LOW = _HEADERS.index('Clim Low')
     _COL_CLIM_HIGH = _HEADERS.index('Clim High')
+    _COL_CBAR = _HEADERS.index('Colorbar')
     _COL_LABEL = _HEADERS.index('Label')
     _COL_DELETE = _HEADERS.index('Delete')
 
@@ -79,18 +82,6 @@ class TableModelImages(_AbstractTableModelMpl):
     def deleteData(self, index):
             self.setData(index, True)
 
-#    def changeColor(self, index):
-#        row = index.row()
-#        color = self._model_data[row]['color']
-#        color_256 = [color[0]*255, color[1]*255, color[2]*255]
-#        qcolor = _QColor(color_256[0], color_256[1], color_256[2])
-#
-#        result = _QColorDialog.getColor(qcolor)
-#        if _QColor.isValid(result):
-#            self.setData(index, result.getRgb())
-#        else:
-#            return None
-
     def data(self, index, role=_Qt.DisplayRole):
         if not index.isValid() or not 0 <= index.row() < self.rowCount():
             return _QVariant()
@@ -107,6 +98,9 @@ class TableModelImages(_AbstractTableModelMpl):
                 return str(self._model_data[row]['clim_low'])
             elif col == TableModelImages._COL_CLIM_HIGH:
                 return str(self._model_data[row]['clim_high'])
+            elif col == TableModelImages._COL_CBAR:
+#                print('1')
+                return str(self._model_data[row]['colorbar'])
             elif col == TableModelImages._COL_LABEL:
                 return str(self._model_data[row]['label'])
             elif col == TableModelImages._COL_DELETE:
@@ -136,6 +130,9 @@ class TableModelImages(_AbstractTableModelMpl):
                 self._model_data[row]['clim_low'] = float(value)
             elif col == TableModelImages._COL_CLIM_HIGH:
                 self._model_data[row]['clim_high'] = float(value)
+            elif col == TableModelImages._COL_CBAR:
+#                print('2')
+                self._model_data[row]['colorbar'] = bool(value)
             elif col == TableModelImages._COL_LABEL:
                 self._model_data[row]['label'] = value
             elif col == TableModelImages._COL_DELETE:
@@ -169,6 +166,11 @@ class EditDelegateImages(_AbstractEditDelegateMpl):
                 spinBoxSize.setMaximum(1e10)
                 spinBoxSize.setSingleStep(.5)
                 return spinBoxSize
+            elif col == TableModelImages._COL_CBAR:  # colorbar
+#                print('3')
+                comboBoxTrueFalse = _QComboBox(parent)
+                comboBoxTrueFalse.addItems(['True','False'])
+                return comboBoxTrueFalse
             elif col == TableModelImages._COL_CMAP:  # cmaps
                 comboBoxCmapNames = _QComboBox(parent)
                 list_cmaps = list(_mpl.cm.cmap_d.keys())
@@ -194,6 +196,12 @@ class EditDelegateImages(_AbstractEditDelegateMpl):
             editor.setValue(item_float)
         elif col == TableModelImages._COL_LABEL:  # Label
             editor.setText(item)
+        elif (col == TableModelImages._COL_CBAR or
+              col == TableModelImages._COL_CMAP): # colorbar or cmap
+            loc = editor.findText(item)
+            if loc < 0:
+                loc = 0
+            editor.setCurrentIndex(loc)
         else:
             pass
 
@@ -212,6 +220,10 @@ class EditDelegateImages(_AbstractEditDelegateMpl):
             idx = editor.currentIndex()
             cmap_name = list_cmaps[idx]
             model.setData(index, cmap_name)
+        elif col == TableModelImages._COL_CBAR:  # Colorbar
+#            print('5')
+            cbar = editor.currentText() == 'True'
+            model.setData(index, cbar)
         elif col == TableModelImages._COL_LABEL:  # Label
             label = editor.text()
             model.setData(index, label)

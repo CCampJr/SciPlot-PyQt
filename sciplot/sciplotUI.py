@@ -498,7 +498,7 @@ class SciPlotUI(_QMainWindow):
         plot_data.label = label
 
         # Plot outputs a line object
-        line_out = self.mpl_widget.axes.plot(x, y, label=label, **kwargs)
+        plot_data.mplobj = self.mpl_widget.axes.plot(x, y, label=label, **kwargs)
         try:
             self.mpl_widget.axes.legend(loc='best')
         except:
@@ -509,14 +509,14 @@ class SciPlotUI(_QMainWindow):
             self.updateAllLabels(x_label=x_label, y_label=y_label)
 
         self.mpl_widget.fig.tight_layout()
-        self.updateAxisParameters()
+        self.axisAspect()
         self.mpl_widget.draw()
 
 
         # Since the plot was not fed style-info (unless kwargs were used)
         # we rely on the mpl stylesheet to setup color, linewidth, etc.
         # Thus, we plot, then retrieve what the style info was
-        plot_data.retrieve_style_from_line(line_out[0])
+        plot_data.retrieve_style_from_line(plot_data.mplobj[0])
 
         # Append this specific plot data to out list of all plots
         self._plot_data.append(plot_data)
@@ -621,19 +621,25 @@ class SciPlotUI(_QMainWindow):
 
         # Clear axis -- in the future, maybe clear figure and recreate axis
         self.mpl_widget.axes.clear()
-
+        
         # Images
         # Check to see if any images even remain (maybe all were deleted)
         if self.elements.count('images'):
             if len(self._images_data) > 0:
                 self.mpl_widget.axes.hold(True)
                 for itm in self._images_data:
-                    self.mpl_widget.axes.imshow(itm.img, label=itm.label,
+                    if itm.cbar['obj'] is not None:
+                        itm.cbar['obj'].remove()
+                        itm.cbar['obj'] = None
+                    itm.mplobj = self.mpl_widget.axes.imshow(itm.img, label=itm.label,
                                                 interpolation='none',
                                                 origin='lower',
                                                 cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
                                                 alpha=itm.style_dict['alpha'],
                                                 clim=itm.style_dict['clim'])
+                    if itm.cbar['show']:
+                        itm.cbar['obj'] = self.mpl_widget.fig.colorbar(itm.mplobj,
+                                                                       use_gridspec=True)
 
         # Bars
         # Check to see if any images even remain (maybe all were deleted)
@@ -641,7 +647,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._bar_data) > 0:
                 self.mpl_widget.axes.hold(True)
                 for itm in self._bar_data:
-                    self.mpl_widget.axes.bar(itm._left, itm.y, width=itm._width,
+                    itm.mplobj = self.mpl_widget.axes.bar(itm._left, itm.y, width=itm._width,
                                              label=itm.label,
                                              facecolor=itm.style_dict['facecolor'],
                                              alpha=itm.style_dict['alpha'],
@@ -653,7 +659,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._plot_data) > 0:
                 self.mpl_widget.axes.hold(True)
                 for itm in self._plot_data:
-                    self.mpl_widget.axes.plot(itm.x, itm.y, label=itm.label,
+                    itm.mplobj = self.mpl_widget.axes.plot(itm.x, itm.y, label=itm.label,
                                               color=itm.style_dict['color'],
                                               alpha=itm.style_dict['alpha'],
                                               linewidth=itm.style_dict['linewidth'],
@@ -667,7 +673,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._fill_between_data) > 0:
                 self.mpl_widget.axes.hold(True)
                 for itm in self._fill_between_data:
-                    self.mpl_widget.axes.fill_between(itm.x, itm.y_low, itm.y_high,
+                    itm.mplobj = self.mpl_widget.axes.fill_between(itm.x, itm.y_low, itm.y_high,
                                                       label=itm.label,
                                                       facecolor=itm.style_dict['facecolor'],
                                                       edgecolor=itm.style_dict['edgecolor'],
@@ -697,6 +703,7 @@ class SciPlotUI(_QMainWindow):
 
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
+        self.axisAspect()
         self.mpl_widget.draw()
 
     def __fill_between(self, x, y_low, y_high, label=None, x_label=None,
@@ -737,17 +744,17 @@ class SciPlotUI(_QMainWindow):
         fill_between_data.label = label
 
         # Fill between outputs a polycollection
-        pc_out = self.mpl_widget.axes.fill_between(x, y_low, y_high,
+        fill_between_data.mplobj = self.mpl_widget.axes.fill_between(x, y_low, y_high,
                                                    label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
         self.mpl_widget.fig.tight_layout()
-        self.updateAxisParameters()
+        self.axisAspect()
         self.mpl_widget.draw()
 
         # Since the fill_between was not fed style-info (unless kwargs were used)
         # we rely on the mpl stylesheet to setup color, linewidth, etc.
         # Thus, we plot, then retrieve what the style info was
-        fill_between_data.retrieve_style_from_polycollection(pc_out)
+        fill_between_data.retrieve_style_from_polycollection(fill_between_data.mplobj)
 
         # Append this specific plot data to out list of all plots
         self._fill_between_data.append(fill_between_data)
@@ -755,6 +762,7 @@ class SciPlotUI(_QMainWindow):
         # Update model
         self.modelFillBetween._model_data.append(fill_between_data.model_style)
         self.modelFillBetween.layoutChanged.emit()
+        
 
     def __updateFillBetweenDataStyle(self):
         """
@@ -774,7 +782,7 @@ class SciPlotUI(_QMainWindow):
         self.refreshAllPlots()
 
     def __imshow(self, img, x=None, y=None, label=None,
-               x_label=None, y_label=None, **kwargs):
+               x_label=None, y_label=None, cbar=False, **kwargs):
         """
         MPL-like plotting functionality
 
@@ -797,6 +805,9 @@ class SciPlotUI(_QMainWindow):
 
         y_label : str
             Y-axis label (units)
+            
+        cbar : bool
+            Attach a colorbar to the img
 
         kwargs : dict
             Other parameters sent directly to mpl-imshow
@@ -809,12 +820,17 @@ class SciPlotUI(_QMainWindow):
         image_data.x = x
         image_data.y = y
         image_data.label = label
+        image_data.cbar['show'] = cbar
 
         # Imshow outputs an image object
-        image_out = self.mpl_widget.axes.imshow(img, interpolation='None',
+        image_data.mplobj = self.mpl_widget.axes.imshow(img, interpolation='None',
                                                 origin='lower',
                                                 label=label,
                                                 **kwargs)
+        if image_data.cbar['show']:
+            image_data.cbar['obj'] = self.mpl_widget.fig.colorbar(image_data.mplobj,
+                                                use_gridspec=True)
+            
 #        self.mpl_widget.axes.legend(loc='best')
 
         # If labels are provided, update the global data and the linEdits
@@ -822,13 +838,14 @@ class SciPlotUI(_QMainWindow):
             self.updateAllLabels(x_label=x_label, y_label=y_label)
 
         self.mpl_widget.fig.tight_layout()
-        self.updateAxisParameters()
+        
+        self.axisAspect()
         self.mpl_widget.draw()
 
         # Since the image was not fed style-info (unless kwargs were used)
         # we rely on the mpl stylesheet to setup cmap, etc.
         # Thus, we plot, then retrieve what the style info was
-        image_data.retrieve_style_from_image(image_out)
+        image_data.retrieve_style_from_image(image_data.mplobj)
 
         # Append this specific plot data to out list of all plots
         self._images_data.append(image_data)
@@ -852,7 +869,10 @@ class SciPlotUI(_QMainWindow):
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
         """
-        self._images_data.pop(row)
+        popd = self._images_data.pop(row)
+        if popd.cbar['obj'] is not None:
+            popd.cbar['obj'].remove()
+#        self.axisAspect()
         self.refreshAllPlots()
 
 
@@ -935,7 +955,7 @@ class SciPlotUI(_QMainWindow):
         bar_data._left = bar_data.x - bar_data._width/2
 
         # Plot outputs a list of patch objects
-        bar_out = self.mpl_widget.axes.bar(bar_data._left, y,
+        bar_data.mplobj = self.mpl_widget.axes.bar(bar_data._left, y,
                                            width=bar_data._width,
                                            label=label, **kwargs)
         self.mpl_widget.axes.legend(loc='best')
@@ -945,14 +965,15 @@ class SciPlotUI(_QMainWindow):
             self.updateAllLabels(x_label=x_label, y_label=y_label)
 
         self.mpl_widget.fig.tight_layout()
-        self.updateAxisParameters()
+        
+        self.axisAspect()
         self.mpl_widget.draw()
 
 
         # Since the plot was not fed style-info (unless kwargs were used)
         # we rely on the mpl stylesheet to setup color, linewidth, etc.
         # Thus, we plot, then retrieve what the style info was
-        bar_data.retrieve_style_from_bar(bar_out[0])
+        bar_data.retrieve_style_from_bar(bar_data.mplobj[0])
 
         # Append this specific plot data to out list of all plots
         self._bar_data.append(bar_data)
@@ -1091,7 +1112,7 @@ if __name__ == '__main__':
 #    winPlotter.plot(x, y**1.1, label='Plot 2')
     winPlotter.fill_between(x, y-1000, y+1000, label='Fill Between')
 #
-    winPlotter.imshow(_np.random.randn(100,100), label='Imshow')
+    winPlotter.imshow(_np.random.randn(100,100), label='Imshow', cbar=True)
     winPlotter.bar(x[::10],y[::10],label='Bar')
 #    winPlotter.hist(y,label='Hist')
 
