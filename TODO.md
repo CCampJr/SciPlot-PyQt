@@ -1,12 +1,14 @@
 # Major initiatives
 * Move plotting functions out into their own module
-* Add entry numbers and a way to probe plots by entry, regardless of type of
-plot
+* Add entry numbers and a way to probe plots by entry, regardless of type of plot
 * Add ordering (bottom-to-top)
 
-# Plotting function adds
+# Plotting type adds
 * Scatter plots
 * Whisker plots
+
+# Plotting functionalities
+* ~~colobar~~
 
 # Style functionality
 * Load mpl-style sheets

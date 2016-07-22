@@ -12,6 +12,23 @@ import numpy as _np
 class Data:
     """
     Contains the underlying data to be plotted
+    
+    Attributes
+    ----------
+    x : ndarray (1D)
+        x-data (effectively, the horizontal axis data)
+    
+    y : ndarray (1D)
+        y-data (effectively, the vertical axis data)
+    
+    label : str
+        Label information, i.e., the name of the plot, graph, etc.
+        
+    style_dict : dict
+        Style information (e.g., color, linewidth, etc)
+        
+    mplobj : object
+        Object returned from the MPL plotting procedure.
     """
     def __init__(self):
         self._setupData()
@@ -20,6 +37,7 @@ class Data:
         self.x = None
         self.y = None
         self.label = None
+        self.mplobj = None
         #self.units = {'x_units': None, 'y_units': None}
         self.style_dict = {}
 
