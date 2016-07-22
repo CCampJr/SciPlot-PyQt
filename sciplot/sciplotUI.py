@@ -432,7 +432,7 @@ class SciPlotUI(_QMainWindow):
 
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
-        self.mpl_widget.axes.hold(True)
+        self.mpl_widget.ax.hold(True)
 
         # Insert MPL widget and toolbar
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget)
@@ -498,9 +498,9 @@ class SciPlotUI(_QMainWindow):
         plot_data.label = label
 
         # Plot outputs a line object
-        plot_data.mplobj = self.mpl_widget.axes.plot(x, y, label=label, **kwargs)
+        plot_data.mplobj = self.mpl_widget.ax.plot(x, y, label=label, **kwargs)
         try:
-            self.mpl_widget.axes.legend(loc='best')
+            self.mpl_widget.ax.legend(loc='best')
         except:
             pass
 
@@ -530,13 +530,13 @@ class SciPlotUI(_QMainWindow):
         Within the MPL widget, update the x- and y-labels and the title
         """
         if x_label is not None:
-            self.mpl_widget.axes.set_xlabel(x_label)
+            self.mpl_widget.ax.set_xlabel(x_label)
 
         if y_label is not None:
-            self.mpl_widget.axes.set_ylabel(y_label)
+            self.mpl_widget.ax.set_ylabel(y_label)
 
         if title is not None:
-            self.mpl_widget.axes.set_title(title)
+            self.mpl_widget.ax.set_title(title)
         self.mpl_widget.fig.tight_layout()
         self.mpl_widget.draw()
 
@@ -620,18 +620,18 @@ class SciPlotUI(_QMainWindow):
         """
 
         # Clear axis -- in the future, maybe clear figure and recreate axis
-        self.mpl_widget.axes.clear()
+        self.mpl_widget.ax.clear()
         
         # Images
         # Check to see if any images even remain (maybe all were deleted)
         if self.elements.count('images'):
             if len(self._images_data) > 0:
-                self.mpl_widget.axes.hold(True)
+                self.mpl_widget.ax.hold(True)
                 for itm in self._images_data:
                     if itm.cbar['obj'] is not None:
                         itm.cbar['obj'].remove()
                         itm.cbar['obj'] = None
-                    itm.mplobj = self.mpl_widget.axes.imshow(itm.img, label=itm.label,
+                    itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=itm.label,
                                                 interpolation='none',
                                                 origin='lower',
                                                 cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
@@ -645,9 +645,9 @@ class SciPlotUI(_QMainWindow):
         # Check to see if any images even remain (maybe all were deleted)
         if self.elements.count('bars'):
             if len(self._bar_data) > 0:
-                self.mpl_widget.axes.hold(True)
+                self.mpl_widget.ax.hold(True)
                 for itm in self._bar_data:
-                    itm.mplobj = self.mpl_widget.axes.bar(itm._left, itm.y, width=itm._width,
+                    itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, width=itm._width,
                                              label=itm.label,
                                              facecolor=itm.style_dict['facecolor'],
                                              alpha=itm.style_dict['alpha'],
@@ -657,9 +657,9 @@ class SciPlotUI(_QMainWindow):
         # Check to see if any plots even are remaining (maybe all were deleted)
         if self.elements.count('lines'):
             if len(self._plot_data) > 0:
-                self.mpl_widget.axes.hold(True)
+                self.mpl_widget.ax.hold(True)
                 for itm in self._plot_data:
-                    itm.mplobj = self.mpl_widget.axes.plot(itm.x, itm.y, label=itm.label,
+                    itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, label=itm.label,
                                               color=itm.style_dict['color'],
                                               alpha=itm.style_dict['alpha'],
                                               linewidth=itm.style_dict['linewidth'],
@@ -671,9 +671,9 @@ class SciPlotUI(_QMainWindow):
         # Check to see if any plots even are remaining (maybe all were deleted)
         if self.elements.count('fill betweens'):
             if len(self._fill_between_data) > 0:
-                self.mpl_widget.axes.hold(True)
+                self.mpl_widget.ax.hold(True)
                 for itm in self._fill_between_data:
-                    itm.mplobj = self.mpl_widget.axes.fill_between(itm.x, itm.y_low, itm.y_high,
+                    itm.mplobj = self.mpl_widget.ax.fill_between(itm.x, itm.y_low, itm.y_high,
                                                       label=itm.label,
                                                       facecolor=itm.style_dict['facecolor'],
                                                       edgecolor=itm.style_dict['edgecolor'],
@@ -691,15 +691,15 @@ class SciPlotUI(_QMainWindow):
             label_object_count += len(self._bar_data)
 
         if label_object_count > 0:
-            self.mpl_widget.axes.legend(loc='best')
+            self.mpl_widget.ax.legend(loc='best')
 
         # Apply x- and y-labels and a title if they are set
         if self._global_data.labels['title'] is not None:
-            self.mpl_widget.axes.set_title(self._global_data.labels['title'])
+            self.mpl_widget.ax.set_title(self._global_data.labels['title'])
         if self._global_data.labels['x_label'] is not None:
-            self.mpl_widget.axes.set_xlabel(self._global_data.labels['x_label'])
+            self.mpl_widget.ax.set_xlabel(self._global_data.labels['x_label'])
         if self._global_data.labels['y_label'] is not None:
-            self.mpl_widget.axes.set_ylabel(self._global_data.labels['y_label'])
+            self.mpl_widget.ax.set_ylabel(self._global_data.labels['y_label'])
 
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
@@ -744,9 +744,9 @@ class SciPlotUI(_QMainWindow):
         fill_between_data.label = label
 
         # Fill between outputs a polycollection
-        fill_between_data.mplobj = self.mpl_widget.axes.fill_between(x, y_low, y_high,
+        fill_between_data.mplobj = self.mpl_widget.ax.fill_between(x, y_low, y_high,
                                                    label=label, **kwargs)
-        self.mpl_widget.axes.legend(loc='best')
+        self.mpl_widget.ax.legend(loc='best')
         self.mpl_widget.fig.tight_layout()
         self.axisAspect()
         self.mpl_widget.draw()
@@ -823,7 +823,7 @@ class SciPlotUI(_QMainWindow):
         image_data.cbar['show'] = cbar
 
         # Imshow outputs an image object
-        image_data.mplobj = self.mpl_widget.axes.imshow(img, interpolation='None',
+        image_data.mplobj = self.mpl_widget.ax.imshow(img, interpolation='None',
                                                 origin='lower',
                                                 label=label,
                                                 **kwargs)
@@ -831,7 +831,7 @@ class SciPlotUI(_QMainWindow):
             image_data.cbar['obj'] = self.mpl_widget.fig.colorbar(image_data.mplobj,
                                                 use_gridspec=True)
             
-#        self.mpl_widget.axes.legend(loc='best')
+#        self.mpl_widget.ax.legend(loc='best')
 
         # If labels are provided, update the global data and the linEdits
         if x_label is not None or y_label is not None:
@@ -955,10 +955,10 @@ class SciPlotUI(_QMainWindow):
         bar_data._left = bar_data.x - bar_data._width/2
 
         # Plot outputs a list of patch objects
-        bar_data.mplobj = self.mpl_widget.axes.bar(bar_data._left, y,
+        bar_data.mplobj = self.mpl_widget.ax.bar(bar_data._left, y,
                                            width=bar_data._width,
                                            label=label, **kwargs)
-        self.mpl_widget.axes.legend(loc='best')
+        self.mpl_widget.ax.legend(loc='best')
 
         # If labels are provided, update the global data and the linEdits
         if x_label is not None or y_label is not None:
@@ -1036,7 +1036,7 @@ class SciPlotUI(_QMainWindow):
         Set axis aspect ratio property
         """
         aspect = self.ui.comboBoxAspect.currentText()
-        self.mpl_widget.axes.set_aspect(aspect)
+        self.mpl_widget.ax.set_aspect(aspect)
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
         self.mpl_widget.draw()
@@ -1046,7 +1046,7 @@ class SciPlotUI(_QMainWindow):
         Set axis scaling property
         """
         ratio = self.ui.comboBoxAxisScaling.currentText()
-        self.mpl_widget.axes.axis(ratio)
+        self.mpl_widget.ax.axis(ratio)
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
         self.mpl_widget.draw()
@@ -1061,7 +1061,7 @@ class SciPlotUI(_QMainWindow):
         else:
             state = 'off'
 
-        self.mpl_widget.axes.axis(state)
+        self.mpl_widget.ax.axis(state)
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
         self.mpl_widget.draw()
@@ -1072,16 +1072,16 @@ class SciPlotUI(_QMainWindow):
         """
         if self.sender() == self.ui.lineEditXLimMin:
             value = float(self.ui.lineEditXLimMin.text())
-            self.mpl_widget.axes.axis(xmin=value)
+            self.mpl_widget.ax.axis(xmin=value)
         elif self.sender() == self.ui.lineEditXLimMax:
             value = float(self.ui.lineEditXLimMax.text())
-            self.mpl_widget.axes.axis(xmax=value)
+            self.mpl_widget.ax.axis(xmax=value)
         elif self.sender() == self.ui.lineEditYLimMin:
             value = float(self.ui.lineEditYLimMin.text())
-            self.mpl_widget.axes.axis(ymin=value)
+            self.mpl_widget.ax.axis(ymin=value)
         elif self.sender() == self.ui.lineEditYLimMax:
             value = float(self.ui.lineEditYLimMax.text())
-            self.mpl_widget.axes.axis(ymax=value)
+            self.mpl_widget.ax.axis(ymax=value)
 
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
@@ -1091,9 +1091,9 @@ class SciPlotUI(_QMainWindow):
         """
         Query current state of axis settings and update appropriate lineEdit's
         """
-        axis_visible = self.mpl_widget.axes.axison
+        axis_visible = self.mpl_widget.ax.axison
         self.ui.checkBoxAxisVisible.setChecked(axis_visible)
-        xmin, xmax, ymin, ymax = self.mpl_widget.axes.axis()
+        xmin, xmax, ymin, ymax = self.mpl_widget.ax.axis()
         self.ui.lineEditXLimMin.setText(str(xmin))
         self.ui.lineEditXLimMax.setText(str(xmax))
         self.ui.lineEditYLimMin.setText(str(ymin))
@@ -1117,4 +1117,4 @@ if __name__ == '__main__':
 #    winPlotter.hist(y,label='Hist')
 
 #    winPlotter.bar(0,10, label='Bar: single-value')
-    _sys.exit(winPlotter.app.exec_())
+    winPlotter.app.exec_()

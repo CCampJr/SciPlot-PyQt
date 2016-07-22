@@ -58,8 +58,8 @@ class MplCanvas(FigureCanvas):
         self.toolbar = _NavigationToolbar(self, None)
         
     def setupAx(self):
-        self.axes = self.fig.add_subplot(111)
-        self.axes.hold(False)
+        self.ax = self.fig.add_subplot(111)
+        self.ax.hold(False)
 
     def compute_initial_figure(self):
         pass
