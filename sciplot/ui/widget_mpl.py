@@ -39,10 +39,9 @@ class MplCanvas(FigureCanvas):
 
         # Create figure and axes
         self.fig = _Figure(figsize=(width, height), dpi=dpi)
-        self.axes = self.fig.add_subplot(111)
-        # We want the axes cleared every time plot() is called
-        self.axes.hold(False)
-
+        
+        self.setupAx()
+        
         # Not really used, but could be used to have some sort of initial plot
         self.compute_initial_figure()
 
@@ -57,6 +56,10 @@ class MplCanvas(FigureCanvas):
 
         # Create the toolbar and connect to canvas (self)
         self.toolbar = _NavigationToolbar(self, None)
+        
+    def setupAx(self):
+        self.axes = self.fig.add_subplot(111)
+        self.axes.hold(False)
 
     def compute_initial_figure(self):
         pass
