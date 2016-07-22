@@ -91,6 +91,9 @@ class SciPlotUI(_QMainWindow):
     limit_to : list, optional (default = None)
         Limit the application to implement only certain functionality. \
         Default is all elements turned ON. See Notes for options.
+        
+    show : bool, optional (default = True)
+        Whether to show the UI upon instantiation
 
     Methods
     -------
@@ -159,10 +162,11 @@ class SciPlotUI(_QMainWindow):
     -----
     * limit_to options: 'lines', 'fill betweens', 'bars', images'
     """
-    def __init__(self, limit_to=None, parent=None):
+    def __init__(self, limit_to=None, parent=None, show=True):
         self.app = _QApplication(_sys.argv)
         self.setup(limit_to=limit_to, parent=parent)
-        self.show()
+        if show:
+            self.show()
 
     def _tabAvailability(self, limit_to=None):
         """
