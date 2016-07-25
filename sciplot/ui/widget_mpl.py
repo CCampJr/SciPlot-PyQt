@@ -62,8 +62,8 @@ class MplCanvas(FigureCanvas):
         self.toolbar = _NavigationToolbar(self, None)
         
     def setupAx(self, subplot=111, **kwargs):
-        if subplot > 999:
-            raise ValueError('Subplot is limited to 9x9 or less')
+        if subplot > 339:
+            raise ValueError('Subplot is limited to 3x3 or less')
         # Break out e.g. 111 to [1, 1, 1]
         subplot_list = [int(val) for val in list(str(subplot))]
         
@@ -78,10 +78,10 @@ class MplCanvas(FigureCanvas):
 
         # [start, stop) count
         c_start = vnum*100 + hnum*10 + 1
-        c_stop = vnum*100 + hnum*10 + num_plots
+        c_stop = vnum*100 + hnum*10 + num_plots + 1
         
         if num_plots <= 0:
-            raise ValueError('subplot need be 1x1 to 9x9')
+            raise ValueError('subplot need be 1x1 to 3x3')
         elif num_plots == 1:
             self.ax = self.fig.add_subplot(111, **kwargs)
         elif num_plots > 1:
@@ -123,19 +123,20 @@ if __name__ == '__main__':
 
     qApp = _QtWidgets.QApplication(_sys.argv)
     
-    aw = ApplicationWindow(style='seaborn-deep')
-    aw.mpl_widget.ax.plot((2,3),(4,-1), label='a')
-    aw.mpl_widget.ax.hold(True)
-    aw.mpl_widget.ax.plot((2,3),(4,-2), label='b')
-    aw.mpl_widget.ax.set_xlabel('X')
-    aw.mpl_widget.ax.set_ylabel('Y')
-    aw.mpl_widget.ax.set_title('Title')
-    aw.mpl_widget.ax.legend()
-    aw.mpl_widget.fig.tight_layout()
-    aw.show()
+#    aw = ApplicationWindow(style='seaborn-deep')
+#    aw.mpl_widget.ax.plot((2,3),(4,-1), label='a')
+#    aw.mpl_widget.ax.hold(True)
+#    aw.mpl_widget.ax.plot((2,3),(4,-2), label='b')
+#    aw.mpl_widget.ax.set_xlabel('X')
+#    aw.mpl_widget.ax.set_ylabel('Y')
+#    aw.mpl_widget.ax.set_title('Title')
+#    aw.mpl_widget.ax.legend()
+#    aw.mpl_widget.fig.tight_layout()
+#    aw.show()
     
-    aw2 = ApplicationWindow(style='seaborn-deep', subplot=999)
+    aw2 = ApplicationWindow(style='seaborn-deep', subplot=211)
     aw2.mpl_widget.ax[0].set_title('0')
+    aw2.mpl_widget.ax[1].set_title('1')
     aw2.show()
 
     qApp.exec_()
