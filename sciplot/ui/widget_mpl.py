@@ -87,7 +87,6 @@ class MplCanvas(FigureCanvas):
         elif num_plots > 1:
             self.ax = []
             for num, splt_num in enumerate(_np.arange(c_start, c_stop)):
-                print(splt_num)
                 self.ax.append(self.fig.add_subplot(splt_num, **kwargs))
                 self.ax[num].hold(False)
             self.fig.tight_layout()
