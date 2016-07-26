@@ -632,6 +632,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._images_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._images_data:
+                    # Hide label if alpha=0
                     if itm.style_dict['alpha'] == 0:
                         label = None
                     else:
@@ -655,6 +656,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._bar_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._bar_data:
+                    # Hide label if alpha=0
                     if itm.style_dict['alpha'] == 0:
                         label = None
                     else:
@@ -671,6 +673,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._plot_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._plot_data:
+                    # Hide label if alpha=0
                     if itm.style_dict['alpha'] == 0:
                         label = None
                     else:
@@ -690,6 +693,7 @@ class SciPlotUI(_QMainWindow):
             if len(self._fill_between_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._fill_between_data:
+                    # Hide label if alpha=0
                     if itm.style_dict['alpha'] == 0:
                         label = None
                     else:
