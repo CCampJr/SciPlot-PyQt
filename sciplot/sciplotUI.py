@@ -164,9 +164,13 @@ class SciPlotUI(_QMainWindow):
     """
     def __init__(self, limit_to=None, parent=None, show=True):
         self.app = _QApplication(_sys.argv)
+        self.app.setQuitOnLastWindowClosed(True)
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
+        
+    def closeEvent(self, event):
+        pass
 
     def _tabAvailability(self, limit_to=None):
         """
