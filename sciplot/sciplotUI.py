@@ -632,10 +632,14 @@ class SciPlotUI(_QMainWindow):
             if len(self._images_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._images_data:
+                    if itm.style_dict['alpha'] == 0:
+                        label = None
+                    else:
+                        label = itm.label
                     if itm.cbar['obj'] is not None:
                         itm.cbar['obj'].remove()
                         itm.cbar['obj'] = None
-                    itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=itm.label,
+                    itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=label,
                                                 interpolation='none',
                                                 origin='lower',
                                                 cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
@@ -651,25 +655,34 @@ class SciPlotUI(_QMainWindow):
             if len(self._bar_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._bar_data:
+                    if itm.style_dict['alpha'] == 0:
+                        label = None
+                    else:
+                        label = itm.label
                     itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, width=itm._width,
-                                             label=itm.label,
-                                             facecolor=itm.style_dict['facecolor'],
-                                             alpha=itm.style_dict['alpha'],
-                                             edgecolor=itm.style_dict['edgecolor'],
-                                             linewidth=itm.style_dict['linewidth'])
+                                                        label=label,
+                                                        facecolor=itm.style_dict['facecolor'],
+                                                        alpha=itm.style_dict['alpha'],
+                                                        edgecolor=itm.style_dict['edgecolor'],
+                                                        linewidth=itm.style_dict['linewidth'])
         # Lines
         # Check to see if any plots even are remaining (maybe all were deleted)
         if self.elements.count('lines'):
             if len(self._plot_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._plot_data:
-                    itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, label=itm.label,
-                                              color=itm.style_dict['color'],
-                                              alpha=itm.style_dict['alpha'],
-                                              linewidth=itm.style_dict['linewidth'],
-                                              linestyle=itm.style_dict['linestyle'],
-                                              marker=itm.style_dict['marker'],
-                                              markersize=itm.style_dict['markersize'])
+                    if itm.style_dict['alpha'] == 0:
+                        label = None
+                    else:
+                        label = itm.label
+                    itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, 
+                                                         label=label,
+                                                         color=itm.style_dict['color'],
+                                                         alpha=itm.style_dict['alpha'],
+                                                         linewidth=itm.style_dict['linewidth'],
+                                                         linestyle=itm.style_dict['linestyle'],
+                                                         marker=itm.style_dict['marker'],
+                                                         markersize=itm.style_dict['markersize'])
 
         # Fill between
         # Check to see if any plots even are remaining (maybe all were deleted)
@@ -677,8 +690,12 @@ class SciPlotUI(_QMainWindow):
             if len(self._fill_between_data) > 0:
                 self.mpl_widget.ax.hold(True)
                 for itm in self._fill_between_data:
+                    if itm.style_dict['alpha'] == 0:
+                        label = None
+                    else:
+                        label = itm.label
                     itm.mplobj = self.mpl_widget.ax.fill_between(itm.x, itm.y_low, itm.y_high,
-                                                      label=itm.label,
+                                                      label=label,
                                                       facecolor=itm.style_dict['facecolor'],
                                                       edgecolor=itm.style_dict['edgecolor'],
                                                       alpha=itm.style_dict['alpha'],
