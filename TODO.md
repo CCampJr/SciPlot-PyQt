@@ -8,6 +8,7 @@
 * Whisker plots
 
 # Plotting functionalities
+* Incorporate 'bottom' parameter into bar plots
 * ~~colobar~~
 
 # Style functionality
