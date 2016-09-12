@@ -59,6 +59,7 @@ class DataBar(_Data, BarStyle):
         self._width = None
         self._left = None
         self._gap = None
+        self._bottom = None
         self._setupData()
         self._setupBarStyle()
 

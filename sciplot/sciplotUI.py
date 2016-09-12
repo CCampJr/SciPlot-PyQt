@@ -665,7 +665,9 @@ class SciPlotUI(_QMainWindow):
                         label = None
                     else:
                         label = itm.label
-                    itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, width=itm._width,
+                    itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, 
+                                                        bottom=itm.bottom,
+                                                        width=itm._width,
                                                         label=label,
                                                         facecolor=itm.style_dict['facecolor'],
                                                         alpha=itm.style_dict['alpha'],
@@ -905,7 +907,7 @@ class SciPlotUI(_QMainWindow):
         self.refreshAllPlots()
 
 
-    def __bar(self, x, y, width_factor=1.0, use_real_width=False, label=None,
+    def __bar(self, x, y, bottom=0, width_factor=1.0, use_real_width=False, label=None,
             x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
@@ -921,8 +923,11 @@ class SciPlotUI(_QMainWindow):
             X-axis data (center of bars)
 
         y : ndarray (1D, for now)
-            Y-axis data
+            Y-axis data (height)
 
+        bottom : float (for now)
+            Baseline of bars
+            
         width_factor: float
             If legnth of y>1, fraction of space between bars taken up by bar \
             (e.g. 1.0 leads to bars that tough). If y is a single-value OR \
@@ -949,6 +954,7 @@ class SciPlotUI(_QMainWindow):
         bar_data = _DataBar()
         bar_data.x = x
         bar_data.y = y
+        bar_data.bottom = bottom
         bar_data.label = label
 
         bar_data.style_dict['width_factor'] = width_factor
@@ -985,6 +991,7 @@ class SciPlotUI(_QMainWindow):
 
         # Plot outputs a list of patch objects
         bar_data.mplobj = self.mpl_widget.ax.bar(bar_data._left, y,
+                                           bottom=bar_data.bottom,
                                            width=bar_data._width,
                                            label=label, **kwargs)
         self.mpl_widget.ax.legend(loc='best')
