@@ -205,7 +205,7 @@
              <item>
               <widget class="QLabel" name="label_7">
                <property name="text">
-                <string>Y Label</string>
+                <string>Y Limits</string>
                </property>
               </widget>
              </item>

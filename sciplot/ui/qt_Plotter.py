@@ -190,7 +190,7 @@ class Ui_MainWindow(object):
         self.toolBox.setItemText(self.toolBox.indexOf(self.GeneralParameters), _translate("MainWindow", "General Parameters"))
         self.label_5.setText(_translate("MainWindow", "Axis Visibility"))
         self.label_6.setText(_translate("MainWindow", "X Limits"))
-        self.label_7.setText(_translate("MainWindow", "Y Label"))
+        self.label_7.setText(_translate("MainWindow", "Y Limits"))
         self.label_8.setText(_translate("MainWindow", "Scaling"))
         self.comboBoxAxisScaling.setItemText(0, _translate("MainWindow", "auto"))
         self.comboBoxAxisScaling.setItemText(1, _translate("MainWindow", "equal"))
