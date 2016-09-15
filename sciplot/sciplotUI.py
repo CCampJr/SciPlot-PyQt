@@ -163,8 +163,6 @@ class SciPlotUI(_QMainWindow):
     * limit_to options: 'lines', 'fill betweens', 'bars', images'
     """
     def __init__(self, limit_to=None, parent=None, show=True):
-        self.app = _QApplication(_sys.argv)
-        self.app.setQuitOnLastWindowClosed(True)
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
@@ -1137,9 +1135,12 @@ class SciPlotUI(_QMainWindow):
 
 if __name__ == '__main__':
 
+    app = _QApplication(_sys.argv)
+    #app.setQuitOnLastWindowClosed(True)
+    
     winPlotter = SciPlotUI(limit_to=['lines','bars', 'fill betweens',
                                      'images'])
-    winPlotter.show()
+    #winPlotter.show()
 
     x = _np.arange(100)
     y = x**2
@@ -1153,4 +1154,4 @@ if __name__ == '__main__':
 #    winPlotter.hist(y,label='Hist')
 
 #    winPlotter.bar(0,10, label='Bar: single-value')
-    winPlotter.app.exec_()
+    app.exec_()
