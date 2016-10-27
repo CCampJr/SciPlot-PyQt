@@ -56,6 +56,8 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QSizePolicy as _QSizePolicy,
                              QTabWidget as _QTabWidget)
 
+from PyQt5.QtCore import (QModelIndex as _QModelIndex)
+
 # Import from Designer-based GUI
 from sciplot.ui.qt_Plotter import Ui_MainWindow as Ui_Plotter
 from sciplot.ui.widget_mpl import MplCanvas as _MplCanvas
@@ -470,6 +472,9 @@ class SciPlotUI(_QMainWindow):
         self.ui.lineEditXLimMax.editingFinished.connect(self.axisLimits)
         self.ui.lineEditYLimMin.editingFinished.connect(self.axisLimits)
         self.ui.lineEditYLimMax.editingFinished.connect(self.axisLimits)
+        
+        # Actions
+        self.ui.pushButtonClearAll.pressed.connect(self.clearAll)
 
     def __plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
         """
@@ -1132,6 +1137,53 @@ class SciPlotUI(_QMainWindow):
         self.ui.lineEditXLimMax.setText(str(xmax))
         self.ui.lineEditYLimMin.setText(str(ymin))
         self.ui.lineEditYLimMax.setText(str(ymax))
+        
+    def clearAll(self):
+        """
+        Clear all plots and graphs and images
+        """
+        try:
+            self.modelLine._model_data = []
+            self.modelLine.layoutChanged.emit()
+            for num,_ in enumerate(self._plot_data):
+                self.updatePlotDataDelete(num)
+            self._plot_data = []
+            self.refreshAllPlots()
+        except:
+            print('Error in clear all of plots/lines')
+        
+        try:
+            self.modelBars._model_data = []
+            self.modelBars.layoutChanged.emit()
+            for num,_ in enumerate(self._bar_data):
+                self.updateBarsDataDelete(num)
+            self._bar_data = []
+            self.refreshAllPlots()
+        except:
+            print('Error in clear all of bars')
+        
+        
+        try:
+            self.modelImages._model_data = []
+            self.modelImages.layoutChanged.emit()
+            for num,_ in enumerate(self._images_data):
+                self.updateImagesDataDelete(num)
+            self._images_data = []
+            self.refreshAllPlots()
+        except:
+            print('Error in clear all of images')
+        
+        try:
+            self.modelFillBetween._model_data = []
+            self.modelFillBetween.layoutChanged.emit()
+            for num,_ in enumerate(self._fill_between_data):
+                self.updateFillBetweenDataDelete(num)
+            self._fill_between_data = []
+            self.refreshAllPlots()
+        except:
+            print('Error in clear all of fill-betweens')
+        
+        
 
 if __name__ == '__main__':
 

@@ -73,7 +73,7 @@
             <x>0</x>
             <y>0</y>
             <width>176</width>
-            <height>332</height>
+            <height>315</height>
            </rect>
           </property>
           <attribute name="label">
@@ -156,7 +156,7 @@
             <x>0</x>
             <y>0</y>
             <width>176</width>
-            <height>332</height>
+            <height>315</height>
            </rect>
           </property>
           <attribute name="label">
@@ -289,6 +289,21 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonClearAll">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Clear All</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
