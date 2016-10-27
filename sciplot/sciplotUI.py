@@ -56,8 +56,6 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QSizePolicy as _QSizePolicy,
                              QTabWidget as _QTabWidget)
 
-from PyQt5.QtCore import (QModelIndex as _QModelIndex)
-
 # Import from Designer-based GUI
 from sciplot.ui.qt_Plotter import Ui_MainWindow as Ui_Plotter
 from sciplot.ui.widget_mpl import MplCanvas as _MplCanvas
