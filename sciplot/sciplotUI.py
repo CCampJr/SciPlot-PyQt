@@ -473,6 +473,7 @@ class SciPlotUI(_QMainWindow):
         
         # Actions
         self.ui.pushButtonClearAll.pressed.connect(self.clearAll)
+        self.ui.pushButtonDefaultView.pressed.connect(self.defaultView)
 
     def __plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
         """
@@ -1135,6 +1136,14 @@ class SciPlotUI(_QMainWindow):
         self.ui.lineEditXLimMax.setText(str(xmax))
         self.ui.lineEditYLimMin.setText(str(ymin))
         self.ui.lineEditYLimMax.setText(str(ymax))
+        
+    def defaultView(self):
+        """
+        Set default and Home view to the current one
+        """
+        self.mpl_widget.toolbar._views.clear()
+        self.mpl_widget.toolbar._positions.clear()
+        self.mpl_widget.toolbar.update()
         
     def clearAll(self):
         """
