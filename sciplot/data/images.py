@@ -64,6 +64,7 @@ class DataImages(_Data2D, ImageStyle):
         out['clim_low'] = _np.min(clim)
         out['clim_high'] = _np.max(clim)
         out['label'] = self.label
+        out['id'] = self.id
         out['colorbar'] = self.cbar['show']
         return out
 

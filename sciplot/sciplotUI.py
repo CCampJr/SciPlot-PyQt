@@ -44,6 +44,7 @@ Authors
 
 import sys as _sys
 import numpy as _np
+import time as _time
 
 # Generic imports for MPL-incorporation
 import matplotlib as _mpl
@@ -163,6 +164,9 @@ class SciPlotUI(_QMainWindow):
     * limit_to options: 'lines', 'fill betweens', 'bars', images'
     """
     def __init__(self, limit_to=None, parent=None, show=True):
+        self.list_ids = []
+        self.list_all = []
+
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
@@ -506,6 +510,7 @@ class SciPlotUI(_QMainWindow):
         plot_data.x = x
         plot_data.y = y
         plot_data.label = label
+        plot_data.id = _time.time()
 
         # Plot outputs a line object
         plot_data.mplobj = self.mpl_widget.ax.plot(x, y, label=label, **kwargs)
@@ -530,6 +535,8 @@ class SciPlotUI(_QMainWindow):
 
         # Append this specific plot data to out list of all plots
         self._plot_data.append(plot_data)
+        self.list_ids.append(plot_data.id)
+        self.list_all.append(plot_data)
 
         # Update model
         self.modelLine._model_data.append(plot_data.model_style)
@@ -616,12 +623,20 @@ class SciPlotUI(_QMainWindow):
             self._plot_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def __updatePlotDataDelete(self, row):
+    def __updatePlotDataDelete(self, row, plt_id):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
         """
-        self._plot_data.pop(row)
+        try:
+#            print('Plot id: {}'.format(plt_id))
+            idx_to_remove = self.list_ids.index(plt_id)
+            self.list_ids.pop(idx_to_remove)
+            self.list_all.pop(idx_to_remove)
+        except:
+            print('Error in __updatePlotDataDelete: {}'.format(idx_to_remove))
+            
+#        self._plot_data.pop(row)
         self.refreshAllPlots()
 
     def refreshAllPlots(self):
@@ -632,96 +647,173 @@ class SciPlotUI(_QMainWindow):
         # Clear axis -- in the future, maybe clear figure and recreate axis
         self.mpl_widget.ax.clear()
         
-        # Images
-        # Check to see if any images even remain (maybe all were deleted)
-        if self.elements.count('images'):
-            if len(self._images_data) > 0:
+        for itm in self.list_all:
+            if isinstance(itm, _DataLine):
+#                print('Line')
                 self.mpl_widget.ax.hold(True)
-                for itm in self._images_data:
-                    # Hide label if alpha=0
-                    if itm.style_dict['alpha'] == 0:
-                        label = None
-                    else:
-                        label = itm.label
-                    if itm.cbar['obj'] is not None:
+                
+                # Hide label if alpha=0
+                if itm.style_dict['alpha'] == 0:
+                    label = None
+                else:
+                    label = itm.label
+                itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, 
+                                                     label=label,
+                                                     color=itm.style_dict['color'],
+                                                     alpha=itm.style_dict['alpha'],
+                                                     linewidth=itm.style_dict['linewidth'],
+                                                     linestyle=itm.style_dict['linestyle'],
+                                                     marker=itm.style_dict['marker'],
+                                                     markersize=itm.style_dict['markersize'])
+            elif isinstance(itm, _DataBar):
+#                print('Bar')
+                self.mpl_widget.ax.hold(True)
+                
+                # Hide label if alpha=0
+                if itm.style_dict['alpha'] == 0:
+                    label = None
+                else:
+                    label = itm.label
+                itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, 
+                                                    bottom=itm.bottom,
+                                                    width=itm._width,
+                                                    label=label,
+                                                    facecolor=itm.style_dict['facecolor'],
+                                                    alpha=itm.style_dict['alpha'],
+                                                    edgecolor=itm.style_dict['edgecolor'],
+                                                    linewidth=itm.style_dict['linewidth'])
+            elif isinstance(itm, _DataImages):
+#                print('Images')
+                self.mpl_widget.ax.hold(True)
+                
+                # Hide label if alpha=0
+                if itm.style_dict['alpha'] == 0:
+                    label = None
+                else:
+                    label = itm.label
+                if itm.cbar['obj'] is not None:
+                    try:  # Have had some unknown exceptions with .remove()
                         itm.cbar['obj'].remove()
                         itm.cbar['obj'] = None
-                    itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=label,
-                                                interpolation='none',
-                                                origin='lower',
-                                                cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
-                                                alpha=itm.style_dict['alpha'],
-                                                clim=itm.style_dict['clim'])
-                    if itm.cbar['show']:
-                        itm.cbar['obj'] = self.mpl_widget.fig.colorbar(itm.mplobj,
-                                                                       use_gridspec=True)
+                    except:
+                        pass
+                itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=label,
+                                                       interpolation='none',
+                                                       origin='lower',
+                                                       cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
+                                                       alpha=itm.style_dict['alpha'],
+                                                       clim=itm.style_dict['clim'])
+                if itm.cbar['show']:
+                    itm.cbar['obj'] = self.mpl_widget.fig.colorbar(itm.mplobj,
+                                                                   use_gridspec=True)
+            elif isinstance(itm, _DataFillBetween):
+#                print('Fill Between')
+                self.mpl_widget.ax.hold(True)
+                
+                # Hide label if alpha=0
+                if itm.style_dict['alpha'] == 0:
+                    label = None
+                else:
+                    label = itm.label
+                itm.mplobj = self.mpl_widget.ax.fill_between(itm.x, itm.y_low, itm.y_high,
+                                                  label=label,
+                                                  facecolor=itm.style_dict['facecolor'],
+                                                  edgecolor=itm.style_dict['edgecolor'],
+                                                  alpha=itm.style_dict['alpha'],
+                                                  linewidth=itm.style_dict['linewidth'])
 
-        # Bars
-        # Check to see if any images even remain (maybe all were deleted)
-        if self.elements.count('bars'):
-            if len(self._bar_data) > 0:
-                self.mpl_widget.ax.hold(True)
-                for itm in self._bar_data:
-                    # Hide label if alpha=0
-                    if itm.style_dict['alpha'] == 0:
-                        label = None
-                    else:
-                        label = itm.label
-                    itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, 
-                                                        bottom=itm.bottom,
-                                                        width=itm._width,
-                                                        label=label,
-                                                        facecolor=itm.style_dict['facecolor'],
-                                                        alpha=itm.style_dict['alpha'],
-                                                        edgecolor=itm.style_dict['edgecolor'],
-                                                        linewidth=itm.style_dict['linewidth'])
-        # Lines
-        # Check to see if any plots even are remaining (maybe all were deleted)
-        if self.elements.count('lines'):
-            if len(self._plot_data) > 0:
-                self.mpl_widget.ax.hold(True)
-                for itm in self._plot_data:
-                    # Hide label if alpha=0
-                    if itm.style_dict['alpha'] == 0:
-                        label = None
-                    else:
-                        label = itm.label
-                    itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, 
-                                                         label=label,
-                                                         color=itm.style_dict['color'],
-                                                         alpha=itm.style_dict['alpha'],
-                                                         linewidth=itm.style_dict['linewidth'],
-                                                         linestyle=itm.style_dict['linestyle'],
-                                                         marker=itm.style_dict['marker'],
-                                                         markersize=itm.style_dict['markersize'])
-
-        # Fill between
-        # Check to see if any plots even are remaining (maybe all were deleted)
-        if self.elements.count('fill betweens'):
-            if len(self._fill_between_data) > 0:
-                self.mpl_widget.ax.hold(True)
-                for itm in self._fill_between_data:
-                    # Hide label if alpha=0
-                    if itm.style_dict['alpha'] == 0:
-                        label = None
-                    else:
-                        label = itm.label
-                    itm.mplobj = self.mpl_widget.ax.fill_between(itm.x, itm.y_low, itm.y_high,
-                                                      label=label,
-                                                      facecolor=itm.style_dict['facecolor'],
-                                                      edgecolor=itm.style_dict['edgecolor'],
-                                                      alpha=itm.style_dict['alpha'],
-                                                      linewidth=itm.style_dict['linewidth'])
+            else:
+                print('Unknown')
+#        # Images
+#        # Check to see if any images even remain (maybe all were deleted)
+#        if self.elements.count('images'):
+#            if len(self._images_data) > 0:
+#                self.mpl_widget.ax.hold(True)
+#                for itm in self._images_data:
+#                    # Hide label if alpha=0
+#                    if itm.style_dict['alpha'] == 0:
+#                        label = None
+#                    else:
+#                        label = itm.label
+#                    if itm.cbar['obj'] is not None:
+#                        itm.cbar['obj'].remove()
+#                        itm.cbar['obj'] = None
+#                    itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=label,
+#                                                interpolation='none',
+#                                                origin='lower',
+#                                                cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
+#                                                alpha=itm.style_dict['alpha'],
+#                                                clim=itm.style_dict['clim'])
+#                    if itm.cbar['show']:
+#                        itm.cbar['obj'] = self.mpl_widget.fig.colorbar(itm.mplobj,
+#                                                                       use_gridspec=True)
+#
+#        # Bars
+#        # Check to see if any images even remain (maybe all were deleted)
+#        if self.elements.count('bars'):
+#            if len(self._bar_data) > 0:
+#                self.mpl_widget.ax.hold(True)
+#                for itm in self._bar_data:
+#                    # Hide label if alpha=0
+#                    if itm.style_dict['alpha'] == 0:
+#                        label = None
+#                    else:
+#                        label = itm.label
+#                    itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, 
+#                                                        bottom=itm.bottom,
+#                                                        width=itm._width,
+#                                                        label=label,
+#                                                        facecolor=itm.style_dict['facecolor'],
+#                                                        alpha=itm.style_dict['alpha'],
+#                                                        edgecolor=itm.style_dict['edgecolor'],
+#                                                        linewidth=itm.style_dict['linewidth'])
+#        # Lines
+#        # Check to see if any plots even are remaining (maybe all were deleted)
+#        if self.elements.count('lines'):
+#            if len(self._plot_data) > 0:
+#                self.mpl_widget.ax.hold(True)
+#                for itm in self._plot_data:
+#                    # Hide label if alpha=0
+#                    if itm.style_dict['alpha'] == 0:
+#                        label = None
+#                    else:
+#                        label = itm.label
+#                    itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, 
+#                                                         label=label,
+#                                                         color=itm.style_dict['color'],
+#                                                         alpha=itm.style_dict['alpha'],
+#                                                         linewidth=itm.style_dict['linewidth'],
+#                                                         linestyle=itm.style_dict['linestyle'],
+#                                                         marker=itm.style_dict['marker'],
+#                                                         markersize=itm.style_dict['markersize'])
+#
+#        # Fill between
+#        # Check to see if any plots even are remaining (maybe all were deleted)
+#        if self.elements.count('fill betweens'):
+#            if len(self._fill_between_data) > 0:
+#                self.mpl_widget.ax.hold(True)
+#                for itm in self._fill_between_data:
+#                    # Hide label if alpha=0
+#                    if itm.style_dict['alpha'] == 0:
+#                        label = None
+#                    else:
+#                        label = itm.label
+#                    itm.mplobj = self.mpl_widget.ax.fill_between(itm.x, itm.y_low, itm.y_high,
+#                                                      label=label,
+#                                                      facecolor=itm.style_dict['facecolor'],
+#                                                      edgecolor=itm.style_dict['edgecolor'],
+#                                                      alpha=itm.style_dict['alpha'],
+#                                                      linewidth=itm.style_dict['linewidth'])
 
         # Only add a legend if a plot exists
         # Only certain objects provide labels
-        label_object_count = 0
-        if self.elements.count('lines'):
-            label_object_count += len(self._plot_data)
-        if self.elements.count('fill betweens'):
-            label_object_count += len(self._fill_between_data)
-        if self.elements.count('bars'):
-            label_object_count += len(self._bar_data)
+        label_object_count = len(self.list_all)
+#        if self.elements.count('lines'):
+#            label_object_count += len(self._plot_data)
+#        if self.elements.count('fill betweens'):
+#            label_object_count += len(self._fill_between_data)
+#        if self.elements.count('bars'):
+#            label_object_count += len(self._bar_data)
 
         if label_object_count > 0:
             self.mpl_widget.ax.legend(loc='best')
@@ -775,6 +867,7 @@ class SciPlotUI(_QMainWindow):
         fill_between_data.y_low = y_low
         fill_between_data.y_high = y_high
         fill_between_data.label = label
+        fill_between_data.id = _time.time()
 
         # Fill between outputs a polycollection
         fill_between_data.mplobj = self.mpl_widget.ax.fill_between(x, y_low, y_high,
@@ -791,6 +884,8 @@ class SciPlotUI(_QMainWindow):
 
         # Append this specific plot data to out list of all plots
         self._fill_between_data.append(fill_between_data)
+        self.list_ids.append(fill_between_data.id)
+        self.list_all.append(fill_between_data)
 
         # Update model
         self.modelFillBetween._model_data.append(fill_between_data.model_style)
@@ -806,12 +901,16 @@ class SciPlotUI(_QMainWindow):
             self._fill_between_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def __updateFillBetweenDataDelete(self, row):
+    def __updateFillBetweenDataDelete(self, row, plt_id):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
         """
-        self._fill_between_data.pop(row)
+        idx_to_remove = self.list_ids.index(plt_id)
+        self.list_ids.pop(idx_to_remove)
+        self.list_all.pop(idx_to_remove)
+        
+#        self._fill_between_data.pop(row)
         self.refreshAllPlots()
 
     def __imshow(self, img, x=None, y=None, label=None,
@@ -853,6 +952,7 @@ class SciPlotUI(_QMainWindow):
         image_data.x = x
         image_data.y = y
         image_data.label = label
+        image_data.id = _time.time()
         image_data.cbar['show'] = cbar
 
         # Imshow outputs an image object
@@ -882,6 +982,8 @@ class SciPlotUI(_QMainWindow):
 
         # Append this specific plot data to out list of all plots
         self._images_data.append(image_data)
+        self.list_ids.append(image_data.id)
+        self.list_all.append(image_data)
 
         # Update model
         self.modelImages._model_data.append(image_data.model_style)
@@ -897,12 +999,17 @@ class SciPlotUI(_QMainWindow):
             self._images_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def __updateImagesDataDelete(self, row):
+    def __updateImagesDataDelete(self, row, plt_id):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
         """
-        popd = self._images_data.pop(row)
+        
+        idx_to_remove = self.list_ids.index(plt_id)
+        self.list_ids.pop(idx_to_remove)
+        popd = self.list_all.pop(idx_to_remove)
+            
+#        popd = self._images_data.pop(row)
         if popd.cbar['obj'] is not None:
             popd.cbar['obj'].remove()
 #        self.axisAspect()
@@ -958,6 +1065,7 @@ class SciPlotUI(_QMainWindow):
         bar_data.y = y
         bar_data.bottom = bottom
         bar_data.label = label
+        bar_data.id = _time.time()
 
         bar_data.style_dict['width_factor'] = width_factor
 
@@ -1015,6 +1123,9 @@ class SciPlotUI(_QMainWindow):
 
         # Append this specific plot data to out list of all plots
         self._bar_data.append(bar_data)
+        self.list_ids.append(bar_data.id)
+        self.list_all.append(bar_data)
+        
         # Update model
         self.modelBars._model_data.append(bar_data.model_style)
         self.modelBars.layoutChanged.emit()
@@ -1061,12 +1172,16 @@ class SciPlotUI(_QMainWindow):
             self._bar_data[num].model_style = style_info
         self.refreshAllPlots()
 
-    def __updateBarsDataDelete(self, row):
+    def __updateBarsDataDelete(self, row, plt_id):
         """
         A plot was deleted (likely from within the model); thus, need to \
         remove the corresponding plot data
         """
-        self._bar_data.pop(row)
+        idx_to_remove = self.list_ids.index(plt_id)
+        self.list_ids.pop(idx_to_remove)
+        self.list_all.pop(idx_to_remove)
+        
+#        self._bar_data.pop(row)
         self.refreshAllPlots()
 
     def axisAspect(self):
@@ -1152,46 +1267,45 @@ class SciPlotUI(_QMainWindow):
         try:
             self.modelLine._model_data = []
             self.modelLine.layoutChanged.emit()
-            for num,_ in enumerate(self._plot_data):
-                self.updatePlotDataDelete(num)
-            self._plot_data = []
-            self.refreshAllPlots()
         except:
             print('Error in clear all of plots/lines')
         
         try:
             self.modelBars._model_data = []
             self.modelBars.layoutChanged.emit()
-            for num,_ in enumerate(self._bar_data):
-                self.updateBarsDataDelete(num)
-            self._bar_data = []
-            self.refreshAllPlots()
         except:
             print('Error in clear all of bars')
         
         
         try:
+            # Need to iterate as to check for colorbar existance
+            for num, model_data in enumerate(self.modelImages._model_data):
+                idx_to_remove = self.list_ids.index(model_data['id'])
+                self.list_ids.pop(idx_to_remove)
+                popd = self.list_all.pop(idx_to_remove)
+                if popd.cbar['obj'] is not None:
+                    popd.cbar['obj'].remove()
+            
             self.modelImages._model_data = []
             self.modelImages.layoutChanged.emit()
-            for num,_ in enumerate(self._images_data):
-                self.updateImagesDataDelete(num)
-            self._images_data = []
-            self.refreshAllPlots()
         except:
             print('Error in clear all of images')
         
         try:
             self.modelFillBetween._model_data = []
             self.modelFillBetween.layoutChanged.emit()
-            for num,_ in enumerate(self._fill_between_data):
-                self.updateFillBetweenDataDelete(num)
-            self._fill_between_data = []
-            self.refreshAllPlots()
         except:
             print('Error in clear all of fill-betweens')
-        
-        
-
+            
+        try:
+            self.list_ids = []
+            self.list_all = []
+        except:
+            print('Error in clear all')
+        finally:
+            self.refreshAllPlots()
+            
+            
 if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)

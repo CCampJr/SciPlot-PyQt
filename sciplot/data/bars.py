@@ -68,6 +68,7 @@ class DataBar(_Data, BarStyle):
         out = {}
         out.update(self.style_dict)
         out['label'] = self.label
+        out['id'] = self.id
         return out
 
     @model_style.setter

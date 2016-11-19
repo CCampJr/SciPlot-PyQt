@@ -38,6 +38,13 @@ from sciplot.ui.models.abstract import (AbstractTableModelMpl as
                                         _AbstractEditDelegateMpl)
 
 class TableModelLines(_AbstractTableModelMpl):
+    """
+    
+    Signals
+    -------
+    dataSeleted : int, int
+        Row, id of plot
+    """
     _HEADERS = ['Color',
                 'Alpha',
                 'LineWidth',
@@ -45,7 +52,8 @@ class TableModelLines(_AbstractTableModelMpl):
                 'Marker',
                 'Marker Size',
                 'Label',
-                'Delete']
+                'Delete',
+                'ID']
 
     _COL_COLOR = _HEADERS.index('Color')
     _COL_ALPHA = _HEADERS.index('Alpha')
@@ -55,8 +63,9 @@ class TableModelLines(_AbstractTableModelMpl):
     _COL_MARKERSIZE = _HEADERS.index('Marker Size')
     _COL_LABEL = _HEADERS.index('Label')
     _COL_DELETE = _HEADERS.index('Delete')
+    _COL_ID = _HEADERS.index('ID')
 
-    dataDeleted = _pyqtSignal(int)
+    dataDeleted = _pyqtSignal(int, float)
 
     def __init__(self, parent=None):
 
@@ -172,9 +181,9 @@ class TableModelLines(_AbstractTableModelMpl):
                 self._model_data[row]['label'] = value
             elif col == TableModelLines._COL_DELETE:
                 if value:
-                    self._model_data.pop(row)
+                    out = self._model_data.pop(row)
                     self.layoutChanged.emit()
-                    self.dataDeleted.emit(row)
+                    self.dataDeleted.emit(row, out['id'])
 
             self.dataChanged.emit(index, index)
 

@@ -36,6 +36,7 @@ class Data:
     def _setupData(self):
         self.x = None
         self.y = None
+        self.id = None
         self.label = None
         self.mplobj = None
         #self.units = {'x_units': None, 'y_units': None}
@@ -46,6 +47,7 @@ class Data:
         out = {}
         out.update(self.style_dict)
         out['label'] = self.label
+        out['id'] = self.id
         return out
 
 class Data2D(Data):
