@@ -210,10 +210,6 @@ class SciPlotUI(_QMainWindow):
         self.updatePlotDataStyle = self.__updatePlotDataStyle
         self.updatePlotDataDelete = self.__updatePlotDataDelete
 
-        # This list will house objects containing all plot-data (i.e. the \
-        # actual data and all elements that will be placed within models)
-        self._plot_data = []
-
         # Initial  and insert table view for line plots
         self.tableViewLine = _QTableView()
         self.ui.modelTabWidget.addTab(self.tableViewLine, 'Lines')
@@ -269,9 +265,6 @@ class SciPlotUI(_QMainWindow):
         self.updateFillBetweenDataStyle = self.__updateFillBetweenDataStyle
         self.updateFillBetweenDataDelete = self.__updateFillBetweenDataDelete
 
-        # fill_between data-- similar to plot_data above
-        self._fill_between_data = []
-
         # Initial and insert table view for fill_between plots
         self.tableViewFillBetween = _QTableView()
         self.ui.modelTabWidget.addTab(self.tableViewFillBetween,
@@ -322,7 +315,6 @@ class SciPlotUI(_QMainWindow):
         self.updateImagesDataDelete = self.__updateImagesDataDelete
 
         # images data-- similar to plot_data above
-        self._images_data = []
 
         # Initial  and insert table view for images
         self.tableViewImages = _QTableView()
@@ -377,9 +369,6 @@ class SciPlotUI(_QMainWindow):
         self.hist = self.__hist
         self.updateBarsDataStyle = self.__updateBarsDataStyle
         self.updateBarsDataDelete = self.__updateBarsDataDelete
-
-        # bar data-- similar to plot_data above
-        self._bar_data = []
 
         # Initial  and insert table view for bars
         self.tableViewBars = _QTableView()
@@ -534,7 +523,6 @@ class SciPlotUI(_QMainWindow):
         plot_data.retrieve_style_from_line(plot_data.mplobj[0])
 
         # Append this specific plot data to out list of all plots
-        self._plot_data.append(plot_data)
         self.list_ids.append(plot_data.id)
         self.list_all.append(plot_data)
 
@@ -620,7 +608,8 @@ class SciPlotUI(_QMainWindow):
         these elements in the plot data
         """
         for num, style_info in enumerate(self.modelLine._model_data):
-            self._plot_data[num].model_style = style_info
+            idx = self.list_ids.index(style_info['id'])
+            self.list_all[idx].model_style = style_info
         self.refreshAllPlots()
 
     def __updatePlotDataDelete(self, row, plt_id):
@@ -636,7 +625,6 @@ class SciPlotUI(_QMainWindow):
         except:
             print('Error in __updatePlotDataDelete: {}'.format(idx_to_remove))
             
-#        self._plot_data.pop(row)
         self.refreshAllPlots()
 
     def refreshAllPlots(self):
@@ -724,96 +712,10 @@ class SciPlotUI(_QMainWindow):
 
             else:
                 print('Unknown')
-#        # Images
-#        # Check to see if any images even remain (maybe all were deleted)
-#        if self.elements.count('images'):
-#            if len(self._images_data) > 0:
-#                self.mpl_widget.ax.hold(True)
-#                for itm in self._images_data:
-#                    # Hide label if alpha=0
-#                    if itm.style_dict['alpha'] == 0:
-#                        label = None
-#                    else:
-#                        label = itm.label
-#                    if itm.cbar['obj'] is not None:
-#                        itm.cbar['obj'].remove()
-#                        itm.cbar['obj'] = None
-#                    itm.mplobj = self.mpl_widget.ax.imshow(itm.img, label=label,
-#                                                interpolation='none',
-#                                                origin='lower',
-#                                                cmap=_mpl.cm.cmap_d[itm.style_dict['cmap_name']],
-#                                                alpha=itm.style_dict['alpha'],
-#                                                clim=itm.style_dict['clim'])
-#                    if itm.cbar['show']:
-#                        itm.cbar['obj'] = self.mpl_widget.fig.colorbar(itm.mplobj,
-#                                                                       use_gridspec=True)
-#
-#        # Bars
-#        # Check to see if any images even remain (maybe all were deleted)
-#        if self.elements.count('bars'):
-#            if len(self._bar_data) > 0:
-#                self.mpl_widget.ax.hold(True)
-#                for itm in self._bar_data:
-#                    # Hide label if alpha=0
-#                    if itm.style_dict['alpha'] == 0:
-#                        label = None
-#                    else:
-#                        label = itm.label
-#                    itm.mplobj = self.mpl_widget.ax.bar(itm._left, itm.y, 
-#                                                        bottom=itm.bottom,
-#                                                        width=itm._width,
-#                                                        label=label,
-#                                                        facecolor=itm.style_dict['facecolor'],
-#                                                        alpha=itm.style_dict['alpha'],
-#                                                        edgecolor=itm.style_dict['edgecolor'],
-#                                                        linewidth=itm.style_dict['linewidth'])
-#        # Lines
-#        # Check to see if any plots even are remaining (maybe all were deleted)
-#        if self.elements.count('lines'):
-#            if len(self._plot_data) > 0:
-#                self.mpl_widget.ax.hold(True)
-#                for itm in self._plot_data:
-#                    # Hide label if alpha=0
-#                    if itm.style_dict['alpha'] == 0:
-#                        label = None
-#                    else:
-#                        label = itm.label
-#                    itm.mplobj = self.mpl_widget.ax.plot(itm.x, itm.y, 
-#                                                         label=label,
-#                                                         color=itm.style_dict['color'],
-#                                                         alpha=itm.style_dict['alpha'],
-#                                                         linewidth=itm.style_dict['linewidth'],
-#                                                         linestyle=itm.style_dict['linestyle'],
-#                                                         marker=itm.style_dict['marker'],
-#                                                         markersize=itm.style_dict['markersize'])
-#
-#        # Fill between
-#        # Check to see if any plots even are remaining (maybe all were deleted)
-#        if self.elements.count('fill betweens'):
-#            if len(self._fill_between_data) > 0:
-#                self.mpl_widget.ax.hold(True)
-#                for itm in self._fill_between_data:
-#                    # Hide label if alpha=0
-#                    if itm.style_dict['alpha'] == 0:
-#                        label = None
-#                    else:
-#                        label = itm.label
-#                    itm.mplobj = self.mpl_widget.ax.fill_between(itm.x, itm.y_low, itm.y_high,
-#                                                      label=label,
-#                                                      facecolor=itm.style_dict['facecolor'],
-#                                                      edgecolor=itm.style_dict['edgecolor'],
-#                                                      alpha=itm.style_dict['alpha'],
-#                                                      linewidth=itm.style_dict['linewidth'])
 
         # Only add a legend if a plot exists
         # Only certain objects provide labels
         label_object_count = len(self.list_all)
-#        if self.elements.count('lines'):
-#            label_object_count += len(self._plot_data)
-#        if self.elements.count('fill betweens'):
-#            label_object_count += len(self._fill_between_data)
-#        if self.elements.count('bars'):
-#            label_object_count += len(self._bar_data)
 
         if label_object_count > 0:
             self.mpl_widget.ax.legend(loc='best')
@@ -883,7 +785,6 @@ class SciPlotUI(_QMainWindow):
         fill_between_data.retrieve_style_from_polycollection(fill_between_data.mplobj)
 
         # Append this specific plot data to out list of all plots
-        self._fill_between_data.append(fill_between_data)
         self.list_ids.append(fill_between_data.id)
         self.list_all.append(fill_between_data)
 
@@ -898,7 +799,8 @@ class SciPlotUI(_QMainWindow):
         these elements in the fill_between data
         """
         for num, style_info in enumerate(self.modelFillBetween._model_data):
-            self._fill_between_data[num].model_style = style_info
+            idx = self.list_ids.index(style_info['id'])
+            self.list_all[idx].model_style = style_info
         self.refreshAllPlots()
 
     def __updateFillBetweenDataDelete(self, row, plt_id):
@@ -910,7 +812,6 @@ class SciPlotUI(_QMainWindow):
         self.list_ids.pop(idx_to_remove)
         self.list_all.pop(idx_to_remove)
         
-#        self._fill_between_data.pop(row)
         self.refreshAllPlots()
 
     def __imshow(self, img, x=None, y=None, label=None,
@@ -981,7 +882,6 @@ class SciPlotUI(_QMainWindow):
         image_data.retrieve_style_from_image(image_data.mplobj)
 
         # Append this specific plot data to out list of all plots
-        self._images_data.append(image_data)
         self.list_ids.append(image_data.id)
         self.list_all.append(image_data)
 
@@ -996,7 +896,8 @@ class SciPlotUI(_QMainWindow):
         these elements in the fill_between data
         """
         for num, style_info in enumerate(self.modelImages._model_data):
-            self._images_data[num].model_style = style_info
+            idx = self.list_ids.index(style_info['id'])
+            self.list_all[idx].model_style = style_info
         self.refreshAllPlots()
 
     def __updateImagesDataDelete(self, row, plt_id):
@@ -1009,7 +910,6 @@ class SciPlotUI(_QMainWindow):
         self.list_ids.pop(idx_to_remove)
         popd = self.list_all.pop(idx_to_remove)
             
-#        popd = self._images_data.pop(row)
         if popd.cbar['obj'] is not None:
             popd.cbar['obj'].remove()
 #        self.axisAspect()
@@ -1122,7 +1022,6 @@ class SciPlotUI(_QMainWindow):
         bar_data.retrieve_style_from_bar(bar_data.mplobj[0])
 
         # Append this specific plot data to out list of all plots
-        self._bar_data.append(bar_data)
         self.list_ids.append(bar_data.id)
         self.list_all.append(bar_data)
         
@@ -1169,7 +1068,8 @@ class SciPlotUI(_QMainWindow):
         these elements in the fill_between data
         """
         for num, style_info in enumerate(self.modelBars._model_data):
-            self._bar_data[num].model_style = style_info
+            idx = self.list_ids.index(style_info['id'])
+            self.list_all[idx].model_style = style_info
         self.refreshAllPlots()
 
     def __updateBarsDataDelete(self, row, plt_id):
@@ -1181,7 +1081,6 @@ class SciPlotUI(_QMainWindow):
         self.list_ids.pop(idx_to_remove)
         self.list_all.pop(idx_to_remove)
         
-#        self._bar_data.pop(row)
         self.refreshAllPlots()
 
     def axisAspect(self):
