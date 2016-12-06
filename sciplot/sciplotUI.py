@@ -476,7 +476,8 @@ class SciPlotUI(_QMainWindow):
         self.ui.pushButtonClearAll.pressed.connect(self.clearAll)
         self.ui.pushButtonDefaultView.pressed.connect(self.defaultView)
 
-    def __plot(self, x, y, label=None, x_label=None, y_label=None, **kwargs):
+    def __plot(self, x, y, label=None, x_label=None, y_label=None, meta={}, 
+               **kwargs):
         """
         MPL-like plotting functionality
 
@@ -507,6 +508,7 @@ class SciPlotUI(_QMainWindow):
         plot_data.x = x
         plot_data.y = y
         plot_data.label = label
+        plot_data.meta = meta
         plot_data.id = _time.time()
 
         # Plot outputs a line object
@@ -741,8 +743,8 @@ class SciPlotUI(_QMainWindow):
         self.axisAspect()
         self.mpl_widget.draw()
 
-    def __fill_between(self, x, y_low, y_high, label=None, x_label=None,
-                     y_label=None, **kwargs):
+    def __fill_between(self, x, y_low, y_high, label=None,  meta={},
+                       x_label=None, y_label=None, **kwargs):
         """
         MPL-like fill_between plotting functionality
 
@@ -777,6 +779,7 @@ class SciPlotUI(_QMainWindow):
         fill_between_data.y_low = y_low
         fill_between_data.y_high = y_high
         fill_between_data.label = label
+        fill_between_data.meta = meta
         fill_between_data.id = _time.time()
 
         # Fill between outputs a polycollection
@@ -822,7 +825,7 @@ class SciPlotUI(_QMainWindow):
         
         self.refreshAllPlots()
 
-    def __imshow(self, img, x=None, y=None, label=None,
+    def __imshow(self, img, x=None, y=None, label=None, meta={},
                x_label=None, y_label=None, cbar=False, **kwargs):
         """
         MPL-like plotting functionality
@@ -861,6 +864,7 @@ class SciPlotUI(_QMainWindow):
         image_data.x = x
         image_data.y = y
         image_data.label = label
+        image_data.meta = meta
         image_data.id = _time.time()
         image_data.cbar['show'] = cbar
 
@@ -924,8 +928,8 @@ class SciPlotUI(_QMainWindow):
         self.refreshAllPlots()
 
 
-    def __bar(self, x, y, bottom=0, width_factor=1.0, use_real_width=False, label=None,
-            x_label=None, y_label=None, **kwargs):
+    def __bar(self, x, y, bottom=0, width_factor=1.0, use_real_width=False, 
+              label=None, meta={}, x_label=None, y_label=None, **kwargs):
         """
         MPL-like plotting functionality
 
@@ -973,6 +977,7 @@ class SciPlotUI(_QMainWindow):
         bar_data.y = y
         bar_data.bottom = bottom
         bar_data.label = label
+        bar_data.meta = meta
         bar_data.id = _time.time()
 
         bar_data.style_dict['width_factor'] = width_factor
@@ -1037,7 +1042,7 @@ class SciPlotUI(_QMainWindow):
         self.modelBars._model_data.append(bar_data.model_style)
         self.modelBars.layoutChanged.emit()
 
-    def __hist(self, data, bins=10, label=None, x_label=None,
+    def __hist(self, data, bins=10, label=None, meta={}, x_label=None,
              y_label='Counts', **kwargs):
         """
         MPL-like histogram plotting
@@ -1068,7 +1073,7 @@ class SciPlotUI(_QMainWindow):
         offset = gap/2
 
         self.bar(lefts[:-1]+offset, counts, width_factor=1.0, label=label,
-                 x_label=x_label, y_label=y_label, **kwargs)
+                 x_label=x_label, y_label=y_label, meta=meta, **kwargs)
 
     def __updateBarsDataStyle(self):
         """
