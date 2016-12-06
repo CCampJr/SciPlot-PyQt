@@ -53,7 +53,7 @@ class TableModelImages(_AbstractTableModelMpl):
     _COL_LABEL = _HEADERS.index('Label')
     _COL_DELETE = _HEADERS.index('Delete')
 
-    dataDeleted = _pyqtSignal(int)
+    dataDeleted = _pyqtSignal(int, float)
 
     def __init__(self, parent=None):
 
@@ -137,9 +137,9 @@ class TableModelImages(_AbstractTableModelMpl):
                 self._model_data[row]['label'] = value
             elif col == TableModelImages._COL_DELETE:
                 if value:
-                    self._model_data.pop(row)
+                    out = self._model_data.pop(row)
                     self.layoutChanged.emit()
-                    self.dataDeleted.emit(row)
+                    self.dataDeleted.emit(row, out['id'])
 
             self.dataChanged.emit(index, index)
 
