@@ -1205,6 +1205,22 @@ class SciPlotUI(_QMainWindow):
             self.refreshAllPlots()
             
             
+    @property
+    def n_lines(self):
+        return sum(isinstance(x, _DataLine) for x in self.list_all)
+    
+    @property
+    def n_bars(self):
+        return sum(isinstance(x, _DataBar) for x in self.list_all)
+        
+    @property
+    def n_fillbetweens(self):
+        return sum(isinstance(x, _DataFillBetween) for x in self.list_all)
+        
+    @property
+    def n_images(self):
+        return sum(isinstance(x, _DataImages) for x in self.list_all)
+        
 if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)
