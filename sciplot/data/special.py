@@ -24,11 +24,13 @@ class DataFillBetween(_Data, PolyCollectionStyle):
         out.update(self.style_dict)
         out['label'] = self.label
         out['id'] = self.id
+        out['meta'] = self.meta
         return out
 
     @model_style.setter
     def model_style(self, value):
         self.label = value['label']
+        self.meta = value['meta']
         self.style_dict['facecolor'] = value['facecolor']
         self.style_dict['alpha'] = value['alpha']
         self.style_dict['edgecolor'] = value['edgecolor']

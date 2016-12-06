@@ -41,6 +41,7 @@ class Data:
         self.mplobj = None
         #self.units = {'x_units': None, 'y_units': None}
         self.style_dict = {}
+        self.meta = {}
 
     @property
     def model_style(self):
@@ -48,6 +49,7 @@ class Data:
         out.update(self.style_dict)
         out['label'] = self.label
         out['id'] = self.id
+        out['meta'] = self.meta
         return out
 
 class Data2D(Data):

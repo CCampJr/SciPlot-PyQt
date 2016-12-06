@@ -57,6 +57,8 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QSizePolicy as _QSizePolicy,
                              QTabWidget as _QTabWidget)
 
+from PyQt5.QtCore import pyqtSignal as _pyqtSignal
+
 # Import from Designer-based GUI
 from sciplot.ui.qt_Plotter import Ui_MainWindow as Ui_Plotter
 from sciplot.ui.widget_mpl import MplCanvas as _MplCanvas
@@ -163,6 +165,10 @@ class SciPlotUI(_QMainWindow):
     -----
     * limit_to options: 'lines', 'fill betweens', 'bars', images'
     """
+    # Signal emitted when clearAll is called
+    # Added for external programs
+    all_cleared = _pyqtSignal(int)  
+    
     def __init__(self, limit_to=None, parent=None, show=True):
         self.list_ids = []
         self.list_all = []
@@ -420,6 +426,8 @@ class SciPlotUI(_QMainWindow):
         """
 
         # Generic start to any pyQT program
+        
+        
         super(SciPlotUI, self).__init__(parent)
         self.ui = Ui_Plotter()
         self.ui.setupUi(self)
@@ -449,7 +457,7 @@ class SciPlotUI(_QMainWindow):
             count()
 
         # SIGNALS AND SLOTS
-
+        
         # Global labels
         self.ui.lineEditTitle.editingFinished.connect(self.updateLabelsFromLineEdit)
         self.ui.lineEditXLabel.editingFinished.connect(self.updateLabelsFromLineEdit)
@@ -1203,6 +1211,7 @@ class SciPlotUI(_QMainWindow):
             print('Error in clear all')
         finally:
             self.refreshAllPlots()
+            self.all_cleared.emit(id(self))
             
             
     @property
@@ -1220,6 +1229,38 @@ class SciPlotUI(_QMainWindow):
     @property
     def n_images(self):
         return sum(isinstance(x, _DataImages) for x in self.list_all)
+        
+    @property
+    def list_line_objs(self):
+        return [x for x in self.list_all if isinstance(x, _DataLine)]
+        
+    @property
+    def list_line_ids(self):
+        return [x.id for x in self.list_all if isinstance(x, _DataLine)]
+        
+    @property
+    def list_bar_objs(self):
+        return [x for x in self.list_all if isinstance(x, _DataBar)]
+        
+    @property
+    def list_bar_ids(self):
+        return [x.id for x in self.list_all if isinstance(x, _DataBar)]
+        
+    @property
+    def list_fillbetween_objs(self):
+        return [x for x in self.list_all if isinstance(x, _DataFillBetween)]
+        
+    @property
+    def list_fillbetween_ids(self):
+        return [x.id for x in self.list_all if isinstance(x, _DataFillBetween)]
+        
+    @property
+    def list_image_objs(self):
+        return [x for x in self.list_all if isinstance(x, _DataImages)]
+        
+    @property
+    def list_image_ids(self):
+        return [x.id for x in self.list_all if isinstance(x, _DataImages)]
         
 if __name__ == '__main__':
 

@@ -52,8 +52,7 @@ class TableModelLines(_AbstractTableModelMpl):
                 'Marker',
                 'Marker Size',
                 'Label',
-                'Delete',
-                'ID']
+                'Delete']
 
     _COL_COLOR = _HEADERS.index('Color')
     _COL_ALPHA = _HEADERS.index('Alpha')
@@ -63,7 +62,7 @@ class TableModelLines(_AbstractTableModelMpl):
     _COL_MARKERSIZE = _HEADERS.index('Marker Size')
     _COL_LABEL = _HEADERS.index('Label')
     _COL_DELETE = _HEADERS.index('Delete')
-    _COL_ID = _HEADERS.index('ID')
+#    _COL_ID = _HEADERS.index('ID')
 
     dataDeleted = _pyqtSignal(int, float)
 
