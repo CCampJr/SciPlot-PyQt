@@ -18,10 +18,11 @@ packages may work.
 * Matplotlib (1.5.0rc3)
 
 ## Known Issues ##
-There is a bug in PyQt 5.7.1 that will prevent SciPlot's tables from showing the individual plot entries 
+There is a bug in PyQt 5.7.* that will prevent SciPlot's tables from showing the individual plot entries 
 (see https://www.riverbankcomputing.com/pipermail/pyqt/2017-January/038483.html). Apparently, this will be fixed in 5.7.2.
 
-* As WinPython 3.5.2.3Qt5 uses PyQt 5.7.1, it is advised to use WinPython 3.5.2.2Qt5 or 3.4.4.5Qt5 until the matter is sorted out.
+* As WinPython 3.5.2.3Qt5 and 3.5.2.2Qt5 use PyQt 5.7.*, it is advised to use WinPython 3.5.2.1Qt5 or 3.4.4.5Qt5 until the matter is sorted out.
+* Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
 
 ## Installation ##
 ```
