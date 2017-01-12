@@ -44,15 +44,21 @@ sp.imshow(r, clim=[25,75], cmap='viridis', label='Imshow', x_label='X (pix)',
           y_label='Y (pix)')
 ```
 ![Screenshot3.png](./Screenshot3.png)
-## Dependencies##
+## Dependencies ##
 
 Note: These are the developmental system specs. Older versions of certain
 packages may work.
 
 * Python >= 3.4
 * Numpy (1.9.3)
-* PyQT5 (5.5.1)
+* PyQT5 (5.5.1 or 5.6.0)
 * Matplotlib (1.5.0rc3)
+
+## Known Issues ##
+There is a bug in PyQt 5.7.1 that will prevent SciPlot's tables from showing the individual plot entries 
+(see https://www.riverbankcomputing.com/pipermail/pyqt/2017-January/038483.html). Apparently, this will be fixed in 5.7.2.
+
+* As WinPython 3.5.2.3Qt5 uses PyQt 5.7.1, it is advised to use WinPython 3.5.2.2Qt5 or 3.4.4.5Qt5 until the matter is sorted out.
 
 ### NONLICENSE ###
 This software was developed at the National Institute of Standards and Technology (NIST) by
