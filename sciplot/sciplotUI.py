@@ -430,6 +430,10 @@ class SciPlotUI(_QMainWindow):
         self.modelBars.dataChanged.connect(self.updateBarsDataStyle)
         self.modelBars.dataDeleted.connect(self.updateBarsDataDelete)
 
+        # Export bars to csv
+        self.ui.actionExport_Bars_to_CSV.setVisible(True)
+        self.ui.actionExport_Bars_to_CSV.triggered.connect(self.export_bars_csv)
+
     def setup(self, limit_to=None, parent=None):
         """
         Basic UI setup
@@ -1243,10 +1247,24 @@ class SciPlotUI(_QMainWindow):
         finally:
             self.refreshAllPlots()
             self.all_cleared.emit(id(self))
-            
+
+    def export_bars_csv(self):
+        ret = _QFileDialog.getSaveFileName(filter="Comma-Separated Values (*.csv);;All Files (*.*)")
+        if ret[0]:
+            # pth, fname = _os.path.split(ret[0])
+            with open(ret[0],'w') as f:
+                for q in self.list_bar_objs:
+                    f.write('{}\n'.format(q.label))
+                    f.write('left,')
+                    q._left.tofile(f, sep=',')
+                    f.write('\nx,')
+                    q.x.tofile(f, sep=',')
+                    f.write('\ny,')
+                    q.y.tofile(f,sep=',')
+                    f.write('\n\n')    
 
     def export_lines_csv(self):
-        ret = _QFileDialog.getSaveFileName()
+        ret = _QFileDialog.getSaveFileName(filter="Comma-Separated Values (*.csv);;All Files (*.*)")
         if ret[0]:
             # pth, fname = _os.path.split(ret[0])
             with open(ret[0],'w') as f:
@@ -1259,7 +1277,7 @@ class SciPlotUI(_QMainWindow):
                     f.write('\n\n')
 
     def export_fillbetweens_csv(self):
-        ret = _QFileDialog.getSaveFileName()
+        ret = _QFileDialog.getSaveFileName(filter="Comma-Separated Values (*.csv);;All Files (*.*)")
         if ret[0]:
             # pth, fname = _os.path.split(ret[0])
             with open(ret[0],'w') as f:
