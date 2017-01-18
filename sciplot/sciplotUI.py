@@ -1171,7 +1171,23 @@ class SciPlotUI(_QMainWindow):
         self.mpl_widget.toolbar._views.clear()
         self.mpl_widget.toolbar._positions.clear()
         self.mpl_widget.toolbar.update()
-        
+    
+    def clearAllBars(self):
+        try:
+            self.modelBars._model_data = []
+            ids = self.list_bar_ids
+            for i in ids:
+                self.clearID(i)
+            
+            self.modelBars.layoutChanged.emit()
+        except:
+            print('Error in clearAllBars')
+
+    def clearID(self, clear_id):
+        idx_to_remove = self.list_ids.index(clear_id)
+        self.list_ids.pop(idx_to_remove)
+        self.list_all.pop(idx_to_remove)
+
     def clearAll(self):
         """
         Clear all plots and graphs and images
