@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '.\ui_Plotter.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.6
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -44,6 +44,7 @@ class Ui_MainWindow(object):
         self.GeneralParameters.setGeometry(QtCore.QRect(0, 0, 176, 297))
         self.GeneralParameters.setObjectName("GeneralParameters")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.GeneralParameters)
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -78,9 +79,10 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addItem(spacerItem1, 1, 0, 1, 1)
         self.toolBox.addItem(self.GeneralParameters, "")
         self.AxisParameters = QtWidgets.QWidget()
-        self.AxisParameters.setGeometry(QtCore.QRect(0, 0, 149, 248))
+        self.AxisParameters.setGeometry(QtCore.QRect(0, 0, 176, 297))
         self.AxisParameters.setObjectName("AxisParameters")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.AxisParameters)
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -164,6 +166,8 @@ class Ui_MainWindow(object):
         self.menuFigure_Width_Format = QtWidgets.QMenu(self.menuFormat)
         self.menuFigure_Width_Format.setEnabled(False)
         self.menuFigure_Width_Format.setObjectName("menuFigure_Width_Format")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -183,6 +187,18 @@ class Ui_MainWindow(object):
         self.actionMacro_Schema = QtWidgets.QAction(MainWindow)
         self.actionMacro_Schema.setEnabled(False)
         self.actionMacro_Schema.setObjectName("actionMacro_Schema")
+        self.actionExport_Lines_to_CSV = QtWidgets.QAction(MainWindow)
+        self.actionExport_Lines_to_CSV.setVisible(False)
+        self.actionExport_Lines_to_CSV.setObjectName("actionExport_Lines_to_CSV")
+        self.actionExport_Bars_to_CSV = QtWidgets.QAction(MainWindow)
+        self.actionExport_Bars_to_CSV.setVisible(False)
+        self.actionExport_Bars_to_CSV.setObjectName("actionExport_Bars_to_CSV")
+        self.actionExport_Fill_Between_to_CSV = QtWidgets.QAction(MainWindow)
+        self.actionExport_Fill_Between_to_CSV.setVisible(False)
+        self.actionExport_Fill_Between_to_CSV.setObjectName("actionExport_Fill_Between_to_CSV")
+        self.actionExport_Image_to_CSV = QtWidgets.QAction(MainWindow)
+        self.actionExport_Image_to_CSV.setVisible(False)
+        self.actionExport_Image_to_CSV.setObjectName("actionExport_Image_to_CSV")
         self.menuFigure_Width_Format.addAction(self.actionSingle_Column)
         self.menuFigure_Width_Format.addAction(self.actionDouble_Column)
         self.menuFormat.addAction(self.actionStyle)
@@ -190,6 +206,11 @@ class Ui_MainWindow(object):
         self.menuFormat.addSeparator()
         self.menuFormat.addAction(self.actionJournal_Styles)
         self.menuFormat.addAction(self.actionMacro_Schema)
+        self.menuFile.addAction(self.actionExport_Lines_to_CSV)
+        self.menuFile.addAction(self.actionExport_Bars_to_CSV)
+        self.menuFile.addAction(self.actionExport_Fill_Between_to_CSV)
+        self.menuFile.addAction(self.actionExport_Image_to_CSV)
+        self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFormat.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -220,9 +241,14 @@ class Ui_MainWindow(object):
         self.pushButtonClearAll.setText(_translate("MainWindow", "Clear All"))
         self.menuFormat.setTitle(_translate("MainWindow", "Format"))
         self.menuFigure_Width_Format.setTitle(_translate("MainWindow", "Figure Width Format"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionStyle.setText(_translate("MainWindow", "Color Scheme"))
         self.actionSingle_Column.setText(_translate("MainWindow", "Single-Column"))
         self.actionDouble_Column.setText(_translate("MainWindow", "Double-Column"))
         self.actionJournal_Styles.setText(_translate("MainWindow", "Journal Styles"))
         self.actionMacro_Schema.setText(_translate("MainWindow", "Macro Schema"))
+        self.actionExport_Lines_to_CSV.setText(_translate("MainWindow", "Export Lines to CSV"))
+        self.actionExport_Bars_to_CSV.setText(_translate("MainWindow", "Export Bars to CSV"))
+        self.actionExport_Fill_Between_to_CSV.setText(_translate("MainWindow", "Export Fill Between to CSV"))
+        self.actionExport_Image_to_CSV.setText(_translate("MainWindow", "Export Image to CSV"))
 

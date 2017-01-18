@@ -155,8 +155,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>149</width>
-            <height>248</height>
+            <width>176</width>
+            <height>297</height>
            </rect>
           </property>
           <attribute name="label">
@@ -354,6 +354,16 @@
     <addaction name="actionJournal_Styles"/>
     <addaction name="actionMacro_Schema"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExport_Lines_to_CSV"/>
+    <addaction name="actionExport_Bars_to_CSV"/>
+    <addaction name="actionExport_Fill_Between_to_CSV"/>
+    <addaction name="actionExport_Image_to_CSV"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuFormat"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -395,6 +405,38 @@
    </property>
    <property name="text">
     <string>Macro Schema</string>
+   </property>
+  </action>
+  <action name="actionExport_Lines_to_CSV">
+   <property name="text">
+    <string>Export Lines to CSV</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionExport_Bars_to_CSV">
+   <property name="text">
+    <string>Export Bars to CSV</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionExport_Fill_Between_to_CSV">
+   <property name="text">
+    <string>Export Fill Between to CSV</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionExport_Image_to_CSV">
+   <property name="text">
+    <string>Export Image to CSV</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

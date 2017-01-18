@@ -43,6 +43,7 @@ Authors
 """
 
 import sys as _sys
+import os as _os
 import numpy as _np
 import time as _time
 
@@ -55,7 +56,8 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QMainWindow as _QMainWindow,
                              QTableView as _QTableView,
                              QSizePolicy as _QSizePolicy,
-                             QTabWidget as _QTabWidget)
+                             QTabWidget as _QTabWidget,
+                             QFileDialog as _QFileDialog)
 
 from PyQt5.QtCore import pyqtSignal as _pyqtSignal
 
@@ -261,6 +263,10 @@ class SciPlotUI(_QMainWindow):
         self.modelLine.dataChanged.connect(self.updatePlotDataStyle)
         self.modelLine.dataDeleted.connect(self.updatePlotDataDelete)
 
+        # Export lines to csv
+        self.ui.actionExport_Lines_to_CSV.setVisible(True)
+        self.ui.actionExport_Lines_to_CSV.triggered.connect(self.export_lines_csv)
+
     def setupFillBetweens(self):
         """
         Enable and setup fill between plotting
@@ -309,6 +315,10 @@ class SciPlotUI(_QMainWindow):
         # When a model (table) elements changes or is deleted
         self.modelFillBetween.dataChanged.connect(self.updateFillBetweenDataStyle)
         self.modelFillBetween.dataDeleted.connect(self.updateFillBetweenDataDelete)
+
+        # Export fillbetweens to csv
+        self.ui.actionExport_Fill_Between_to_CSV.setVisible(True)
+        self.ui.actionExport_Fill_Between_to_CSV.triggered.connect(self.export_fillbetweens_csv)
 
     def setupImages(self):
         """
@@ -1234,7 +1244,35 @@ class SciPlotUI(_QMainWindow):
             self.refreshAllPlots()
             self.all_cleared.emit(id(self))
             
-            
+
+    def export_lines_csv(self):
+        ret = _QFileDialog.getSaveFileName()
+        if ret[0]:
+            # pth, fname = _os.path.split(ret[0])
+            with open(ret[0],'w') as f:
+                for q in self.list_line_objs:
+                    f.write('{}\n'.format(q.label))
+                    f.write('x,')
+                    q.x.tofile(f, sep=',')
+                    f.write('\ny,')
+                    q.y.tofile(f,sep=',')
+                    f.write('\n\n')
+
+    def export_fillbetweens_csv(self):
+        ret = _QFileDialog.getSaveFileName()
+        if ret[0]:
+            # pth, fname = _os.path.split(ret[0])
+            with open(ret[0],'w') as f:
+                for q in self.list_fillbetween_objs:
+                    f.write('{}\n'.format(q.label))
+                    f.write('x,')
+                    q.x.tofile(f, sep=',')
+                    f.write('\ny_low,')
+                    q.y_low.tofile(f,sep=',')
+                    f.write('\ny_high,')
+                    q.y_high.tofile(f,sep=',')
+                    f.write('\n\n')
+
     @property
     def n_lines(self):
         return sum(isinstance(x, _DataLine) for x in self.list_all)
