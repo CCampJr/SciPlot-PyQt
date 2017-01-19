@@ -18,14 +18,15 @@ packages may work.
 * Matplotlib (1.5.0rc3)
 
 ## Known Issues ##
-1. SciPlot has problems when imported and ran via sciplot.main() or %run from within IPython. It appears to 
-work as expected when called through a normal Python interpreter.
+1. **IPython**: SciPlot has problems when imported and ran via sciplot.main() or %run from within 
+IPython. It appears to work as expected when called through a normal Python interpreter.
 
-2. There is a bug in PyQt 5.7.* that will prevent SciPlot's tables from showing the individual plot entries 
-(see https://www.riverbankcomputing.com/pipermail/pyqt/2017-January/038483.html). Apparently, this will be fixed in 5.7.2.
-
-        * As WinPython 3.5.2.3Qt5 and 3.5.2.2Qt5 use PyQt 5.7.*, it is advised to use WinPython 3.5.2.1Qt5 or 3.4.4.5Qt5 until the matter is sorted out.
-        * Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
+2. **PyQt 5.7**: There is a bug in PyQt 5.7.* that will prevent SciPlot's tables from showing the 
+individual plot entries (see https://www.riverbankcomputing.com/pipermail/pyqt/2017-January/038483.html). 
+Apparently, this will be fixed in 5.7.2.
+  * As WinPython 3.5.2.3Qt5 and 3.5.2.2Qt5 use PyQt 5.7.*, it is advised to use WinPython 3.5.2.1Qt5 or 
+  3.4.4.5Qt5 until the matter is sorted out.
+  * Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
 
 ## Installation ##
 ```
