@@ -175,6 +175,12 @@ class SciPlotUI(_QMainWindow):
         self.list_ids = []
         self.list_all = []
 
+        # Check to see if QApp already exists
+        # if not, one has to be created
+        if _QApplication.instance() is None:
+            self.app = _QApplication(_sys.argv)		
+            self.app.setQuitOnLastWindowClosed(True)
+
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
