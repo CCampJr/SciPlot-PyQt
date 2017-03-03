@@ -58,18 +58,22 @@ class DataImages(_Data2D, ImageStyle):
     def model_style(self):
         out = {}
         out.update(self.style_dict)
-
+        
         # clim broken out into high and low in model
         clim = out.pop('clim')
         out['clim_low'] = _np.min(clim)
         out['clim_high'] = _np.max(clim)
+        
         out['label'] = self.label
+        out['id'] = self.id
+        out['meta'] = self.meta
         out['colorbar'] = self.cbar['show']
         return out
 
     @model_style.setter
     def model_style(self, value):
         self.label = value['label']
+        self.meta = value['meta']
         self.style_dict['cmap_name'] = value['cmap_name']
         self.style_dict['alpha'] = value['alpha']
 

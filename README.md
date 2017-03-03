@@ -7,6 +7,27 @@ It enables fast and easy publication-ready plots and images:
 * Theme and style editing (TODO)
 * Figure saving and opening for later editing (TODO)
 
+## Dependencies ##
+
+Note: These are the developmental system specs. Older versions of certain
+packages may work.
+
+* Python >= 3.4
+* Numpy (1.9.3)
+* PyQT5 (5.5.1 or 5.6.0)
+* Matplotlib (1.5.0rc3)
+
+## Known Issues ##
+1. **IPython**: SciPlot has problems when imported and ran via sciplot.main() or %run from within 
+IPython. It appears to work as expected when called through a normal Python interpreter.
+
+2. **PyQt 5.7**: There is a bug in PyQt 5.7.* that will prevent SciPlot's tables from showing the 
+individual plot entries (see https://www.riverbankcomputing.com/pipermail/pyqt/2017-January/038483.html). 
+Apparently, this will be fixed in 5.7.2.
+  * As WinPython 3.5.2.3Qt5 and 3.5.2.2Qt5 use PyQt 5.7.*, it is advised to use WinPython 3.5.2.1Qt5 or 
+  3.4.4.5Qt5 until the matter is sorted out.
+  * Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
+
 ## Installation ##
 ```
 # Make new directory for crikit2 and enter it
@@ -44,15 +65,6 @@ sp.imshow(r, clim=[25,75], cmap='viridis', label='Imshow', x_label='X (pix)',
           y_label='Y (pix)')
 ```
 ![Screenshot3.png](./Screenshot3.png)
-## Dependencies##
-
-Note: These are the developmental system specs. Older versions of certain
-packages may work.
-
-* Python >= 3.4
-* Numpy (1.9.3)
-* PyQT5 (5.5.1)
-* Matplotlib (1.5.0rc3)
 
 ### NONLICENSE ###
 This software was developed at the National Institute of Standards and Technology (NIST) by

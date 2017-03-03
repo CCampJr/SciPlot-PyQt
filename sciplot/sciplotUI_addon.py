@@ -28,8 +28,9 @@ class SciPlotAddon(_SciPlotUI):
     application on top of SciPlot).
     """
     def __init__(self, limit_to=None, parent=None):
+        super(SciPlotAddon, self).__init__(limit_to=limit_to, parent=parent, show=True)
         # Setup SciPlot window
-        self.setup(limit_to=limit_to, parent=parent)
+        # self.setup(limit_to=limit_to, parent=parent)
 
         # Add a calendar to the tabs and have it displayed initially
         cal1 = _QCalendarWidget()
