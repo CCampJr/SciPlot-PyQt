@@ -5,6 +5,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Nose-related
+.noseids
+
+#VS Code Files
+.idea/
+
 # Distribution / packaging
 .Python
 env/
