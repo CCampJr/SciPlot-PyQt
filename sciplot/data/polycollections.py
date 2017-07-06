@@ -30,7 +30,8 @@ class PolyCollectionStyle:
         # Not going to worry about different face colors yet
         color = pc.get_facecolors()[0][:-1]
         if isinstance(color, str):
-            color = _mpl.colors.ColorConverter.cache[color]
+            # color = _mpl.colors.ColorConverter.cache[color]
+            color = _mpl.colors.ColorConverter().to_rgb(color)
         if isinstance(color, tuple):
             color = list(color)
         self.style_dict['facecolor'] = color
@@ -45,7 +46,8 @@ class PolyCollectionStyle:
         # Not going to worry about different edge colors yet
         color = pc.get_edgecolors()[0][:-1]
         if isinstance(color, str):
-            color = _mpl.colors.ColorConverter.cache[color]
+            # color = _mpl.colors.ColorConverter.cache[color]
+            color = _mpl.colors.ColorConverter().to_rgb(color)
         if isinstance(color, tuple):
             color = list(color)
         self.style_dict['edgecolor'] = color

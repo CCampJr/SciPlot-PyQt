@@ -31,7 +31,8 @@ class BarStyle:
         # facecolor
         facecolor = bar.get_facecolor()[:-1]
         if isinstance(facecolor, str):
-            facecolor = _mpl.colors.ColorConverter.cache[facecolor]
+            # facecolor = _mpl.colors.ColorConverter.cache[facecolor]
+            facecolor = _mpl.colors.ColorConverter().to_rgb(facecolor)
         if isinstance(facecolor, tuple):
             facecolor = list(facecolor)
         self.style_dict['facecolor'] = facecolor
@@ -45,7 +46,8 @@ class BarStyle:
         # edgecolor
         edgecolor = bar.get_edgecolor()[:-1]
         if isinstance(edgecolor, str):
-            edgecolor = _mpl.colors.ColorConverter.cache[edgecolor]
+            # edgecolor = _mpl.colors.ColorConverter.cache[edgecolor]
+            edgecolor = _mpl.colors.ColorConverter().to_rgb(edgecolor)
         if isinstance(edgecolor, tuple):
             edgecolor = list(edgecolor)
         self.style_dict['edgecolor'] = edgecolor

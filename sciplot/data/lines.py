@@ -32,7 +32,9 @@ class LineStyle:
         # Line color
         color = line.get_color()
         if isinstance(color, str):
-            color = _mpl.colors.ColorConverter.cache[color]
+            # print('Color: {}'.format(color))
+            # color = _mpl.colors.ColorConverter.cache[color]
+            color = _mpl.colors.ColorConverter().to_rgb(color)
         if isinstance(color, tuple):
             color = list(color)
         self.style_dict['color'] = color
