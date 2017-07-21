@@ -28,6 +28,9 @@ Apparently, this will be fixed in 5.7.2.
   3.4.4.5Qt5 until the matter is sorted out.
   * Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
 
+3. **MATPLOTLIB 2.0**: SciPlot will crash with MPL 2.* as several changes have been made
+to the MPL API. The dev-MPL2 branch is addressing those needs.
+
 ## Installation ##
 ```
 # Make new directory for crikit2 and enter it
