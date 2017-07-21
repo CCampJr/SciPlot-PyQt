@@ -44,7 +44,10 @@ class PolyCollectionStyle:
 
         # edgecolor p-collections return arrays of RGBA
         # Not going to worry about different edge colors yet
-        color = pc.get_edgecolors()[0][:-1]
+        if pc.get_edgecolors().size > 0:  # MPL 2.0 starts with no edgecolors
+            color = pc.get_edgecolors()[0][:-1]
+        else:
+            pass
         if isinstance(color, str):
             # color = _mpl.colors.ColorConverter.cache[color]
             color = _mpl.colors.ColorConverter().to_rgb(color)
