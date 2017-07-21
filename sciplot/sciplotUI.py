@@ -1061,6 +1061,10 @@ class SciPlotUI(_QMainWindow):
         # Update model
         self.modelBars._model_data.append(bar_data.model_style)
         self.modelBars.layoutChanged.emit()
+        
+        # Note: New in MPL2, edgecolor is RGBA with A defaulting to 0
+        # (ie transparent, which Sciplot does not currently support).
+        self.refreshAllPlots()
 
     def __hist(self, data, bins=10, label=None, meta={}, x_label=None,
              y_label='Counts', **kwargs):
