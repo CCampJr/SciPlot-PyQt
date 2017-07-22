@@ -5,9 +5,12 @@ __pycache__/
 # C extensions
 *.so
 
+<<<<<<< HEAD
 # Nose-related
 .noseids
 
+=======
+>>>>>>> master
 #VS Code Files
 .idea/
 
