@@ -1,2 +1,2 @@
-sphinx-apidoc -o ./source/ ../crikit/
+sphinx-apidoc -o ./source/ ../sciplot/
 make html

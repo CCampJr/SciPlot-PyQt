@@ -15,7 +15,7 @@ packages may work.
 * Python >= 3.4
 * Numpy (1.9.3)
 * PyQT5 (5.5.1 or 5.6.0)
-* Matplotlib (1.5.0rc3)
+* Matplotlib (1.5.0rc3, 2.0.0)
 
 ## Known Issues ##
 1. **IPython**: SciPlot has problems when imported and ran via sciplot.main() or %run from within 
@@ -27,6 +27,10 @@ Apparently, this will be fixed in 5.7.2.
   * As WinPython 3.5.2.3Qt5 and 3.5.2.2Qt5 use PyQt 5.7.*, it is advised to use WinPython 3.5.2.1Qt5 or 
   3.4.4.5Qt5 until the matter is sorted out.
   * Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
+
+3. **MATPLOTLIB 2.0**: SciPlot version solder than 0.1.4 will crash with MPL 2.* as several changes have been made to the MPL API. 
+* For v0.1.3, the dev-MPL2 branch should address those problems
+* v0.1.4 is a merge of v0.1.3 and the dev-MPL2 branch (with other updates)
 
 ## Installation ##
 ```

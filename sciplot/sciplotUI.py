@@ -175,6 +175,10 @@ class SciPlotUI(_QMainWindow):
         self.list_ids = []
         self.list_all = []
 
+        # There are a number of changes and deprectaion
+        # in MPL v2; thus, this will be tracked
+        # so MPL 1 and 2 can be used seemlessly
+        self.__mpl_v2 = int(_mpl.__version__.rsplit('.')[0]) == 2
         # Check to see if QApp already exists
         # if not, one has to be created
         if _QApplication.instance() is None:
@@ -459,7 +463,10 @@ class SciPlotUI(_QMainWindow):
 
         # MPL plot widget
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
-        self.mpl_widget.ax.hold(True)
+
+        # Hold is deprecated in MPL2
+        if not self.__mpl_v2:
+            self.mpl_widget.ax.hold(True)
 
         # Insert MPL widget and toolbar
         self.ui.verticalLayout.insertWidget(0, self.mpl_widget)
@@ -668,7 +675,8 @@ class SciPlotUI(_QMainWindow):
         for itm in self.list_all:
             if isinstance(itm, _DataLine):
 #                print('Line')
-                self.mpl_widget.ax.hold(True)
+                if not self.__mpl_v2:
+                    self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
                 if itm.style_dict['alpha'] == 0:
@@ -685,7 +693,8 @@ class SciPlotUI(_QMainWindow):
                                                      markersize=itm.style_dict['markersize'])
             elif isinstance(itm, _DataBar):
 #                print('Bar')
-                self.mpl_widget.ax.hold(True)
+                if not self.__mpl_v2:
+                    self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
                 if itm.style_dict['alpha'] == 0:
@@ -702,7 +711,8 @@ class SciPlotUI(_QMainWindow):
                                                     linewidth=itm.style_dict['linewidth'])
             elif isinstance(itm, _DataImages):
 #                print('Images')
-                self.mpl_widget.ax.hold(True)
+                if not self.__mpl_v2:
+                    self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
                 if itm.style_dict['alpha'] == 0:
@@ -726,7 +736,8 @@ class SciPlotUI(_QMainWindow):
                                                                    use_gridspec=True)
             elif isinstance(itm, _DataFillBetween):
 #                print('Fill Between')
-                self.mpl_widget.ax.hold(True)
+                if not self.__mpl_v2:
+                    self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
                 if itm.style_dict['alpha'] == 0:
@@ -1053,7 +1064,7 @@ class SciPlotUI(_QMainWindow):
         # we rely on the mpl stylesheet to setup color, linewidth, etc.
         # Thus, we plot, then retrieve what the style info was
         bar_data.retrieve_style_from_bar(bar_data.mplobj[0])
-
+    
         # Append this specific plot data to out list of all plots
         self.list_ids.append(bar_data.id)
         self.list_all.append(bar_data)
@@ -1061,6 +1072,10 @@ class SciPlotUI(_QMainWindow):
         # Update model
         self.modelBars._model_data.append(bar_data.model_style)
         self.modelBars.layoutChanged.emit()
+        
+        # Note: New in MPL2, edgecolor is RGBA with A defaulting to 0
+        # (ie transparent, which Sciplot does not currently support).
+        self.refreshAllPlots()
 
     def __hist(self, data, bins=10, label=None, meta={}, x_label=None,
              y_label='Counts', **kwargs):
