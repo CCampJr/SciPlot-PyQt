@@ -8,7 +8,7 @@ Created on Thu Jul 21 01:11:04 2016
 from setuptools import setup, find_packages
 
 setup(name='sciplot-pyqt',
-      version = '0.1.3',
+      version = '0.1.4',
       description = 'A small matplotlib wrapper/UI for creating \
                      publication-ready plots, graphs, and images',
       url = 'http://github.com/CCampJr/SciPlot-PyQt',
@@ -26,4 +26,6 @@ setup(name='sciplot-pyqt',
                    'Environment :: X11 Applications :: Qt',
                    'Programming Language :: Python :: 3 :: Only',
                    'Programming Language :: Python :: 3.4',
+                   'Programming Language :: Python :: 3.5',
+                   'Programming Language :: Python :: 3.6',
                    'Topic :: Scientific/Engineering :: Visualization'])
