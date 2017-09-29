@@ -8,7 +8,7 @@ Created on Thu Jul 21 01:11:04 2016
 from setuptools import setup, find_packages
 
 setup(name='sciplot-pyqt',
-      version = '0.1.4',
+      version = '0.1.5',
       description = 'A small matplotlib wrapper/UI for creating \
                      publication-ready plots, graphs, and images',
       url = 'http://github.com/CCampJr/SciPlot-PyQt',
