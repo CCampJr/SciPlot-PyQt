@@ -8,8 +8,7 @@
 * Whisker plots
 
 # Plotting functionalities
-* ~~Incorporate 'bottom' parameter into bar plots~~
-* ~~colobar~~
+* Image high and low compression parameters
 
 # Style functionality
 * Load mpl-style sheets
