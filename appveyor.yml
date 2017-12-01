@@ -3,8 +3,6 @@ branches:
     - appveyor
     - master
     - dev
-
-branches:
   except:
     - travis
 
