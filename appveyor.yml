@@ -4,6 +4,7 @@ branches:
   only:
     - master
     - dev
+    - version
 #  except:
 
 
