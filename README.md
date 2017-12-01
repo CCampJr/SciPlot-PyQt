@@ -1,3 +1,5 @@
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=appveyor&svg=true)](https://travis-ci.org/CCampJr/SciPlot-PyQt)
+
 # SciPlot-PyQt: Publication-ready scientific plotting for Python #
 
 SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with
