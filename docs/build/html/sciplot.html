@@ -1,0 +1,930 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sciplot package &mdash; SciPlot-PyQt 16.07 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="SciPlot-PyQt 16.07 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SciPlot-PyQt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">sciplot package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-sciplot.sciplotUI">sciplot.sciplotUI module</a><ul>
+<li><a class="reference internal" href="#sciplot-pyqt-publication-ready-scientific-plotting-for-python">SciPlot-PyQt: Publication-ready scientific plotting for Python</a><ul>
+<li><a class="reference internal" href="#supported-plot-types">Supported Plot Types</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#authors">Authors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-sciplot.sciplotUI_addon">sciplot.sciplotUI_addon module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a><ul>
+<li><a class="reference internal" href="#id1">SciPlot-PyQt: Publication-ready scientific plotting for Python</a><ul>
+<li><a class="reference internal" href="#id2">Supported Plot Types</a></li>
+<li><a class="reference internal" href="#id3">Notes</a></li>
+<li><a class="reference internal" href="#id4">Usage</a></li>
+<li><a class="reference internal" href="#id5">Example</a></li>
+<li><a class="reference internal" href="#id6">Authors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SciPlot-PyQt</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>sciplot package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sciplot.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sciplot-package">
+<h1>sciplot package<a class="headerlink" href="#sciplot-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sciplot.data.html">sciplot.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data.bars">sciplot.data.bars module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data.generic">sciplot.data.generic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data.images">sciplot.data.images module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data.lines">sciplot.data.lines module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data.polycollections">sciplot.data.polycollections module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data.special">sciplot.data.special module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.data.html#module-sciplot.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sciplot.ui.html">sciplot.ui package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.ui.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sciplot.ui.models.html">sciplot.ui.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#module-sciplot.ui.models.abstract">sciplot.ui.models.abstract module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#module-sciplot.ui.models.bars">sciplot.ui.models.bars module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#module-sciplot.ui.models.fillbetween">sciplot.ui.models.fillbetween module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#module-sciplot.ui.models.images">sciplot.ui.models.images module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#module-sciplot.ui.models.lines">sciplot.ui.models.lines module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.models.html#module-sciplot.ui.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sciplot.ui.qt5-creator.html">sciplot.ui.qt5-creator package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sciplot.ui.qt5-creator.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.ui.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.ui.html#module-sciplot.ui.qt_Plotter">sciplot.ui.qt_Plotter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.ui.html#module-sciplot.ui.widget_mpl">sciplot.ui.widget_mpl module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.ui.html#module-sciplot.ui">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sciplot.utils.html">sciplot.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.utils.html#module-sciplot.utils.mplstyle">sciplot.utils.mplstyle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sciplot.utils.html#module-sciplot.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sciplot.sciplotUI">
+<span id="sciplot-sciplotui-module"></span><h2>sciplot.sciplotUI module<a class="headerlink" href="#module-sciplot.sciplotUI" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sciplot-pyqt-publication-ready-scientific-plotting-for-python">
+<h3>SciPlot-PyQt: Publication-ready scientific plotting for Python<a class="headerlink" href="#sciplot-pyqt-publication-ready-scientific-plotting-for-python" title="Permalink to this headline">¶</a></h3>
+<p>SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with 
+PyQt5 that allows interactive plotting through an embedded matplotlib canvas. 
+It enables fast and easy publication-ready plots and images:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Interactive plotting</li>
+<li>Theme and style editing (TODO)</li>
+<li>Figure saving and opening for later editing (TODO)</li>
+</ul>
+</div></blockquote>
+<div class="section" id="supported-plot-types">
+<h4>Supported Plot Types<a class="headerlink" href="#supported-plot-types" title="Permalink to this headline">¶</a></h4>
+<p>Line plots : plot</p>
+<p>Bar plots : bar, hist</p>
+<p>Polycollections : fill_between</p>
+<p>Images : imshow</p>
+</div>
+<div class="section" id="notes">
+<h4>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h4>
+<p>SciPlot has a lot of advances/improvements to make. Feel free to contact me–
+help is always welcome!</p>
+</div>
+<div class="section" id="usage">
+<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
+<p>import sciplot
+sp = sciplot.SciPlotUI()
+sp.show()</p>
+</div>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<p>sp.plot((0,1),(2,3),label=’Line’, x_label=’X’, y_label=’Y’, ls=’–’)
+sp.fill_between((0,1),(1,2),(3,4),label=’Fill Between’, color=’r’, alpha=0.25)</p>
+</div>
+<div class="section" id="authors">
+<h4>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Charles H. Camp Jr. &lt;<a class="reference external" href="mailto:charles&#46;camp&#37;&#52;&#48;nist&#46;gov">charles<span>&#46;</span>camp<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</li>
+</ul>
+<dl class="class">
+<dt id="sciplot.sciplotUI.SciPlotUI">
+<em class="property">class </em><code class="descclassname">sciplot.sciplotUI.</code><code class="descname">SciPlotUI</code><span class="sig-paren">(</span><em>limit_to=None</em>, <em>parent=None</em>, <em>show=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code></p>
+<p>Scientific plotting user-interface for creating publication-quality plots
+and images</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>limit_to</strong> : list, optional (default = None)</p>
+<blockquote>
+<div><p>Limit the application to implement only certain functionality.         Default is all elements turned ON. See Notes for options.</p>
+</div></blockquote>
+<p><strong>show</strong> : bool, optional (default = True)</p>
+<blockquote class="last">
+<div><p>Whether to show the UI upon instantiation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li>limit_to options: ‘lines’, ‘fill betweens’, ‘bars’, images’</li>
+</ul>
+<p class="rubric">Methods</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>plot</td>
+<td>(MPL-like plotting functionality)</td>
+</tr>
+<tr class="row-even"><td>imshow</td>
+<td>(MPL-like imshow)</td>
+</tr>
+<tr class="row-odd"><td>bar</td>
+<td>(MPL-like bar plot EXCEPT centered (rather than left-edge defined))</td>
+</tr>
+<tr class="row-even"><td>hist</td>
+<td>(MPL-like histogram)</td>
+</tr>
+<tr class="row-odd"><td>fill_between</td>
+<td>(MPL-like fill_between)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__bar">
+<code class="descname">_SciPlotUI__bar</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>bottom=0</em>, <em>width_factor=1.0</em>, <em>use_real_width=False</em>, <em>label=None</em>, <em>meta={}</em>, <em>x_label=None</em>, <em>y_label=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPL-like plotting functionality</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> : ndarray (1D)</p>
+<blockquote>
+<div><p>X-axis data (center of bars)</p>
+</div></blockquote>
+<p><strong>y</strong> : ndarray (1D, for now)</p>
+<blockquote>
+<div><p>Y-axis data (height)</p>
+</div></blockquote>
+<p><strong>bottom</strong> : float (for now)</p>
+<blockquote>
+<div><p>Baseline of bars</p>
+</div></blockquote>
+<p><strong>width_factor: float</strong></p>
+<blockquote>
+<div><p>If legnth of y&gt;1, fraction of space between bars taken up by bar             (e.g. 1.0 leads to bars that tough). If y is a single-value OR             use_real_width is True), is the width of the bar.</p>
+</div></blockquote>
+<p><strong>use_real_width</strong> : bool, optional (default=False):</p>
+<blockquote>
+<div><p>If True, width_factor is the real width (in x-units)</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>Label of plot</p>
+</div></blockquote>
+<p><strong>x_label</strong> : str</p>
+<blockquote>
+<div><p>X-axis label (units)</p>
+</div></blockquote>
+<p><strong>y_label</strong> : str</p>
+<blockquote>
+<div><p>Y-axis label (units)</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Other parameters sent directly to mpl-plot</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__fill_between">
+<code class="descname">_SciPlotUI__fill_between</code><span class="sig-paren">(</span><em>x</em>, <em>y_low</em>, <em>y_high</em>, <em>label=None</em>, <em>meta={}</em>, <em>x_label=None</em>, <em>y_label=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__fill_between" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPL-like fill_between plotting functionality</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> : ndarray (1D)</p>
+<blockquote>
+<div><p>X-axis data</p>
+</div></blockquote>
+<p><strong>y_low</strong> : ndarray (1D, for now)</p>
+<blockquote>
+<div><p>Low Y-axis data</p>
+</div></blockquote>
+<p><strong>y_high</strong> : ndarray (1D, for now)</p>
+<blockquote>
+<div><p>High Y-axis data</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>Label of plot</p>
+</div></blockquote>
+<p><strong>x_label</strong> : str</p>
+<blockquote>
+<div><p>X-axis label (units)</p>
+</div></blockquote>
+<p><strong>y_label</strong> : str</p>
+<blockquote>
+<div><p>Y-axis label (units)</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Other parameters sent directly to mpl-fill_between</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__hist">
+<code class="descname">_SciPlotUI__hist</code><span class="sig-paren">(</span><em>data</em>, <em>bins=10</em>, <em>label=None</em>, <em>meta={}</em>, <em>x_label=None</em>, <em>y_label='Counts'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__hist" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPL-like histogram plotting</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : ndarray (1D, for now)</p>
+<blockquote>
+<div><p>Data (center of bars)</p>
+</div></blockquote>
+<p><strong>bins</strong> : int</p>
+<blockquote>
+<div><p>Number of histogram bins</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>Label of plot</p>
+</div></blockquote>
+<p><strong>x_label</strong> : str</p>
+<blockquote>
+<div><p>X-axis label (units)</p>
+</div></blockquote>
+<p><strong>y_label</strong> : str</p>
+<blockquote>
+<div><p>Y-axis label (units)</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Other parameters sent directly to mpl-plot</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__imshow">
+<code class="descname">_SciPlotUI__imshow</code><span class="sig-paren">(</span><em>img</em>, <em>x=None</em>, <em>y=None</em>, <em>label=None</em>, <em>meta={}</em>, <em>x_label=None</em>, <em>y_label=None</em>, <em>cbar=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__imshow" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPL-like plotting functionality</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img</strong> : ndarray (2D)</p>
+<blockquote>
+<div><p>Image data</p>
+</div></blockquote>
+<p><strong>x</strong> : ndarray (1D)</p>
+<blockquote>
+<div><p>X-axis data</p>
+</div></blockquote>
+<p><strong>y</strong> : ndarray (1D, for now)</p>
+<blockquote>
+<div><p>Y-axis data</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>Label of plot</p>
+</div></blockquote>
+<p><strong>x_label</strong> : str</p>
+<blockquote>
+<div><p>X-axis label (units)</p>
+</div></blockquote>
+<p><strong>y_label</strong> : str</p>
+<blockquote>
+<div><p>Y-axis label (units)</p>
+</div></blockquote>
+<p><strong>cbar</strong> : bool</p>
+<blockquote>
+<div><p>Attach a colorbar to the img</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Other parameters sent directly to mpl-imshow</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__plot">
+<code class="descname">_SciPlotUI__plot</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>label=None</em>, <em>x_label=None</em>, <em>y_label=None</em>, <em>meta={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPL-like plotting functionality</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> : ndarray (1D)</p>
+<blockquote>
+<div><p>X-axis data</p>
+</div></blockquote>
+<p><strong>y</strong> : ndarray (1D, for now)</p>
+<blockquote>
+<div><p>Y-axis data</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>Label of plot</p>
+</div></blockquote>
+<p><strong>x_label</strong> : str</p>
+<blockquote>
+<div><p>X-axis label (units)</p>
+</div></blockquote>
+<p><strong>y_label</strong> : str</p>
+<blockquote>
+<div><p>Y-axis label (units)</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Other parameters sent directly to mpl-plot</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateBarsDataDelete">
+<code class="descname">_SciPlotUI__updateBarsDataDelete</code><span class="sig-paren">(</span><em>row</em>, <em>plt_id</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateBarsDataDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>A plot was deleted (likely from within the model); thus, need to         remove the corresponding plot data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateBarsDataStyle">
+<code class="descname">_SciPlotUI__updateBarsDataStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateBarsDataStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something style-related changed in the model; thus, need to change         these elements in the fill_between data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateFillBetweenDataDelete">
+<code class="descname">_SciPlotUI__updateFillBetweenDataDelete</code><span class="sig-paren">(</span><em>row</em>, <em>plt_id</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateFillBetweenDataDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>A plot was deleted (likely from within the model); thus, need to         remove the corresponding plot data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateFillBetweenDataStyle">
+<code class="descname">_SciPlotUI__updateFillBetweenDataStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateFillBetweenDataStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something style-related changed in the model; thus, need to change         these elements in the fill_between data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateImagesDataDelete">
+<code class="descname">_SciPlotUI__updateImagesDataDelete</code><span class="sig-paren">(</span><em>row</em>, <em>plt_id</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateImagesDataDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>A plot was deleted (likely from within the model); thus, need to         remove the corresponding plot data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateImagesDataStyle">
+<code class="descname">_SciPlotUI__updateImagesDataStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updateImagesDataStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something style-related changed in the model; thus, need to change         these elements in the fill_between data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updatePlotDataDelete">
+<code class="descname">_SciPlotUI__updatePlotDataDelete</code><span class="sig-paren">(</span><em>row</em>, <em>plt_id</em><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updatePlotDataDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>A plot was deleted (likely from within the model); thus, need to         remove the corresponding plot data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._SciPlotUI__updatePlotDataStyle">
+<code class="descname">_SciPlotUI__updatePlotDataStyle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._SciPlotUI__updatePlotDataStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something style-related changed in the model; thus, need to change         these elements in the plot data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI._tabAvailability">
+<code class="descname">_tabAvailability</code><span class="sig-paren">(</span><em>limit_to=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI._tabAvailability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI._tabAvailability" title="Permalink to this definition">¶</a></dt>
+<dd><p>If limit_to is provided, limits the tabs (elements) that are available.</p>
+<p>May be useful for built-upon applications.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.all_cleared">
+<code class="descname">all_cleared</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.all_cleared" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.axisAspect">
+<code class="descname">axisAspect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.axisAspect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.axisAspect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set axis aspect ratio property</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.axisLimits">
+<code class="descname">axisLimits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.axisLimits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.axisLimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set axis limits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.axisScaling">
+<code class="descname">axisScaling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.axisScaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.axisScaling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set axis scaling property</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.axisVisible">
+<code class="descname">axisVisible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.axisVisible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.axisVisible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether axis is on or off</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.clearAll">
+<code class="descname">clearAll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.clearAll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.clearAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all plots and graphs and images</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.clearAllBars">
+<code class="descname">clearAllBars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.clearAllBars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.clearAllBars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.clearID">
+<code class="descname">clearID</code><span class="sig-paren">(</span><em>clear_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.clearID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.clearID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.closeEvent">
+<code class="descname">closeEvent</code><span class="sig-paren">(</span><em>self</em>, <em>QCloseEvent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.closeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.defaultView">
+<code class="descname">defaultView</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.defaultView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.defaultView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default and Home view to the current one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.export_bars_csv">
+<code class="descname">export_bars_csv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.export_bars_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.export_bars_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.export_fillbetweens_csv">
+<code class="descname">export_fillbetweens_csv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.export_fillbetweens_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.export_fillbetweens_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.export_lines_csv">
+<code class="descname">export_lines_csv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.export_lines_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.export_lines_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_bar_ids">
+<code class="descname">list_bar_ids</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_bar_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_bar_objs">
+<code class="descname">list_bar_objs</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_bar_objs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_fillbetween_ids">
+<code class="descname">list_fillbetween_ids</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_fillbetween_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_fillbetween_objs">
+<code class="descname">list_fillbetween_objs</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_fillbetween_objs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_image_ids">
+<code class="descname">list_image_ids</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_image_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_image_objs">
+<code class="descname">list_image_objs</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_image_objs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_line_ids">
+<code class="descname">list_line_ids</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_line_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.list_line_objs">
+<code class="descname">list_line_objs</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.list_line_objs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.n_bars">
+<code class="descname">n_bars</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.n_bars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.n_fillbetweens">
+<code class="descname">n_fillbetweens</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.n_fillbetweens" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.n_images">
+<code class="descname">n_images</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.n_images" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.sciplotUI.SciPlotUI.n_lines">
+<code class="descname">n_lines</code><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.n_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.refreshAllPlots">
+<code class="descname">refreshAllPlots</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.refreshAllPlots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.refreshAllPlots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear and re-plot all plot data of all types</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><em>limit_to=None</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic UI setup</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.setupBars">
+<code class="descname">setupBars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.setupBars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.setupBars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable and setup bar and histogram plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.setupFillBetweens">
+<code class="descname">setupFillBetweens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.setupFillBetweens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.setupFillBetweens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable and setup fill between plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.setupImages">
+<code class="descname">setupImages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.setupImages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.setupImages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable and setup image plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.setupLines">
+<code class="descname">setupLines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.setupLines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.setupLines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable and setup line plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.updateAllLabels">
+<code class="descname">updateAllLabels</code><span class="sig-paren">(</span><em>x_label=None</em>, <em>y_label=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.updateAllLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.updateAllLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the x- and y-labels and the title in the MPL widget, the         lineEdit boxes, and the global data container</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.updateAxisParameters">
+<code class="descname">updateAxisParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.updateAxisParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.updateAxisParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query current state of axis settings and update appropriate lineEdit’s</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.updateDataLabels">
+<code class="descname">updateDataLabels</code><span class="sig-paren">(</span><em>x_label=None</em>, <em>y_label=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.updateDataLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.updateDataLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Within the global data container, update the x- and y-labels and the         title</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.updateLabelsFromLineEdit">
+<code class="descname">updateLabelsFromLineEdit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.updateLabelsFromLineEdit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.updateLabelsFromLineEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>From the linEdit widgets, update the x- and y-labels and the title         in the MPL widget and the global data container</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.updateLineEditLabels">
+<code class="descname">updateLineEditLabels</code><span class="sig-paren">(</span><em>x_label=None</em>, <em>y_label=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.updateLineEditLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.updateLineEditLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Within the pyQT lineEdit widgets, update the x- and y-labels and the         title</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sciplot.sciplotUI.SciPlotUI.updateMplLabels">
+<code class="descname">updateMplLabels</code><span class="sig-paren">(</span><em>x_label=None</em>, <em>y_label=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI.html#SciPlotUI.updateMplLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI.SciPlotUI.updateMplLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Within the MPL widget, update the x- and y-labels and the title</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="module-sciplot.sciplotUI_addon">
+<span id="sciplot-sciplotui-addon-module"></span><h2>sciplot.sciplotUI_addon module<a class="headerlink" href="#module-sciplot.sciplotUI_addon" title="Permalink to this headline">¶</a></h2>
+<p>Demonstration of adding functionality to Sciplot</p>
+<p>Created on Mon Jul 11 23:46:01 2016</p>
+<p>&#64;author: chc</p>
+<dl class="class">
+<dt id="sciplot.sciplotUI_addon.SciPlotAddon">
+<em class="property">class </em><code class="descclassname">sciplot.sciplotUI_addon.</code><code class="descname">SciPlotAddon</code><span class="sig-paren">(</span><em>limit_to=None</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/sciplotUI_addon.html#SciPlotAddon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.sciplotUI_addon.SciPlotAddon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sciplot.sciplotUI.SciPlotUI" title="sciplot.sciplotUI.SciPlotUI"><code class="xref py py-class docutils literal"><span class="pre">sciplot.sciplotUI.SciPlotUI</span></code></a></p>
+<p>Trivial example of using SciPlot with addons (or building another     application on top of SciPlot).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-sciplot"></span><div class="section" id="id1">
+<h3>SciPlot-PyQt: Publication-ready scientific plotting for Python<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with 
+PyQt5 that allows interactive plotting through an embedded matplotlib canvas. 
+It enables fast and easy publication-ready plots and images:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Interactive plotting</li>
+<li>Theme and style editing (TODO)</li>
+<li>Figure saving and opening for later editing (TODO)</li>
+</ul>
+</div></blockquote>
+<div class="section" id="id2">
+<h4>Supported Plot Types<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Line plots : plot</p>
+<p>Bar plots : bar, hist</p>
+<p>Polycollections : fill_between</p>
+<p>Images : imshow</p>
+</div>
+<div class="section" id="id3">
+<h4>Notes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>SciPlot has a lot of advances/improvements to make. Feel free to contact me–
+help is always welcome!</p>
+</div>
+<div class="section" id="id4">
+<h4>Usage<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>import sciplot
+sp = sciplot.SciPlotUI()
+sp.show()</p>
+</div>
+<div class="section" id="id5">
+<h4>Example<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>sp.plot((0,1),(2,3),label=’Line’, x_label=’X’, y_label=’Y’, ls=’–’)
+sp.fill_between((0,1),(1,2),(3,4),label=’Fill Between’, color=’r’, alpha=0.25)</p>
+</div>
+<div class="section" id="id6">
+<h4>Authors<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Charles H. Camp Jr. &lt;<a class="reference external" href="mailto:charles&#46;camp&#37;&#52;&#48;nist&#46;gov">charles<span>&#46;</span>camp<span>&#64;</span>nist<span>&#46;</span>gov</a>&gt;</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Charles H. Camp Jr..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'16.07',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

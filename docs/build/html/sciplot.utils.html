@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sciplot.utils package &mdash; SciPlot-PyQt 16.07 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="SciPlot-PyQt 16.07 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SciPlot-PyQt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">sciplot.utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-sciplot.utils.mplstyle">sciplot.utils.mplstyle module</a></li>
+<li><a class="reference internal" href="#module-sciplot.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SciPlot-PyQt</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>sciplot.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sciplot.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sciplot-utils-package">
+<h1>sciplot.utils package<a class="headerlink" href="#sciplot-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sciplot.utils.mplstyle">
+<span id="sciplot-utils-mplstyle-module"></span><h2>sciplot.utils.mplstyle module<a class="headerlink" href="#module-sciplot.utils.mplstyle" title="Permalink to this headline">¶</a></h2>
+<p>Created on Thu Jun 30 10:23:03 2016</p>
+<p>&#64;author: chc</p>
+<dl class="class">
+<dt id="sciplot.utils.mplstyle.MplLines">
+<em class="property">class </em><code class="descclassname">sciplot.utils.mplstyle.</code><code class="descname">MplLines</code><a class="reference internal" href="_modules/sciplot/utils/mplstyle.html#MplLines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.utils.mplstyle.MplLines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.4/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplLines.LINESTYLE_DESC">
+<code class="descname">LINESTYLE_DESC</code><em class="property"> = ['_draw_solid', '_draw_dashed', '_draw_dash_dot', '_draw_dotted', '_draw_nothing', '_draw_nothing', '_draw_nothing']</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplLines.LINESTYLE_DESC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplLines.LINESTYLE_DICT">
+<code class="descname">LINESTYLE_DICT</code><em class="property"> = {'-': '_draw_solid', '--': '_draw_dashed', '-.': '_draw_dash_dot', ':': '_draw_dotted', 'None': '_draw_nothing', ' ': '_draw_nothing', '': '_draw_nothing'}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplLines.LINESTYLE_DICT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplLines.LINESTYLE_SYMBOL">
+<code class="descname">LINESTYLE_SYMBOL</code><em class="property"> = ['-', '--', '-.', ':', 'None', ' ', '']</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplLines.LINESTYLE_SYMBOL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplLines.count">
+<code class="descname">count</code><em class="property"> = ''</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplLines.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sciplot.utils.mplstyle.MplLines.index">
+<em class="property">classmethod </em><code class="descname">index</code><span class="sig-paren">(</span><em>str_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/utils/mplstyle.html#MplLines.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.utils.mplstyle.MplLines.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sciplot.utils.mplstyle.MplMarkers">
+<em class="property">class </em><code class="descclassname">sciplot.utils.mplstyle.</code><code class="descname">MplMarkers</code><a class="reference internal" href="_modules/sciplot/utils/mplstyle.html#MplMarkers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.utils.mplstyle.MplMarkers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.4/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplMarkers.MARKER_DESC">
+<code class="descname">MARKER_DESC</code><em class="property"> = ['point', 'pixel', 'circle', 'triangle_down', 'triangle_up', 'triangle_left', 'triangle_right', 'tri_down', 'tri_up', 'tri_left', 'tri_right', 'octagon', 'square', 'pentagon', 'star', 'hexagon1', 'hexagon2', 'plus', 'x', 'diamond', 'thin_diamond', 'vline', 'hline', 'plus_filled', 'x_filled', 'tickleft', 'tickright', 'tickup', 'tickdown', 'caretleft', 'caretright', 'caretup', 'caretdown', 'caretleftbase', 'caretrightbase', 'caretupbase', 'caretdownbase', 'nothing', 'nothing', 'nothing', 'nothing']</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplMarkers.MARKER_DESC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplMarkers.MARKER_DICT">
+<code class="descname">MARKER_DICT</code><em class="property"> = {'.': 'point', ',': 'pixel', 'o': 'circle', 'v': 'triangle_down', '^': 'triangle_up', '&lt;': 'triangle_left', '&gt;': 'triangle_right', '1': 'tri_down', '2': 'tri_up', '3': 'tri_left', '4': 'tri_right', '8': 'octagon', 's': 'square', 'p': 'pentagon', '*': 'star', 'h': 'hexagon1', 'H': 'hexagon2', '+': 'plus', 'x': 'x', 'D': 'diamond', 'd': 'thin_diamond', '|': 'vline', '_': 'hline', 'P': 'plus_filled', 'X': 'x_filled', 0: 'tickleft', 1: 'tickright', 2: 'tickup', 3: 'tickdown', 4: 'caretleft', 5: 'caretright', 6: 'caretup', 7: 'caretdown', 8: 'caretleftbase', 9: 'caretrightbase', 10: 'caretupbase', 11: 'caretdownbase', 'None': 'nothing', None: 'nothing', ' ': 'nothing', '': 'nothing'}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplMarkers.MARKER_DICT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplMarkers.MARKER_SYMBOL">
+<code class="descname">MARKER_SYMBOL</code><em class="property"> = ['.', ',', 'o', 'v', '^', '&lt;', '&gt;', '1', '2', '3', '4', '8', 's', 'p', '*', 'h', 'H', '+', 'x', 'D', 'd', '|', '_', 'P', 'X', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 'None', None, ' ', '']</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplMarkers.MARKER_SYMBOL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplMarkers.count">
+<code class="descname">count</code><em class="property"> = ''</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplMarkers.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sciplot.utils.mplstyle.MplMarkers.index">
+<em class="property">classmethod </em><code class="descname">index</code><span class="sig-paren">(</span><em>str_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sciplot/utils/mplstyle.html#MplMarkers.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.utils.mplstyle.MplMarkers.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets">
+<em class="property">class </em><code class="descclassname">sciplot.utils.mplstyle.</code><code class="descname">MplStyleSheets</code><a class="reference internal" href="_modules/sciplot/utils/mplstyle.html#MplStyleSheets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.4/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._base_crikit">
+<code class="descname">_base_crikit</code><em class="property"> = {'font.family': ['sans-serif'], 'font.sans-serif': ['Arial', 'Bitstream Vera Sans', 'DejaVu Sans', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', 'sans-serif'], 'axes.prop_cycle': cycler('color', [array([ 0.12156863,  0.46666667,  0.70588235]), array([ 1.        ,  0.49803922,  0.05490196]), array([ 0.17254902,  0.62745098,  0.17254902]), array([ 0.83921569,  0.15294118,  0.15686275]), array([ 0.58039216,  0.40392157,  0.74117647]), array([ 0.54901961,  0.3372549 ,  0.29411765]), array([ 0.89019608,  0.46666667,  0.76078431]), array([ 0.49803922,  0.49803922,  0.49803922]), array([ 0.7372549 ,  0.74117647,  0.13333333]), array([ 0.09019608,  0.74509804,  0.81176471])]), 'image.cmap': 'viridis', 'image.interpolation': 'none'}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._base_crikit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._paper_fullwidth">
+<code class="descname">_paper_fullwidth</code><em class="property"> = {'axes.labelsize': 8.8, 'axes.titlesize': 9.6, 'figure.figsize': [6.4, 4.4], 'grid.linewidth': 0.8, 'legend.fontsize': 8.8, 'lines.linewidth': 1.4, 'lines.markeredgewidth': 0.0, 'lines.markersize': 5.6, 'patch.linewidth': 0.24, 'xtick.labelsize': 8.0, 'xtick.major.pad': 5.6, 'xtick.major.width': 0.8, 'xtick.minor.width': 0.4, 'ytick.labelsize': 8.0, 'ytick.major.pad': 5.6, 'ytick.major.width': 0.8, 'ytick.minor.width': 0.4}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._paper_fullwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._paper_halfwidth">
+<code class="descname">_paper_halfwidth</code><em class="property"> = {'axes.labelsize': 8.8, 'axes.titlesize': 9.6, 'figure.figsize': [3.3, 4.4], 'grid.linewidth': 0.8, 'legend.fontsize': 8.0, 'lines.linewidth': 1.4, 'lines.markeredgewidth': 0.0, 'lines.markersize': 5.6, 'patch.linewidth': 0.24, 'xtick.labelsize': 8.0, 'xtick.major.pad': 5.6, 'xtick.major.width': 0.8, 'xtick.minor.width': 0.4, 'ytick.labelsize': 8.0, 'ytick.major.pad': 5.6, 'ytick.major.width': 0.8, 'ytick.minor.width': 0.4}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._paper_halfwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._poster">
+<code class="descname">_poster</code><em class="property"> = {'axes.labelsize': 17.6, 'axes.titlesize': 19.2, 'figure.figsize': [12.8, 8.8], 'grid.linewidth': 1.6, 'legend.fontsize': 16.0, 'lines.linewidth': 2.8, 'lines.markeredgewidth': 0.0, 'lines.markersize': 11.2, 'patch.linewidth': 0.48, 'xtick.labelsize': 16.0, 'xtick.major.pad': 11.2, 'xtick.major.width': 1.6, 'xtick.minor.width': 0.8, 'ytick.labelsize': 16.0, 'ytick.major.pad': 11.2, 'ytick.major.width': 1.6, 'ytick.minor.width': 0.8}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._poster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._tableau10">
+<code class="descname">_tableau10</code><em class="property"> = array([[ 0.12156863,  0.46666667,  0.70588235],        [ 1.        ,  0.49803922,  0.05490196],        [ 0.17254902,  0.62745098,  0.17254902],        [ 0.83921569,  0.15294118,  0.15686275],        [ 0.58039216,  0.40392157,  0.74117647],        [ 0.54901961,  0.3372549 ,  0.29411765],        [ 0.89019608,  0.46666667,  0.76078431],        [ 0.49803922,  0.49803922,  0.49803922],        [ 0.7372549 ,  0.74117647,  0.13333333],        [ 0.09019608,  0.74509804,  0.81176471]])</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._tableau10" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._tableau10_med">
+<code class="descname">_tableau10_med</code><em class="property"> = array([[ 0.44705882,  0.61960784,  0.80784314],        [ 1.        ,  0.61960784,  0.29019608],        [ 0.40392157,  0.74901961,  0.36078431],        [ 0.92941176,  0.4       ,  0.36470588],        [ 0.67843137,  0.54509804,  0.78823529],        [ 0.65882353,  0.47058824,  0.43137255],        [ 0.92941176,  0.59215686,  0.79215686],        [ 0.63529412,  0.63529412,  0.63529412],        [ 0.80392157,  0.8       ,  0.36470588],        [ 0.42745098,  0.8       ,  0.85490196]])</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._tableau10_med" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets._tableau20">
+<code class="descname">_tableau20</code><em class="property"> = array([[ 0.12156863,  0.46666667,  0.70588235],        [ 0.68235294,  0.78039216,  0.90980392],        [ 1.        ,  0.49803922,  0.05490196],        [ 1.        ,  0.73333333,  0.47058824],        [ 0.17254902,  0.62745098,  0.17254902],        [ 0.59607843,  0.8745098 ,  0.54117647],        [ 0.83921569,  0.15294118,  0.15686275],        [ 1.        ,  0.59607843,  0.58823529],        [ 0.58039216,  0.40392157,  0.74117647],        [ 0.77254902,  0.69019608,  0.83529412],        [ 0.54901961,  0.3372549 ,  0.29411765],        [ 0.76862745,  0.61176471,  0.58039216],        [ 0.89019608,  0.46666667,  0.76078431],        [ 0.96862745,  0.71372549,  0.82352941],        [ 0.49803922,  0.49803922,  0.49803922],        [ 0.78039216,  0.78039216,  0.78039216],        [ 0.7372549 ,  0.74117647,  0.13333333],        [ 0.85882353,  0.85882353,  0.55294118],        [ 0.09019608,  0.74509804,  0.81176471],        [ 0.61960784,  0.85490196,  0.89803922]])</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets._tableau20" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets.basic_fullwidth">
+<code class="descname">basic_fullwidth</code><em class="property"> = {'font.family': ['sans-serif'], 'font.sans-serif': ['Arial', 'Bitstream Vera Sans', 'DejaVu Sans', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', 'sans-serif'], 'axes.prop_cycle': cycler('color', [array([ 0.12156863,  0.46666667,  0.70588235]), array([ 1.        ,  0.49803922,  0.05490196]), array([ 0.17254902,  0.62745098,  0.17254902]), array([ 0.83921569,  0.15294118,  0.15686275]), array([ 0.58039216,  0.40392157,  0.74117647]), array([ 0.54901961,  0.3372549 ,  0.29411765]), array([ 0.89019608,  0.46666667,  0.76078431]), array([ 0.49803922,  0.49803922,  0.49803922]), array([ 0.7372549 ,  0.74117647,  0.13333333]), array([ 0.09019608,  0.74509804,  0.81176471])]), 'image.cmap': 'viridis', 'image.interpolation': 'none', 'axes.labelsize': 8.8, 'axes.titlesize': 9.6, 'figure.figsize': [6.4, 4.4], 'grid.linewidth': 0.8, 'legend.fontsize': 8.8, 'lines.linewidth': 1.4, 'lines.markeredgewidth': 0.0, 'lines.markersize': 5.6, 'patch.linewidth': 0.24, 'xtick.labelsize': 8.0, 'xtick.major.pad': 5.6, 'xtick.major.width': 0.8, 'xtick.minor.width': 0.4, 'ytick.labelsize': 8.0, 'ytick.major.pad': 5.6, 'ytick.major.width': 0.8, 'ytick.minor.width': 0.4}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets.basic_fullwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets.basic_halfwidth">
+<code class="descname">basic_halfwidth</code><em class="property"> = {'font.family': ['sans-serif'], 'font.sans-serif': ['Arial', 'Bitstream Vera Sans', 'DejaVu Sans', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', 'sans-serif'], 'axes.prop_cycle': cycler('color', [array([ 0.12156863,  0.46666667,  0.70588235]), array([ 1.        ,  0.49803922,  0.05490196]), array([ 0.17254902,  0.62745098,  0.17254902]), array([ 0.83921569,  0.15294118,  0.15686275]), array([ 0.58039216,  0.40392157,  0.74117647]), array([ 0.54901961,  0.3372549 ,  0.29411765]), array([ 0.89019608,  0.46666667,  0.76078431]), array([ 0.49803922,  0.49803922,  0.49803922]), array([ 0.7372549 ,  0.74117647,  0.13333333]), array([ 0.09019608,  0.74509804,  0.81176471])]), 'image.cmap': 'viridis', 'image.interpolation': 'none', 'axes.labelsize': 8.8, 'axes.titlesize': 9.6, 'figure.figsize': [3.3, 4.4], 'grid.linewidth': 0.8, 'legend.fontsize': 8.0, 'lines.linewidth': 1.4, 'lines.markeredgewidth': 0.0, 'lines.markersize': 5.6, 'patch.linewidth': 0.24, 'xtick.labelsize': 8.0, 'xtick.major.pad': 5.6, 'xtick.major.width': 0.8, 'xtick.minor.width': 0.4, 'ytick.labelsize': 8.0, 'ytick.major.pad': 5.6, 'ytick.major.width': 0.8, 'ytick.minor.width': 0.4}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets.basic_halfwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sciplot.utils.mplstyle.MplStyleSheets.basic_poster">
+<code class="descname">basic_poster</code><em class="property"> = {'font.family': ['sans-serif'], 'font.sans-serif': ['Arial', 'Bitstream Vera Sans', 'DejaVu Sans', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', 'sans-serif'], 'axes.prop_cycle': cycler('color', [array([ 0.12156863,  0.46666667,  0.70588235]), array([ 1.        ,  0.49803922,  0.05490196]), array([ 0.17254902,  0.62745098,  0.17254902]), array([ 0.83921569,  0.15294118,  0.15686275]), array([ 0.58039216,  0.40392157,  0.74117647]), array([ 0.54901961,  0.3372549 ,  0.29411765]), array([ 0.89019608,  0.46666667,  0.76078431]), array([ 0.49803922,  0.49803922,  0.49803922]), array([ 0.7372549 ,  0.74117647,  0.13333333]), array([ 0.09019608,  0.74509804,  0.81176471])]), 'image.cmap': 'viridis', 'image.interpolation': 'none', 'axes.labelsize': 17.6, 'axes.titlesize': 19.2, 'figure.figsize': [12.8, 8.8], 'grid.linewidth': 1.6, 'legend.fontsize': 16.0, 'lines.linewidth': 2.8, 'lines.markeredgewidth': 0.0, 'lines.markersize': 11.2, 'patch.linewidth': 0.48, 'xtick.labelsize': 16.0, 'xtick.major.pad': 11.2, 'xtick.major.width': 1.6, 'xtick.minor.width': 0.8, 'ytick.labelsize': 16.0, 'ytick.major.pad': 11.2, 'ytick.major.width': 1.6, 'ytick.minor.width': 0.8}</em><a class="headerlink" href="#sciplot.utils.mplstyle.MplStyleSheets.basic_poster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sciplot.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sciplot.utils" title="Permalink to this headline">¶</a></h2>
+<p>Utility modules</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Charles H. Camp Jr..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'16.07',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
