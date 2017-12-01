@@ -5,9 +5,9 @@ PYQT_VERSION=5.8.1
 QT_BASE=58
 USE_CMAKE=true
 
-sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y
-sudo apt-get update -qq
-sudo apt-get -y install qt58base
+sudo add-apt-repository -y ppa:beineri/opt-qt59-trusty
+sudo apt-get update
+sudo apt-get install -y qt59base
 source /opt/qt58/bin/qt58-env.sh
 
 mkdir -p $PYQT
