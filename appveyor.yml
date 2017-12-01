@@ -52,7 +52,5 @@ install:
   - pip install pyqt5
   - python setup.py install
 
-build: off
-
 test_script:
   - "%PYTHON%\\Scripts\\py.test.exe"
