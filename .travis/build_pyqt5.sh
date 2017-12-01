@@ -22,17 +22,14 @@ mkdir -p PyQt
 tar xzf PyQt.tar.gz -C PyQt --strip-components=1
 
 cd $PYQT/sip
-python configure.py -e $PYQT/include
+#python configure.py -e $PYQT/include
+python configure.py
 make
-make install
+sudo make install
 
 cd $PYQT/PyQt
-pwd
 python configure.py --confirm-license --no-designer-plugin
 make
 
-cd $PYQT/sip
-make install
-
 cd $PYQT/PyQt
-make install
+sudo make install
