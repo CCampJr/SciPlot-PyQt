@@ -10,7 +10,7 @@ wget -O sip.tar.gz http://sourceforge.net/projects/pyqt/files/sip/sip-$SIP_VERSI
 mkdir -p sip
 tar xzf sip.tar.gz -C sip --strip-component=1
 
-wget -O PyQt.tar.gz  http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-$PYQT_VERSION/PyQt-x11-gpl-$PYQT_VERSION.tar.gz
+wget -O PyQt.tar.gz  http://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-$PYQT_VERSION/PyQt5_gpl-$PYQT_VERSION.tar.gz
 mkdir -p PyQt
 tar xzf PyQt.tar.gz -C PyQt --strip-components=1
 
