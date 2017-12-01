@@ -1,9 +1,16 @@
 language: python
+
 python:
   - "3.4"
   - "3.5"
   - "3.6"
   - "3.6-dev" # 3.6 development branch
+
+before_install:
+  - set -e
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.4' && $TRAVIS_PYTHON_VERSION != '3.5']]; then pip install pyqt5; fi
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.4']]; then source $TRAVIS_BUILD_DIR/.travis/build_pyqt5.sh; fi
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.5']]; then source $TRAVIS_BUILD_DIR/.travis/build_pyqt5.sh; fi
 # command to install dependencies
 install:
   - python setup.py install
