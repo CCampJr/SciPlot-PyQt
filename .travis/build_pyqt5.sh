@@ -2,9 +2,14 @@ PYQT=$TRAVIS_BUILD_DIR/pyqt
 
 SIP_VERSION=4.19.6
 PYQT_VERSION=5.8.1
+QT_BASE=58
+USE_CMAKE=true
 
-sudo add-apt-repository ppa:beineri/opt-qt58-trusty
+sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y
 sudo apt-get update
+sudo apt-get install qt58-meta-minimal
+source /opt/qt58/bin/qt58-env.sh
+qmake -v
 
 mkdir -p $PYQT
 cd $PYQT
