@@ -1,0 +1,34 @@
+branches:
+  only:
+    - appveyor
+    - master
+    - dev
+
+environment:
+
+  matrix:
+    - PYTHON: "C:\\Python34-x64"
+      PYTHON_VERSION: "3.4.4"
+      PYTHON_ARCH: "64"
+      QTIMPL: "PyQt5"
+
+    - PYTHON: "C:\\Python35-x64"
+      PYTHON_VERSION: "3.5.3"
+      PYTHON_ARCH: "64"
+      QTIMPL: "PyQt5"
+
+    - PYTHON: "C:\\Python36-x64"
+      PYTHON_VERSION: "3.6.3"
+      PYTHON_ARCH: "64"
+      QTIMPL: "PyQt5"
+
+init:
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH% %QTIMPL%"
+
+install:
+  - python setup.py install
+
+build: off
+
+test_script:
+  - "%PYTHON%\\Scripts\\py.test.exe"
