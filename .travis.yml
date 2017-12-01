@@ -44,11 +44,10 @@ script:
 # blocklist
 branches:
   except:
-  - appveyor
+
   
 # safelist
 branches:
   only:
   - master
   - dev
-  - travis

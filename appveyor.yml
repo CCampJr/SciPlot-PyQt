@@ -5,7 +5,7 @@ branches:
     - master
     - dev
   except:
-    - travis
+
 
 environment:
 
