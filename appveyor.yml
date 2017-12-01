@@ -1,3 +1,8 @@
+# From http://tjelvarolsson.com/blog/how-to-continuously-test-your-python-code-on-windows-using-appveyor/
+# 
+
+build: false
+
 branches:
   only:
     - appveyor
@@ -7,41 +12,45 @@ branches:
     - travis
 
 environment:
-
   matrix:
-    - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4.4"
-      PYTHON_ARCH: "64"
-      QTIMPL: "PyQt5"
-
-    - PYTHON: "C:\\Python35-x64"
-      PYTHON_VERSION: "3.5.3"
-      PYTHON_ARCH: "64"
-      QTIMPL: "PyQt5"
-
     - PYTHON: "C:\\Python36-x64"
       PYTHON_VERSION: "3.6.3"
       PYTHON_ARCH: "64"
       QTIMPL: "PyQt5"
+      CONDA_INSTALL_LOCN: "C:\\Miniconda36-x64"
+
+cache:
+  - '%LOCALAPPDATA%\pip\Cache'
+  - '%USERPROFILE%\.cache\matplotlib'
 
 init:
-  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH% %QTIMPL%"
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH% %QTIMPL% %MINICONDA%"
 
 install:
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - set PATH=%CONDA_INSTALL_LOCN%;%CONDA_INSTALL_LOCN%\scripts;%PATH%;
+  - set PYTHONUNBUFFERED=1
+  # for msinttypes and newer stuff
+  - conda config --set always_yes true
+  - conda update --all
+  - conda config --set show_channel_urls yes
+  - conda config --prepend channels conda-forge
+  # this is now the downloaded conda...
+  - conda info -a
 
-  # Check that we have the expected version and architecture for Python
-  - "python --version"
-  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-  
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - "pip install --disable-pip-version-check --user --upgrade pip"
-  - "pip install pyqt5"  
-  - "python setup.py install"
+  # For building, use a new environment which only includes the requirements for mpl
+  # same things as the requirements in ci/conda_recipe/meta.yaml
+  # if conda-forge gets a new pyqt, it might be nice to install it as well to have more backends
+  # https://github.com/conda-forge/conda-forge.github.io/issues/157#issuecomment-223536381
+  #
+  - conda create -q -n test-environment python=%PYTHON_VERSION%
+    msinttypes freetype=2.6 "libpng>=1.6.21,<1.7" zlib=1.2 tk=8.5
+    pip setuptools numpy mock pandas sphinx tornado
+  - activate test-environment
+  - echo %PYTHON_VERSION% %TARGET_ARCH%
+  # pytest-cov>=2.3.1 due to https://github.com/pytest-dev/pytest-cov/issues/124
+  - pip install -q "pytest!=3.3.0" "pytest-cov>=2.3.1" pytest-rerunfailures pytest-timeout pytest-xdist
+  - pip install pyqt5
+  - python setup.py install
 
 build: off
 
