@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=travis)](https://travis-ci.org/CCampJr/SciPlot-PyQt)
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=appveyor&svg=true)](https://ci.appveyor.com/project/CCampJr/sciplot-pyqt)
+
 
 # SciPlot-PyQt: Publication-ready scientific plotting for Python #
 

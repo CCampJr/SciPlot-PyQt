@@ -1,6 +1,7 @@
+# https://github.com/astropy/astropy/blob/master/appveyor.yml
+
 branches:
   only:
-    - appveyor
     - master
     - dev
   except:
@@ -8,42 +9,33 @@ branches:
 
 environment:
 
-  matrix:
-    - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4.4"
-      PYTHON_ARCH: "64"
-      QTIMPL: "PyQt5"
+    global:
+        PYTHON: "C:\\conda"
+        MINICONDA_VERSION: "latest"
+        PYTHON_ARCH: "64"
+        CONDA_DEPENDENCIES: "pyqt matplotlib"
+        # PIP_DEPENDENCIES: "objgraph"
 
-    - PYTHON: "C:\\Python35-x64"
-      PYTHON_VERSION: "3.5.3"
-      PYTHON_ARCH: "64"
-      QTIMPL: "PyQt5"
+    matrix:
+        - PYTHON_VERSION: "3.6"
+          NUMPY_VERSION: "stable"
 
-    - PYTHON: "C:\\Python36-x64"
-      PYTHON_VERSION: "3.6.3"
-      PYTHON_ARCH: "64"
-      QTIMPL: "PyQt5"
+matrix:
+    fast_finish: true
 
-init:
-  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH% %QTIMPL%"
+platform:
+    -x64
+
+# os: Visual Studio 2015 Update 2
 
 install:
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - "git clone git://github.com/astropy/ci-helpers.git"
+    - "powershell ci-helpers/appveyor/install-miniconda.ps1"
+    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - "activate test"
 
-  # Check that we have the expected version and architecture for Python
-  - "python --version"
-  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-  
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - "pip install --disable-pip-version-check --user --upgrade pip"
-  
-  - "python setup.py install"
-
-build: off
+# Not a .NET project, we build Astropy in the install step instead
+build: false
 
 test_script:
-  - "%PYTHON%\\Scripts\\py.test.exe"
+    - "%CMD_IN_ENV% python setup.py test"
