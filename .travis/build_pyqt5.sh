@@ -7,7 +7,7 @@ USE_CMAKE=true
 
 sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y
 sudo apt-get update
-sudo apt-get install qt58-base
+sudo apt-get install qt58base
 source /opt/qt58/bin/qt58-env.sh
 cmake --version
 
