@@ -17,11 +17,10 @@ matrix:
     python: '3.6'
   - os: linux
     dist: trusty
-    sudo: required
+    sudo: false
     python: '3.6-dev'
   
 before_install:
-  - set -e
   - if [[ "$TRAVIS_PYTHON_VERSION" != "3.4" && "$TRAVIS_PYTHON_VERSION" != "3.5" ]]; then
       pip install pyqt5;
     else
