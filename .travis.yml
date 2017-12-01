@@ -5,6 +5,7 @@ matrix:
   - os: linux
     dist: trusty
     sudo: required
+    compiler: gcc
     python: '3.4'
   - os: linux
     dist: trusty

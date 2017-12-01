@@ -7,9 +7,9 @@ USE_CMAKE=true
 
 sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y
 sudo apt-get update
-sudo apt-get install qt58-meta-minimal
+sudo apt-get install qt58-base
 source /opt/qt58/bin/qt58-env.sh
-qmake -v
+cmake --version
 
 mkdir -p $PYQT
 cd $PYQT
