@@ -28,6 +28,7 @@ before_install:
     fi
 # command to install dependencies
 install:
+  - cd $TRAVIS_BUILD_DIR
   - python setup.py install
 # command to run tests
 script:
