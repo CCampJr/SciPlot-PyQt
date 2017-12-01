@@ -20,6 +20,13 @@ matrix:
     sudo: false
     python: '3.6-dev'
   
+cache:
+    apt: true
+    pip: true
+    ccache: true
+    directories:
+        - $TRAVIS_BUILD_DIR/pyqt
+
 before_install:
   - if [[ "$TRAVIS_PYTHON_VERSION" != "3.4" && "$TRAVIS_PYTHON_VERSION" != "3.5" ]]; then
       pip install pyqt5;
