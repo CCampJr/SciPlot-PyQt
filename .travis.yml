@@ -41,6 +41,11 @@ install:
 script:
   - pytest
 
+# blocklist
+branches:
+  except:
+  - appveyor
+  
 # safelist
 branches:
   only:
