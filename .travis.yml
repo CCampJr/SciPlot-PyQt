@@ -1,4 +1,8 @@
-sudo: required
+if [[ "$TRAVIS_PYTHON_VERSION" != "3.4" && "$TRAVIS_PYTHON_VERSION" != "3.5" ]]; then
+  sudo: false
+else
+  sudo: required
+fi
 
 language: python
 
