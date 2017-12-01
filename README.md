@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=travis)](https://travis-ci.org/CCampJr/SciPlot-PyQt)
+
 # SciPlot-PyQt: Publication-ready scientific plotting for Python #
 
 SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with
