@@ -1,5 +1,3 @@
-# http://tjelvarolsson.com/blog/how-to-continuously-test-your-python-code-on-windows-using-appveyor/
-# https://github.com/jbmohler/matplotlib-winbuild
 # https://github.com/astropy/astropy/blob/master/appveyor.yml
 
 branches:
