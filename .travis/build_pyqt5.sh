@@ -3,10 +3,8 @@ PYQT=$TRAVIS_BUILD_DIR/pyqt
 SIP_VERSION=4.19.6
 PYQT_VERSION=5.8.1
 
-sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-sudo apt-get update -qq
-sudo apt-get install -qq libqt5webkit5-dev qtdeclarative5-dev
-export QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
+sudo add-apt-repository ppa:beineri/opt-qt58-trusty
+sudo apt-get update
 
 mkdir -p $PYQT
 cd $PYQT
