@@ -1,5 +1,5 @@
-# From http://tjelvarolsson.com/blog/how-to-continuously-test-your-python-code-on-windows-using-appveyor/
-# 
+# http://tjelvarolsson.com/blog/how-to-continuously-test-your-python-code-on-windows-using-appveyor/
+# https://github.com/jbmohler/matplotlib-winbuild
 
 build: false
 
@@ -23,7 +23,7 @@ environment:
 # with the PYTHON_ARCH variable
 platform:
     - x64
-    
+
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
   - '%USERPROFILE%\.cache\matplotlib'
@@ -54,6 +54,11 @@ install:
   - echo %PYTHON_VERSION% %TARGET_ARCH%
   # pytest-cov>=2.3.1 due to https://github.com/pytest-dev/pytest-cov/issues/124
   - pip install -q "pytest!=3.3.0" "pytest-cov>=2.3.1" pytest-rerunfailures pytest-timeout pytest-xdist
+  - git clone https://github.com/matplotlib/matplotlib
+  - git clone https://github.com/jbmohler/matplotlib-winbuild
+  - python matplotlib-winbuild\buildall.py
+  # - curl 
+  # - pip install 
   - pip install pyqt5
   - python setup.py install
 
