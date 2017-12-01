@@ -28,8 +28,6 @@ make
 sudo make install
 
 cd $PYQT/PyQt
-python configure.py --confirm-license --no-designer-plugin
+python configure.py --confirm-license --no-designer-plugin -e QtCore -e QtGui -e QtWidgets
 make
-
-cd $PYQT/PyQt
 sudo make install
