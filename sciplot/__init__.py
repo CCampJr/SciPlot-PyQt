@@ -47,9 +47,7 @@ import pkg_resources as _pkg_resources
 
 _sys.path.append(_os.path.abspath('../'))
 
-# M.N.P.Q (Major, Minor, Subminor)
 __version__ = _pkg_resources.require("sciplot-pyqt")[0].version
-print('Retrieved version number: {}'.format(__version__))
 
 __all__ = ['SciPlotUI']
 
