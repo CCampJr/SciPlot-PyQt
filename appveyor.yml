@@ -4,6 +4,10 @@ branches:
     - master
     - dev
 
+branches:
+  except:
+    - travis
+
 environment:
 
   matrix:
