@@ -50,6 +50,7 @@ import time as _time
 # Generic imports for MPL-incorporation
 import matplotlib as _mpl
 _mpl.use('Qt5Agg')
+import matplotlib.pyplot as _plt  # Simply for it starting a QApplication
 
 # Generic imports for QT-based programs
 from PyQt5.QtWidgets import (QApplication as _QApplication,
@@ -60,6 +61,8 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QFileDialog as _QFileDialog)
 
 from PyQt5.QtCore import pyqtSignal as _pyqtSignal
+
+import sciplot
 
 # Import from Designer-based GUI
 from sciplot.ui.qt_Plotter import Ui_MainWindow as Ui_Plotter
@@ -172,6 +175,7 @@ class SciPlotUI(_QMainWindow):
     all_cleared = _pyqtSignal(int)  
     
     def __init__(self, limit_to=None, parent=None, show=True):
+        self.__version__ = sciplot.__version__
         self.list_ids = []
         self.list_all = []
 
@@ -179,16 +183,32 @@ class SciPlotUI(_QMainWindow):
         # in MPL v2; thus, this will be tracked
         # so MPL 1 and 2 can be used seemlessly
         self._mpl_v2 = int(_mpl.__version__.rsplit('.')[0]) == 2
+
         # Check to see if QApp already exists
         # if not, one has to be created
+        self.app = None
         if _QApplication.instance() is None:
-            self.app = _QApplication(_sys.argv)		
+            print('\nNo QApplication instance (this is common with certain \
+version of Matplotlib). Creating one.\n\r\
+You will need to exec manually after you finish plotting.\n\
+-----------Example---------------\n\
+import sciplot\n\
+sp = sciplot.main()\n\n\
+# Plot a line\n\
+sp.plot((0,1),(0,1))\n\n\
+# Start the QApplication\n\
+sp.app.exec_()')
+            self.app = _QApplication(_sys.argv)
             self.app.setQuitOnLastWindowClosed(True)
 
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
-        
+        # if app is not None:
+        # #     print('Here')
+        #     if app.exec_():
+        #         print('Here')
+
     def closeEvent(self, event):
         pass
 
