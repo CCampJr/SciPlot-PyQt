@@ -183,20 +183,32 @@ class SciPlotUI(_QMainWindow):
         # in MPL v2; thus, this will be tracked
         # so MPL 1 and 2 can be used seemlessly
         self._mpl_v2 = int(_mpl.__version__.rsplit('.')[0]) == 2
+
         # Check to see if QApp already exists
         # if not, one has to be created
-        # print('QApp: {}'.format(_QApplication.instance()))
         self.app = None
         if _QApplication.instance() is None:
-            self.app = _QApplication(_sys.argv)		
+            print('\nNo QApplication instance (this is common with certain \
+version of Matplotlib). Creating one.\n\r\
+You will need to exec manually after you finish plotting.\n\
+-----------Example---------------\n\
+import sciplot\n\
+sp = sciplot.main()\n\n\
+# Plot a line\n\
+sp.plot((0,1),(0,1))\n\n\
+# Start the QApplication\n\
+sp.app.exec_()')
+            self.app = _QApplication(_sys.argv)
             self.app.setQuitOnLastWindowClosed(True)
 
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
-        if self.app is not None:
-            self.app.exec_()
-        
+        # if app is not None:
+        # #     print('Here')
+        #     if app.exec_():
+        #         print('Here')
+
     def closeEvent(self, event):
         pass
 
