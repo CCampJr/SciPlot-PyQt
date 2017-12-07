@@ -51,4 +51,4 @@ branches:
   only:
   - master
   - dev
-  - version
+  - fastpyqt5
