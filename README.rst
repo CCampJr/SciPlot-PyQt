@@ -1,3 +1,5 @@
+.. -*- mode: rst -*-
+
 |Travis|_ |AppVeyor|_ |PyVersions|_ |PyPi|_
 
 .. |Travis| image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
