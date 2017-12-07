@@ -35,7 +35,7 @@ branches:
   only:
   - master
   - dev
-  
+  - test_deploy
 deploy:
   provider: pypi
   server: https://testpypi.python.org/pypi # Remove this line for official deployment
