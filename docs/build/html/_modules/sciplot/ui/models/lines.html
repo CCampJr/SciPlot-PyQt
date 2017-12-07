@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sciplot.ui.models.lines &mdash; SciPlot-PyQt 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="SciPlot-PyQt 0.2.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> SciPlot-PyQt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciPlot-PyQt</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sciplot.ui.models.lines</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sciplot.ui.models.lines</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">ModelViewDelegate for an MPL Line object</span>
+
+<span class="sd">Created on Thu Jul  7 10:01:23 2016</span>
+
+<span class="sd">@author: chc</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="k">import</span> <span class="p">(</span><span class="n">QApplication</span> <span class="k">as</span> <span class="n">_QApplication</span><span class="p">,</span>
+                             <span class="n">QMainWindow</span> <span class="k">as</span> <span class="n">_QMainWindow</span><span class="p">,</span>
+                             <span class="n">QColorDialog</span> <span class="k">as</span> <span class="n">_QColorDialog</span><span class="p">,</span>
+                             <span class="n">QDoubleSpinBox</span> <span class="k">as</span> <span class="n">_QDoubleSpinBox</span><span class="p">,</span>
+                             <span class="n">QComboBox</span> <span class="k">as</span> <span class="n">_QComboBox</span><span class="p">,</span>
+                             <span class="n">QLineEdit</span> <span class="k">as</span> <span class="n">_QLineEdit</span><span class="p">,</span>
+                             <span class="n">QStyledItemDelegate</span> <span class="k">as</span> <span class="n">_QStyledItemDelegate</span><span class="p">,</span>
+                             <span class="n">QTableView</span> <span class="k">as</span> <span class="n">_QTableView</span><span class="p">,</span>
+                             <span class="n">QSizePolicy</span> <span class="k">as</span> <span class="n">_QSizePolicy</span><span class="p">,</span>
+                             <span class="n">QHBoxLayout</span> <span class="k">as</span> <span class="n">_QHBoxLayout</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="k">import</span> <span class="p">(</span><span class="n">QAbstractTableModel</span> <span class="k">as</span> <span class="n">_QAbstractTableModel</span><span class="p">,</span>
+                          <span class="n">QVariant</span> <span class="k">as</span> <span class="n">_QVariant</span><span class="p">,</span>
+                          <span class="n">QObject</span> <span class="k">as</span> <span class="n">_QObject</span><span class="p">,</span>
+                          <span class="n">pyqtSignal</span> <span class="k">as</span> <span class="n">_pyqtSignal</span><span class="p">,</span>
+                          <span class="n">QModelIndex</span> <span class="k">as</span> <span class="n">_QModelIndex</span><span class="p">,</span>
+                          <span class="n">Qt</span> <span class="k">as</span> <span class="n">_Qt</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="k">import</span> <span class="p">(</span><span class="n">QPixmap</span> <span class="k">as</span> <span class="n">_QPixmap</span><span class="p">,</span>
+                         <span class="n">QIcon</span> <span class="k">as</span> <span class="n">_QIcon</span><span class="p">,</span>
+                         <span class="n">QColor</span> <span class="k">as</span> <span class="n">_QColor</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sciplot.utils.mplstyle</span> <span class="k">import</span> <span class="n">MplMarkers</span><span class="p">,</span> <span class="n">MplLines</span>
+
+<span class="kn">from</span> <span class="nn">sciplot.ui.models.abstract</span> <span class="k">import</span> <span class="p">(</span><span class="n">AbstractTableModelMpl</span> <span class="k">as</span>
+                                        <span class="n">_AbstractTableModelMpl</span><span class="p">,</span>
+                                        <span class="n">AbstractEditDelegateMpl</span> <span class="k">as</span>
+                                        <span class="n">_AbstractEditDelegateMpl</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TableModelLines"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines">[docs]</a><span class="k">class</span> <span class="nc">TableModelLines</span><span class="p">(</span><span class="n">_AbstractTableModelMpl</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Signals</span>
+<span class="sd">    -------</span>
+<span class="sd">    dataSeleted : int, int</span>
+<span class="sd">        Row, id of plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_HEADERS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Color&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Alpha&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;LineWidth&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;LineStyle&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Marker&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Marker Size&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Label&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Delete&#39;</span><span class="p">]</span>
+
+    <span class="n">_COL_COLOR</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Color&#39;</span><span class="p">)</span>
+    <span class="n">_COL_ALPHA</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Alpha&#39;</span><span class="p">)</span>
+    <span class="n">_COL_LINEWIDTH</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;LineWidth&#39;</span><span class="p">)</span>
+    <span class="n">_COL_LINESTYLE</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;LineStyle&#39;</span><span class="p">)</span>
+    <span class="n">_COL_MARKER</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Marker&#39;</span><span class="p">)</span>
+    <span class="n">_COL_MARKERSIZE</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Marker Size&#39;</span><span class="p">)</span>
+    <span class="n">_COL_LABEL</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Label&#39;</span><span class="p">)</span>
+    <span class="n">_COL_DELETE</span> <span class="o">=</span> <span class="n">_HEADERS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;Delete&#39;</span><span class="p">)</span>
+<span class="c1">#    _COL_ID = _HEADERS.index(&#39;ID&#39;)</span>
+
+    <span class="n">dataDeleted</span> <span class="o">=</span> <span class="n">_pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">_QAbstractTableModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_HEADERS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="TableModelLines.rowCount"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.rowCount">[docs]</a>    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">_QModelIndex</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TableModelLines.columnCount"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.columnCount">[docs]</a>    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">_QModelIndex</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TableModelLines.headerData"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.headerData">[docs]</a>    <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">_Qt</span><span class="o">.</span><span class="n">Horizontal</span> <span class="ow">and</span> <span class="n">role</span> <span class="o">==</span> <span class="n">_Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_QVariant</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TableModelLines.doubleClickCheck"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.doubleClickCheck">[docs]</a>    <span class="k">def</span> <span class="nf">doubleClickCheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>  <span class="c1"># Color</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">changeColor</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_DELETE</span><span class="p">:</span>  <span class="c1"># Delete?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deleteData</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TableModelLines.deleteData"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.deleteData">[docs]</a>    <span class="k">def</span> <span class="nf">deleteData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TableModelLines.changeColor"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.changeColor">[docs]</a>    <span class="k">def</span> <span class="nf">changeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+        <span class="n">color_256</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">]</span>
+        <span class="n">qcolor</span> <span class="o">=</span> <span class="n">_QColor</span><span class="p">(</span><span class="n">color_256</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_256</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color_256</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_QColorDialog</span><span class="o">.</span><span class="n">getColor</span><span class="p">(</span><span class="n">qcolor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_QColor</span><span class="o">.</span><span class="n">isValid</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">getRgb</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TableModelLines.data"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">_Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">_QVariant</span><span class="p">()</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">_Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_ALPHA</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINEWIDTH</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;linewidth&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINESTYLE</span><span class="p">:</span>
+                <span class="n">ls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;linestyle&#39;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">MplLines</span><span class="o">.</span><span class="n">LINESTYLE_DICT</span><span class="p">[</span><span class="n">ls</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKER</span><span class="p">:</span>
+                <span class="n">mk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;marker&#39;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">MplMarkers</span><span class="o">.</span><span class="n">MARKER_DICT</span><span class="p">[</span><span class="n">mk</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKERSIZE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;markersize&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LABEL</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_DELETE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">elif</span> <span class="n">role</span> <span class="o">==</span> <span class="n">_Qt</span><span class="o">.</span><span class="n">DecorationRole</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+                <span class="n">color_256</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">]</span>
+                <span class="n">qcolor</span> <span class="o">=</span> <span class="n">_QColor</span><span class="p">(</span><span class="n">color_256</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_256</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color_256</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">pm</span> <span class="o">=</span> <span class="n">_QPixmap</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+                <span class="n">pm</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">qcolor</span><span class="p">)</span>
+                <span class="n">icon</span> <span class="o">=</span> <span class="n">_QIcon</span><span class="p">(</span><span class="n">pm</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">icon</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_DELETE</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">color_256</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">255</span><span class="p">]</span>
+                <span class="n">qcolor</span> <span class="o">=</span> <span class="n">_QColor</span><span class="p">(</span><span class="n">color_256</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_256</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color_256</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">pm</span> <span class="o">=</span> <span class="n">_QPixmap</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+                <span class="n">pm</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">qcolor</span><span class="p">)</span>
+                <span class="n">icon</span> <span class="o">=</span> <span class="n">_QIcon</span><span class="p">(</span><span class="n">pm</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">icon</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_QVariant</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TableModelLines.setData"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.setData">[docs]</a>    <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">_Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="n">_Qt</span><span class="o">.</span><span class="n">EditRole</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>
+                <span class="n">color_255</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">color_255</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                         <span class="nb">round</span><span class="p">(</span><span class="n">color_255</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                         <span class="nb">round</span><span class="p">(</span><span class="n">color_255</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+<span class="c1">#                self.colorChanged.emit(row)</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_ALPHA</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINEWIDTH</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;linewidth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINESTYLE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;linestyle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKER</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;marker&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKERSIZE</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;markersize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LABEL</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_DELETE</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">layoutChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dataDeleted</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TableModelLines.flags"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.TableModelLines.flags">[docs]</a>    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">_QAbstractTableModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">flags</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">flag</span> <span class="o">|</span> <span class="n">_Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span></div></div>
+
+
+<div class="viewcode-block" id="EditDelegateLines"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.EditDelegateLines">[docs]</a><span class="k">class</span> <span class="nc">EditDelegateLines</span><span class="p">(</span><span class="n">_AbstractEditDelegateMpl</span><span class="p">):</span>
+<div class="viewcode-block" id="EditDelegateLines.createEditor"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.EditDelegateLines.createEditor">[docs]</a>    <span class="k">def</span> <span class="nf">createEditor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>
+                <span class="c1"># Color handled by doubleClicked SIGNAL</span>
+                <span class="k">pass</span>
+            <span class="c1"># LineWidth or Marker size or Alpha</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINEWIDTH</span> <span class="ow">or</span>
+                  <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_ALPHA</span> <span class="ow">or</span>
+                  <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKERSIZE</span><span class="p">):</span>
+                <span class="n">spinBoxSize</span> <span class="o">=</span> <span class="n">_QDoubleSpinBox</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+                <span class="n">spinBoxSize</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">spinBoxSize</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+                <span class="n">spinBoxSize</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">spinBoxSize</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINESTYLE</span><span class="p">:</span>  <span class="c1"># LineStyle</span>
+                <span class="n">comboBoxLineStyle</span> <span class="o">=</span> <span class="n">_QComboBox</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line_style</span> <span class="ow">in</span> <span class="n">MplLines</span><span class="o">.</span><span class="n">LINESTYLE_DESC</span><span class="p">:</span>
+                    <span class="n">comboBoxLineStyle</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">line_style</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">comboBoxLineStyle</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKER</span><span class="p">:</span>  <span class="c1"># Marker</span>
+                <span class="n">comboBoxMarker</span> <span class="o">=</span> <span class="n">_QComboBox</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">marker_style</span> <span class="ow">in</span> <span class="n">MplMarkers</span><span class="o">.</span><span class="n">MARKER_DESC</span><span class="p">:</span>
+                    <span class="n">comboBoxMarker</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">marker_style</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">comboBoxMarker</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LABEL</span><span class="p">:</span>  <span class="c1"># Label</span>
+                <span class="n">lineEditLabel</span> <span class="o">=</span> <span class="n">_QLineEdit</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">lineEditLabel</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_DELETE</span><span class="p">:</span>  <span class="c1"># Delete?</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">_QVariant</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EditDelegateLines.setEditorData"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.EditDelegateLines.setEditorData">[docs]</a>    <span class="k">def</span> <span class="nf">setEditorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">_Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>
+            <span class="c1"># Color handled by doubleClick SIGNAL</span>
+            <span class="k">pass</span>
+        <span class="c1"># LineWidth or MarkerSize or Alpha</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINEWIDTH</span> <span class="ow">or</span>
+              <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_ALPHA</span> <span class="ow">or</span>
+              <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKERSIZE</span><span class="p">):</span>
+            <span class="n">item_float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">item_float</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINESTYLE</span><span class="p">:</span>  <span class="c1"># LineStyle</span>
+            <span class="n">style_index</span> <span class="o">=</span> <span class="n">MplLines</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">style_index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKER</span><span class="p">:</span>  <span class="c1"># Marker</span>
+            <span class="n">style_index</span> <span class="o">=</span> <span class="n">MplMarkers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">style_index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LABEL</span><span class="p">:</span>  <span class="c1"># Label</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="EditDelegateLines.setModelData"><a class="viewcode-back" href="../../../../sciplot.ui.models.html#sciplot.ui.models.lines.EditDelegateLines.setModelData">[docs]</a>    <span class="k">def</span> <span class="nf">setModelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_COLOR</span><span class="p">:</span>
+            <span class="c1"># Color handled by doubleClick SIGNAL</span>
+            <span class="k">pass</span>
+        <span class="c1"># LineWidth or MarkerSize or Alpha</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINEWIDTH</span> <span class="ow">or</span>
+              <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_ALPHA</span> <span class="ow">or</span>
+              <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKERSIZE</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LINESTYLE</span><span class="p">:</span>  <span class="c1"># LineStyle</span>
+            <span class="n">style_index</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">MplLines</span><span class="o">.</span><span class="n">LINESTYLE_SYMBOL</span><span class="p">[</span><span class="n">style_index</span><span class="p">]</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_MARKER</span><span class="p">:</span>  <span class="c1"># Marker</span>
+            <span class="n">style_index</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">MplMarkers</span><span class="o">.</span><span class="n">MARKER_SYMBOL</span><span class="p">[</span><span class="n">style_index</span><span class="p">]</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="n">TableModelLines</span><span class="o">.</span><span class="n">_COL_LABEL</span><span class="p">:</span>  <span class="c1"># Label</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, 2017, Charles H Camp Jr.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sciplot.utils.mplstyle &mdash; SciPlot-PyQt 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="SciPlot-PyQt 0.2.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> SciPlot-PyQt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciPlot-PyQt</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sciplot.utils.mplstyle</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sciplot.utils.mplstyle</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Thu Jun 30 10:23:03 2016</span>
+
+<span class="sd">@author: chc</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">cycler</span> <span class="k">import</span> <span class="n">cycler</span>
+<span class="kn">import</span> <span class="nn">copy</span> <span class="k">as</span> <span class="nn">_copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">_np</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">_mpl</span>
+
+<div class="viewcode-block" id="MplMarkers"><a class="viewcode-back" href="../../../sciplot.utils.html#sciplot.utils.mplstyle.MplMarkers">[docs]</a><span class="k">class</span> <span class="nc">MplMarkers</span><span class="p">:</span>
+    <span class="n">MARKER_DICT</span> <span class="o">=</span> <span class="n">_mpl</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">MarkerStyle</span><span class="o">.</span><span class="n">markers</span>
+    <span class="n">MARKER_DESC</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">MARKER_SYMBOL</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">MARKER_DICT</span><span class="p">:</span>
+        <span class="n">MARKER_SYMBOL</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">MARKER_DESC</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MARKER_DICT</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
+
+<div class="viewcode-block" id="MplMarkers.index"><a class="viewcode-back" href="../../../sciplot.utils.html#sciplot.utils.mplstyle.MplMarkers.index">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">str_in</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">MARKER_DESC</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">str_in</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">MARKER_SYMBOL</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">str_in</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">idx</span></div></div>
+
+<div class="viewcode-block" id="MplLines"><a class="viewcode-back" href="../../../sciplot.utils.html#sciplot.utils.mplstyle.MplLines">[docs]</a><span class="k">class</span> <span class="nc">MplLines</span><span class="p">:</span>
+    <span class="n">LINESTYLE_DICT</span> <span class="o">=</span> <span class="n">_mpl</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">lineStyles</span>
+    <span class="n">LINESTYLE_DESC</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">LINESTYLE_SYMBOL</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">LINESTYLE_DICT</span><span class="p">:</span>
+        <span class="n">LINESTYLE_SYMBOL</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">LINESTYLE_DESC</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LINESTYLE_DICT</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
+
+<div class="viewcode-block" id="MplLines.index"><a class="viewcode-back" href="../../../sciplot.utils.html#sciplot.utils.mplstyle.MplLines.index">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">str_in</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">LINESTYLE_DESC</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">str_in</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">LINESTYLE_SYMBOL</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">str_in</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">idx</span></div></div>
+
+<div class="viewcode-block" id="MplStyleSheets"><a class="viewcode-back" href="../../../sciplot.utils.html#sciplot.utils.mplstyle.MplStyleSheets">[docs]</a><span class="k">class</span> <span class="nc">MplStyleSheets</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_tableau20</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">180</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">174</span><span class="p">,</span> <span class="mi">199</span><span class="p">,</span> <span class="mi">232</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">187</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">44</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">44</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">152</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">138</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">214</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">150</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">148</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">189</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">197</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">213</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">140</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">75</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">196</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">148</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">227</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">194</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">247</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">210</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">127</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">127</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">199</span><span class="p">,</span> <span class="mi">199</span><span class="p">,</span> <span class="mi">199</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">188</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">34</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">219</span><span class="p">,</span> <span class="mi">219</span><span class="p">,</span> <span class="mi">141</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">207</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">158</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">229</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">_np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span>
+
+    <span class="n">_tableau10</span> <span class="o">=</span> <span class="n">_tableau20</span><span class="p">[::</span><span class="mi">2</span><span class="p">,:]</span>
+
+    <span class="n">_tableau10_med</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">114</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">206</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">74</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">103</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span> <span class="mi">92</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">237</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">93</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">173</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">201</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">168</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">110</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">237</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">202</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">162</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">162</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">205</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">93</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">109</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">218</span><span class="p">]],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span>
+
+
+    <span class="n">_base_crikit</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;font.sans-serif&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Bitstream Vera Sans&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;DejaVu Sans&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Lucida Grande&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Verdana&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Geneva&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Lucid&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;Avant Garde&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;sans-serif&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">:</span> <span class="n">cycler</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">_tableau10</span><span class="p">),</span>
+<span class="c1">#                    &#39;axes.prop_cycle&#39;: plt.style.library[&#39;ggplot&#39;][&#39;axes.prop_cycle&#39;],</span>
+                    <span class="s1">&#39;image.cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;viridis&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;image.interpolation&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}</span>
+
+    <span class="n">_paper_halfwidth</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mf">8.8</span><span class="p">,</span>
+                 <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mf">9.6</span><span class="p">,</span>
+                 <span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.3</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">],</span>
+                 <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                 <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span>
+                 <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.4</span><span class="p">,</span>
+                 <span class="s1">&#39;lines.markeredgewidth&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                 <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+                 <span class="s1">&#39;patch.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.24</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.major.pad&#39;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.major.width&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.minor.width&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.major.pad&#39;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.major.width&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.minor.width&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">}</span>
+
+    <span class="n">_paper_fullwidth</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mf">8.8</span><span class="p">,</span>
+                 <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mf">9.6</span><span class="p">,</span>
+                 <span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">],</span>
+                 <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                 <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mf">8.8</span><span class="p">,</span>
+                 <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.4</span><span class="p">,</span>
+                 <span class="s1">&#39;lines.markeredgewidth&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                 <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+                 <span class="s1">&#39;patch.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.24</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.major.pad&#39;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.major.width&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                 <span class="s1">&#39;xtick.minor.width&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mf">8.0</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.major.pad&#39;</span><span class="p">:</span> <span class="mf">5.6</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.major.width&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                 <span class="s1">&#39;ytick.minor.width&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">}</span>
+
+    <span class="n">_poster</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mf">17.6</span><span class="p">,</span>
+               <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mf">19.2</span><span class="p">,</span>
+               <span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">12.8</span><span class="p">,</span> <span class="mf">8.8</span><span class="p">],</span>
+              <span class="s1">&#39;grid.linewidth&#39;</span><span class="p">:</span> <span class="mf">1.6</span><span class="p">,</span>
+              <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span>
+              <span class="s1">&#39;lines.linewidth&#39;</span><span class="p">:</span> <span class="mf">2.8</span><span class="p">,</span>
+              <span class="s1">&#39;lines.markeredgewidth&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+              <span class="s1">&#39;lines.markersize&#39;</span><span class="p">:</span> <span class="mf">11.2</span><span class="p">,</span>
+              <span class="s1">&#39;patch.linewidth&#39;</span><span class="p">:</span> <span class="mf">0.48</span><span class="p">,</span>
+              <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span>
+              <span class="s1">&#39;xtick.major.pad&#39;</span><span class="p">:</span> <span class="mf">11.2</span><span class="p">,</span>
+              <span class="s1">&#39;xtick.major.width&#39;</span><span class="p">:</span> <span class="mf">1.6</span><span class="p">,</span>
+              <span class="s1">&#39;xtick.minor.width&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+              <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span>
+              <span class="s1">&#39;ytick.major.pad&#39;</span><span class="p">:</span> <span class="mf">11.2</span><span class="p">,</span>
+              <span class="s1">&#39;ytick.major.width&#39;</span><span class="p">:</span> <span class="mf">1.6</span><span class="p">,</span>
+              <span class="s1">&#39;ytick.minor.width&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}</span>
+
+    <span class="n">basic_halfwidth</span> <span class="o">=</span> <span class="n">_copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">_base_crikit</span><span class="p">)</span>
+    <span class="n">basic_halfwidth</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_paper_halfwidth</span><span class="p">)</span>
+
+    <span class="n">basic_fullwidth</span> <span class="o">=</span> <span class="n">_copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">_base_crikit</span><span class="p">)</span>
+    <span class="n">basic_fullwidth</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_paper_fullwidth</span><span class="p">)</span>
+
+    <span class="n">basic_poster</span> <span class="o">=</span> <span class="n">_copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">_base_crikit</span><span class="p">)</span>
+    <span class="n">basic_poster</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_poster</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">_np</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;classic&#39;</span><span class="p">)</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="n">MplStyleSheets</span><span class="o">.</span><span class="n">basic_fullwidth</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+
+    <span class="n">_plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">_plt</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">_np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">_plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">_plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, 2017, Charles H Camp Jr.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
