@@ -43,11 +43,11 @@ Authors
 """
 import sys as _sys
 import os as _os
+import pkg_resources as _pkg_resources
 
 _sys.path.append(_os.path.abspath('../'))
 
-# M.N.P.Q (Major, Minor, Subminor)
-__version__ = '0.1.1'
+__version__ = _pkg_resources.require("sciplot-pyqt")[0].version
 
 __all__ = ['SciPlotUI']
 
