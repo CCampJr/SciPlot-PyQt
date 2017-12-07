@@ -1,14 +1,14 @@
 language: python
 matrix:
   include:
-  - os: linux
-    dist: trusty
-    sudo: required
-    python: '3.4'
-  - os: linux
-    dist: trusty
-    sudo: required
-    python: '3.5'
+  # - os: linux
+  #   dist: trusty
+  #   sudo: required
+  #   python: '3.4'
+  # - os: linux
+  #   dist: trusty
+  #   sudo: required
+  #   python: '3.5'
   - os: linux
     dist: trusty
     sudo: false
@@ -26,7 +26,13 @@ cache:
 before_install:
 - if [[ "$TRAVIS_PYTHON_VERSION" != "3.4" && "$TRAVIS_PYTHON_VERSION" != "3.5" ]];
   then pip install pyqt5; else source $TRAVIS_BUILD_DIR/.travis/build_pyqt5.sh; fi
+- pip install sphinx
 install:
+- cd $TRAVIS_BUILD_DIR
+- python setup.py sdist
+- cd $TRAVIS_BUILD_DIR/docs/
+- sphinx-apidoc -o ./source ../sciplot_pyqt
+- make html
 - cd $TRAVIS_BUILD_DIR
 - python setup.py install
 script:
