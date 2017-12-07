@@ -1,13 +1,19 @@
-.. image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
-    :target: https://travis-ci.org/CCampJr/SciPlot-PyQt
+|Travis|_ |AppVeyor|_ |PyVersions|_ |PyPi|_
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
-    :target: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
+.. |Travis| image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
+.. _Travis: https://travis-ci.org/CCampJr/SciPlot-PyQt
 
-.. image:: https://badge.fury.io/py/sciplot-pyqt.svg
-    :target: https://badge.fury.io/py/sciplot-pyqt
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
+.. _Appveyor: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
-.. image:: https://img.shields.io/badge/Python-3.4%2C%203.5%2C%203.6-blue.svg
+.. |PyVersions| 
+
+
+.. |PyPi| image:: https://badge.fury.io/py/sciplot-pyqt.svg
+.. _PyPi: https://badge.fury.io/py/sciplot-pyqt
+
+.. |PyVersions| image:: https://img.shields.io/badge/Python-3.4%2C%203.5%2C%203.6-blue.svg
+.. _PyVersions: https://www.python.org/download/releases/3.0/
 
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================
