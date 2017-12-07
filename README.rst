@@ -7,6 +7,8 @@
 .. image:: https://badge.fury.io/py/sciplot-pyqt.svg
     :target: https://badge.fury.io/py/sciplot-pyqt
 
+.. image:: https://img.shields.io/badge/Python-3.4%2C%203.5%2C%203.6-blue.svg
+
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================
 
