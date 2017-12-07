@@ -31,13 +31,13 @@ install:
 - python setup.py install
 script:
 - pytest
-branches:
-  only:
-  - master
-  - dev
-  - test_deploy
-  - release
-  - releases
+# branches:
+#   only:
+#   - master
+#   - dev
+#   - test_deploy
+#   - release
+#   - releases
 deploy:
   provider: pypi
   server: https://testpypi.python.org/pypi # Remove this line for official deployment
