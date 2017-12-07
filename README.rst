@@ -4,6 +4,8 @@
 .. image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
     :target: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
+.. image:: https://badge.fury.io/py/sciplot-pyqt.svg
+    :target: https://badge.fury.io/py/sciplot-pyqt
 
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================
