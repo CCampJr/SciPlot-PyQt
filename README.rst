@@ -25,6 +25,7 @@ Dependencies
 packages may work.
 
 -   python >= 3.4
+    
     - Tested with 3.4.4, 3.5.2, 3.6.1
 
 -   numpy (1.9.3)
@@ -63,8 +64,8 @@ Known Issues
     several changes have been made to the MPL API. 
     
     - For v0.1.3, the dev-MPL2 branch should address those problems
-    
     - v0.1.4 is a merge of v0.1.3 and the dev-MPL2 branch (with other updates)
+
 
 Installation
 ------------
