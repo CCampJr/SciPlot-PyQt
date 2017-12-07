@@ -11,8 +11,11 @@ SciPlot-PyQt: Publication-ready scientific plotting for Python
 SciPlot-PyQt (aka SciPlot) is a user-interface/matplotlib wrapper built with
 PyQt5 that allows interactive plotting through an embedded matplotlib canvas.
 It enables fast and easy publication-ready plots and images:
+
 - Interactive plotting
+
 - Theme and style editing (TODO)
+
 - Figure saving and opening for later editing (TODO)
 
 Dependencies
