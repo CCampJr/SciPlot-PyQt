@@ -53,7 +53,7 @@ Known Issues
 
 2.  **PyQt 5.7**: There is a bug in PyQt 5.7.* that will prevent SciPlot's tables from showing the 
     individual plot entries (see https://www.riverbankcomputing.com/pipermail/pyqt/2017-January/038483.html). 
-    Apparently, this will be fixed in 5.7.2.  
+    Apparently, this will be fixed in 5.7.2.
     
     - As WinPython 3.5.2.3Qt5 and 3.5.2.2Qt5 use PyQt 5.7.*, it is advised to use WinPython 3.5.2.1Qt5 or 
       3.4.4.5Qt5 until the matter is sorted out.
@@ -61,7 +61,7 @@ Known Issues
     - Alternatively, one can uninstall pyqt5.7.* and force an install of <= 5.6.*.
 
 3.  **MATPLOTLIB 2.0**: SciPlot version solder than 0.1.4 will crash with MPL 2.* as 
-    several changes have been made to the MPL API. 
+    several changes have been made to the MPL API.
     
     - For v0.1.3, the dev-MPL2 branch should address those problems
     - v0.1.4 is a merge of v0.1.3 and the dev-MPL2 branch (with other updates)
