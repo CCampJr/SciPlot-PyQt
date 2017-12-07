@@ -1,13 +1,10 @@
-# Major initiatives
-* Move plotting functions out into their own module
+# Plotting functionalities
+* Image high and low compression parameters
 * Add ordering (bottom-to-top)
 
 # Plotting type adds
 * Scatter plots
 * Whisker plots
-
-# Plotting functionalities
-* Image high and low compression parameters
 
 # Style functionality
 * Load mpl-style sheets
