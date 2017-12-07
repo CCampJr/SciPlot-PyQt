@@ -8,7 +8,7 @@ Created on Thu Jul 21 01:11:04 2016
 from setuptools import setup, find_packages
 
 with open('README.rst') as f:
-      long_description = f.read()
+    long_description = f.read()
 
 setup(name='sciplot-pyqt',
       version = '0.2.2a',
