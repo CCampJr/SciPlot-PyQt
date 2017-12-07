@@ -2,10 +2,10 @@
 
 |Travis|_ |AppVeyor|_ |PyQt5|_ |Py34|_ |Py35|_ |Py36|_ |PyPi|_
 
-.. |Travis| image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
+.. |Travis| image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=dev
 .. _Travis: https://travis-ci.org/CCampJr/SciPlot-PyQt
 
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=dev&svg=true
 .. _AppVeyor: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
 .. |Py34| image:: https://img.shields.io/badge/Python-3.4-blue.svg
