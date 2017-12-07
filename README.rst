@@ -6,16 +6,13 @@
 .. _Travis: https://travis-ci.org/CCampJr/SciPlot-PyQt
 
 .. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
-.. _Appveyor: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
+.. _AppVeyor: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
-.. |PyVersions| 
-
+.. |PyVersions| image:: https://codecov.io/github/scikit-learn/scikit-learn/badge.svg?branch=master&service=github
+.. _PyVersions: https://www.python.org/download/releases/3.0/
 
 .. |PyPi| image:: https://badge.fury.io/py/sciplot-pyqt.svg
 .. _PyPi: https://badge.fury.io/py/sciplot-pyqt
-
-.. |PyVersions| image:: https://img.shields.io/badge/Python-3.4%2C%203.5%2C%203.6-blue.svg
-.. _PyVersions: https://www.python.org/download/releases/3.0/
 
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================
