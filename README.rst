@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-|Travis|_ |AppVeyor|_ |PyVersions|_ |PyPi|_
+|Travis|_ |AppVeyor|_ |PyQt5|_ |Py34|_ |Py35|_ |Py36|_ |PyPi|_
 
 .. |Travis| image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
 .. _Travis: https://travis-ci.org/CCampJr/SciPlot-PyQt
@@ -8,11 +8,21 @@
 .. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
 .. _AppVeyor: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
-.. |PyVersions| image:: https://codecov.io/github/scikit-learn/scikit-learn/badge.svg?branch=master&service=github
-.. _PyVersions: https://www.python.org/download/releases/3.0/
+.. |Py34| image:: https://img.shields.io/badge/Python-3.4-blue.svg
+.. _Py34: https://www.python.org/downloads/
+
+.. |Py35| image:: https://img.shields.io/badge/Python-3.5-blue.svg
+.. _Py35: https://www.python.org/downloads/
+
+.. |Py36| image:: https://img.shields.io/badge/Python-3.6-blue.svg
+.. _Py36: https://www.python.org/downloads/
 
 .. |PyPi| image:: https://badge.fury.io/py/sciplot-pyqt.svg
 .. _PyPi: https://badge.fury.io/py/sciplot-pyqt
+
+.. |PyQt5| image:: https://img.shields.io/badge/PyQt-5-ff69b4.svg
+.. _PyQt5: https://www.riverbankcomputing.com/software/pyqt/download5
+
 
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================
