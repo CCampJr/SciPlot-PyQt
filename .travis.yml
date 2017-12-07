@@ -28,6 +28,7 @@ before_install:
   then pip install pyqt5; else source $TRAVIS_BUILD_DIR/.travis/build_pyqt5.sh; fi
 - pip install sphinx
 - pip install numpydoc
+- pip install sphinx_rtd_theme
 install:
 - cd $TRAVIS_BUILD_DIR
 - pip install -e .

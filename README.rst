@@ -46,6 +46,8 @@ packages may work.
 
 -   numpydoc (0.6.0) (Only for building documentation)
 
+-   sphinx_rtd_theme (0.2.5b2) (Only for building documentation)
+
 
 Known Issues
 ------------
