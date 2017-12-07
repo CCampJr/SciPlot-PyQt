@@ -31,7 +31,7 @@ install:
 - cd $TRAVIS_BUILD_DIR
 - python setup.py sdist
 - cd $TRAVIS_BUILD_DIR/docs/
-- sphinx-apidoc -o ./source ../sciplot_pyqt
+- sphinx-apidoc -o ./source ../sciplot
 - make html
 - cd $TRAVIS_BUILD_DIR
 - python setup.py install
