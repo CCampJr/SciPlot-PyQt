@@ -37,6 +37,7 @@ branches:
   - dev
   - test_deploy
   - release
+  - releases
 deploy:
   provider: pypi
   server: https://testpypi.python.org/pypi # Remove this line for official deployment
@@ -46,4 +47,3 @@ deploy:
   on:
     tags: true
     python: 3.6
-    branch: release
