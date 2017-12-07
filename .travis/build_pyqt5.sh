@@ -10,9 +10,11 @@ sudo apt-get update
 sudo apt-get install -y qt59base
 source /opt/qt59/bin/qt59-env.sh
 
-sudo apt-get install -y python3-pyqt5
+sudo apt-get install -y python3-pyqt5-dbg
+sudo apt-get install -y pyqt5-dev-tools
 sudo apt-get install -y qttools5-dev-tools
 sudo apt-get install -y pyqt5-dev-tools
+sudo apt-get install -y python3-matplotlib
 # mkdir -p $PYQT
 # cd $PYQT
 
