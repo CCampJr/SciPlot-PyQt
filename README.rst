@@ -153,6 +153,8 @@ appears, follow up the plotting commands with:
 
 Sciplot tests for this and will prove you with a message to your terminal:
 
+.. code::
+
     No QApplication instance (this is common with certain
     version of Matplotlib). Creating one.
     You will need to exec manually after you finish plotting.
