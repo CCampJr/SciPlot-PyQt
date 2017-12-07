@@ -151,7 +151,7 @@ appears, follow up the plotting commands with:
 
     sp.app.exec_()
 
-Sciplot tests for this and will prove you with a message to your terminal:
+Sciplot tests for this and will provide you with a message to your terminal:
 
 .. code::
 
@@ -160,8 +160,8 @@ Sciplot tests for this and will prove you with a message to your terminal:
     You will need to exec manually after you finish plotting.
     
     -----------Example---------------
-    import sciplot\n\
-    sp = sciplot.main()\n\n\
+    import sciplot
+    sp = sciplot.main()
 
     # Plot a line
     sp.plot((0,1),(0,1))
