@@ -11,3 +11,6 @@
 * Custom style sheets
 * Journal-specific styles/sizes/etc
 * Manually adjust figsize, dpi, font, etc
+
+# Other
+* Documentation (it's just API currently)
