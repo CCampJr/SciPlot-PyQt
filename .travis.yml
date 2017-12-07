@@ -31,14 +31,18 @@ before_install:
 - pip install sphinx_rtd_theme
 install:
 - cd $TRAVIS_BUILD_DIR
-- pip install -e .
+- python setup.py egg_info
+- python setup.py dist_info
+- python setup.py build_sphinx
 - python setup.py sdist
-- cd $TRAVIS_BUILD_DIR/docs/
-- sphinx-apidoc -o ./source ../sciplot
-- make html
-- pip uninstall -y sciplot-pyqt
-- cd $TRAVIS_BUILD_DIR
 - python setup.py install
+# - python setup.py sdist
+# - cd $TRAVIS_BUILD_DIR/docs/
+# - sphinx-apidoc -o ./source ../sciplot
+# - make html
+# - pip uninstall -y sciplot-pyqt
+# - cd $TRAVIS_BUILD_DIR
+# - python setup.py install
 script:
 - pytest
 # branches:
