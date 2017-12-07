@@ -4,7 +4,6 @@ matrix:
   - os: linux
     dist: trusty
     sudo: required
-    compiler: gcc
     python: '3.4'
   - os: linux
     dist: trusty
@@ -32,16 +31,19 @@ install:
 - python setup.py install
 script:
 - pytest
-branches:
-  only:
-  - master
-  - dev
+# branches:
+#   only:
+#   - master
+#   - dev
+#   - test_deploy
+#   - release
+#   - releases
 deploy:
   provider: pypi
-  server: https://testpypi.python.org/pypi # Remove this line for official deployment
+  server: https://test.pypi.org/legacy/ # Remove this line for official deployment
   user: ccampjr
   password:
     secure: VU3ssaA1XuH2qbFS8GR8ZRFc0sQiTVcezUsZQmkSudrqRP62Ys9Cztx3WQxeafBhsqM/eFAWgArGWMp6V1X2m6ELQ/ZRVzY7LGrb6Ma1XjdQcjHfoiZakioIJz3QasNZa+SrR+9ayxqq68LbFXM7Ywfg7WJYJxKvc8vcYr+ek07p6dlDZ9I22iPL/Mpb0BI4oWCibbIhlI5DxfvV45rIFLvg/KEBdiOJI/A8+3KkLR5GieQM6ZvSFN5KAgN7w4/CFHhFcMplDylU8+a30yKRnZXnBGRF3neQ6xcSH5eoCFzh4rsjV1CxIVR90Wkkt/TImJS8GxA6DT73rJRQmtBhPQSaEBnXv3fX02TsNVn8IpWYYP5SX6CdGeVRYtXJ+32MSAxRfQSyaI8b5nbW9mgcFyDZqa2uUu/oJBYd9TpoeGBbj+pqZa5/9QDlQOEVgTJVe0JAhVGULp340DkX2TzwVDF3Hh3cqSbizWRMI5KbnhoDqwr48TwrjEDs03LY7t29WsgPyvr2N6Nsewr+0/5T4aUlybRoUZP0sD4+6m5dV6SUjm9SP2G3lrRcGsE2gvK6rXdJzg6rAxVYy5CRgNDO650vlDWb+ynYk29q045AVbZzkv6wgxikbUderHU1FSScrTZQRMICNMqUI5yYzBsKv9vDvqvC+MElYq48KWS+Ijk=
   on:
     tags: true
-    branch: test_deploy
+    python: 3.6

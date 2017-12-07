@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sciplot.sciplotUI &mdash; SciPlot-PyQt 0.1.5a1 documentation</title>
+  <title>sciplot.sciplotUI &mdash; SciPlot-PyQt 0.1.5a3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="SciPlot-PyQt 0.1.5a1 documentation" href="../../index.html"/>
+    <link rel="top" title="SciPlot-PyQt 0.1.5a3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.1.5a1
+                0.1.5a3
               </div>
             
           
@@ -205,6 +205,7 @@
 <span class="c1"># Generic imports for MPL-incorporation</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">_mpl</span>
 <span class="n">_mpl</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Qt5Agg&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>  <span class="c1"># Simply for it starting a QApplication</span>
 
 <span class="c1"># Generic imports for QT-based programs</span>
 <span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="k">import</span> <span class="p">(</span><span class="n">QApplication</span> <span class="k">as</span> <span class="n">_QApplication</span><span class="p">,</span>
@@ -215,6 +216,8 @@
                              <span class="n">QFileDialog</span> <span class="k">as</span> <span class="n">_QFileDialog</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="k">import</span> <span class="n">pyqtSignal</span> <span class="k">as</span> <span class="n">_pyqtSignal</span>
+
+<span class="kn">import</span> <span class="nn">sciplot</span>
 
 <span class="c1"># Import from Designer-based GUI</span>
 <span class="kn">from</span> <span class="nn">sciplot.ui.qt_Plotter</span> <span class="k">import</span> <span class="n">Ui_MainWindow</span> <span class="k">as</span> <span class="n">Ui_Plotter</span>
@@ -327,6 +330,7 @@
     <span class="n">all_cleared</span> <span class="o">=</span> <span class="n">_pyqtSignal</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__version__</span> <span class="o">=</span> <span class="n">sciplot</span><span class="o">.</span><span class="n">__version__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_all</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -334,16 +338,32 @@
         <span class="c1"># in MPL v2; thus, this will be tracked</span>
         <span class="c1"># so MPL 1 and 2 can be used seemlessly</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mpl_v2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_mpl</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+
         <span class="c1"># Check to see if QApp already exists</span>
         <span class="c1"># if not, one has to be created</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">_QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">_QApplication</span><span class="p">(</span><span class="n">_sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>		
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">No QApplication instance (this is common with certain </span><span class="se">\</span>
+<span class="s1">version of Matplotlib). Creating one.</span><span class="se">\n\r\</span>
+<span class="s1">You will need to exec manually after you finish plotting.</span><span class="se">\n\</span>
+<span class="s1">-----------Example---------------</span><span class="se">\n\</span>
+<span class="s1">import sciplot</span><span class="se">\n\</span>
+<span class="s1">sp = sciplot.main()</span><span class="se">\n\n\</span>
+<span class="s1"># Plot a line</span><span class="se">\n\</span>
+<span class="s1">sp.plot((0,1),(0,1))</span><span class="se">\n\n\</span>
+<span class="s1"># Start the QApplication</span><span class="se">\n\</span>
+<span class="s1">sp.app.exec_()&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">_QApplication</span><span class="p">(</span><span class="n">_sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">setQuitOnLastWindowClosed</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">limit_to</span><span class="o">=</span><span class="n">limit_to</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        
+        <span class="c1"># if app is not None:</span>
+        <span class="c1"># #     print(&#39;Here&#39;)</span>
+        <span class="c1">#     if app.exec_():</span>
+        <span class="c1">#         print(&#39;Here&#39;)</span>
+
 <div class="viewcode-block" id="SciPlotUI.closeEvent"><a class="viewcode-back" href="../../sciplot.html#sciplot.sciplotUI.SciPlotUI.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="k">pass</span></div>
 
@@ -1573,7 +1593,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.1.5a1',
+            VERSION:'0.1.5a3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
