@@ -4,7 +4,6 @@ matrix:
   - os: linux
     dist: trusty
     sudo: required
-    compiler: gcc
     python: '3.4'
   - os: linux
     dist: trusty
@@ -36,6 +35,7 @@ branches:
   only:
   - master
   - dev
+  
 deploy:
   provider: pypi
   server: https://testpypi.python.org/pypi # Remove this line for official deployment
