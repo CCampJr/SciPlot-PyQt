@@ -74,17 +74,63 @@ Known Issues
 Installation
 ------------
 
-.. code:: python
+**Note**: the installer only checks for the dependencies of matplotlib and
+numpy. PyQt5 is not checked for, though, it is also required. See Depencies
+above for more information and requirements.
+
+Using pip (hard install)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code::
+
+    # Only Python 3.* installed
+    pip install sciplot-pyqt
+
+    # If you have both Python 2.* and 3.* you may need
+    pip3 install sciplot-pyqt
+
+Using pip (soft install [can update with git])
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code::
     
-    # Make new directory for crikit2 and enter it
+    # Make new directory for sciplot-pyqt and enter it
     # Clone from github
     git clone https://github.com/CCampJr/SciPlot-PyQt.git
 
-    # Install (mainly check installation)
+    # Only Python 3.* installed
     pip install -e .
 
-    # IMPORTANT: You will need to manually install PyQt5 and Qt5
-    # These packages are not pip-installable at this time
+    # If you have both Python 2.* and 3.* you may need instead
+    pip3 install -e .
+
+    # To update in the future
+    git pull
+
+Using setuptools
+~~~~~~~~~~~~~~~~
+
+You will need to `download the repository <https://github.com/CCampJr/SciPlot-PyQt/releases>`_
+or clone the repository with git:
+
+.. code::
+    
+    # Make new directory for sciplot-pyqt and enter it
+    # Clone from github
+    git clone https://github.com/CCampJr/SciPlot-PyQt.git
+
+Perform the install **without building the documentation**:
+
+.. code::
+
+    python setup.py install
+
+Perform the install **and build the documentation** (see dependencies above):
+
+.. code::
+
+    python setup.py build_sphinx
+    python setup.py install
 
 Usage
 -----
@@ -94,8 +140,34 @@ Usage
     import sciplot
     sp = sciplot.main()
 
+**Note** Sciplot-pyqt relies on an existing, active Qt5 QApplication instance 
+to operate. Some versions of Matplotlib 1.5.* provide this, others do not.
+Matplotlib 2.* seems to always provide this functionality.
+
+**If** you perform the examples below and just a non-repsonsive white window
+appears, follow up the plotting commands with:
+
+.. code:: python
+
+    sp.app.exec_()
+
+Sciplot tests for this and will prove you with a message to your terminal:
+
+    No QApplication instance (this is common with certain
+    version of Matplotlib). Creating one.
+    You will need to exec manually after you finish plotting.
+    
+    -----------Example---------------
+    import sciplot\n\
+    sp = sciplot.main()\n\n\
+
+    # Plot a line
+    sp.plot((0,1),(0,1))
+    # Start the QApplication
+    sp.app.exec_()
+
 Example
--------
+~~~~~~~
 
 .. code:: python
 
