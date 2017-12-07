@@ -27,6 +27,7 @@ before_install:
 - if [[ "$TRAVIS_PYTHON_VERSION" != "3.4" && "$TRAVIS_PYTHON_VERSION" != "3.5" ]];
   then pip install pyqt5; else source $TRAVIS_BUILD_DIR/.travis/build_pyqt5.sh; fi
 - pip install sphinx
+- pip install numpydoc
 install:
 - cd $TRAVIS_BUILD_DIR
 - pip install -e .

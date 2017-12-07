@@ -44,6 +44,8 @@ packages may work.
     
     - Tested with 1.4.5, 1.6.4
 
+-   numpydoc (0.6.0) (Only for building documentation)
+
 
 Known Issues
 ------------
