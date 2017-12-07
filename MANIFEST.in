@@ -1,4 +1,4 @@
 include *.rst
 recursive-include docs *
 include NONLICENSE.md
-include README.md
+include README.rst
