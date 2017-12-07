@@ -11,7 +11,7 @@ with open('README.rst') as f:
       long_description = f.read()
 
 setup(name='sciplot-pyqt',
-      version = '0.2.0',
+      version = '0.2.1',
       description = 'A small matplotlib wrapper/UI for creating \
                      publication-ready plots, graphs, and images',
       long_description = long_description,
