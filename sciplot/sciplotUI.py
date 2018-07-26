@@ -1223,8 +1223,13 @@ sp.app.exec_()')
         """
         Set default and Home view to the current one
         """
-        self.mpl_widget.toolbar._views.clear()
-        self.mpl_widget.toolbar._positions.clear()
+        # New versions of MPL don't have these functions
+        try:
+            self.mpl_widget.toolbar._views.clear()
+            self.mpl_widget.toolbar._positions.clear()
+        except:
+            pass
+
         self.mpl_widget.toolbar.update()
     
     def clearAllBars(self):
