@@ -121,17 +121,7 @@ if __name__ == '__main__':
                                _QtWidgets.QSizePolicy.Expanding)
 
     qApp = _QtWidgets.QApplication(_sys.argv)
-    
-#    aw = ApplicationWindow(style='seaborn-deep')
-#    aw.mpl_widget.ax.plot((2,3),(4,-1), label='a')
-#    aw.mpl_widget.ax.hold(True)
-#    aw.mpl_widget.ax.plot((2,3),(4,-2), label='b')
-#    aw.mpl_widget.ax.set_xlabel('X')
-#    aw.mpl_widget.ax.set_ylabel('Y')
-#    aw.mpl_widget.ax.set_title('Title')
-#    aw.mpl_widget.ax.legend()
-#    aw.mpl_widget.fig.tight_layout()
-#    aw.show()
+ 
     
     aw2 = ApplicationWindow(style='seaborn-deep', subplot=211)
     aw2.mpl_widget.ax[0].set_title('0')

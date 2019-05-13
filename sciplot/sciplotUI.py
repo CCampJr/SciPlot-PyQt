@@ -180,9 +180,9 @@ class SciPlotUI(_QMainWindow):
         self.list_all = []
 
         # There are a number of changes and deprectaion
-        # in MPL v2; thus, this will be tracked
+        # in MPL v2 and v3 ; thus, this will be tracked
         # so MPL 1 and 2 can be used seemlessly
-        self._mpl_v2 = int(_mpl.__version__.rsplit('.')[0]) == 2
+        self._mpl_v1 = int(_mpl.__version__.rsplit('.')[0]) == 1
 
         # Check to see if QApp already exists
         # if not, one has to be created
@@ -485,7 +485,7 @@ sp.app.exec_()')
         self.mpl_widget = _MplCanvas(height=6, dpi=100)
 
         # Hold is deprecated in MPL2
-        if not self._mpl_v2:
+        if self._mpl_v1:
             self.mpl_widget.ax.hold(True)
 
         # Insert MPL widget and toolbar
@@ -695,7 +695,7 @@ sp.app.exec_()')
         for itm in self.list_all:
             if isinstance(itm, _DataLine):
 #                print('Line')
-                if not self._mpl_v2:
+                if self._mpl_v1:
                     self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
@@ -713,7 +713,7 @@ sp.app.exec_()')
                                                      markersize=itm.style_dict['markersize'])
             elif isinstance(itm, _DataBar):
 #                print('Bar')
-                if not self._mpl_v2:
+                if self._mpl_v1:
                     self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
@@ -731,7 +731,7 @@ sp.app.exec_()')
                                                     linewidth=itm.style_dict['linewidth'])
             elif isinstance(itm, _DataImages):
 #                print('Images')
-                if not self._mpl_v2:
+                if self._mpl_v1:
                     self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
@@ -756,7 +756,7 @@ sp.app.exec_()')
                                                                    use_gridspec=True)
             elif isinstance(itm, _DataFillBetween):
 #                print('Fill Between')
-                if not self._mpl_v2:
+                if self._mpl_v1:
                     self.mpl_widget.ax.hold(True)
                 
                 # Hide label if alpha=0
