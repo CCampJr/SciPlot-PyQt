@@ -8,6 +8,10 @@ This document records all notable changes to
 This project adheres to `PEP 440 -- Version Identification 
 and Dependency Specification <https://www.python.org/dev/peps/pep-0440/>`_.
 
+0.2.2 (2019)
+-------------
+-   Address compatibility with Matplotlib 2.*/3.*
+
 0.2.1 (17-12-07)
 ----------------
 
