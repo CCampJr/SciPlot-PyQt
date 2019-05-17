@@ -20,35 +20,18 @@ Bar plots : bar, hist
 Polycollections : fill_between
 
 Images : imshow
-
-Notes
------
-SciPlot has a lot of advances/improvements to make. Feel free to contact me--
-help is always welcome!
-
-Usage
------
-import sciplot
-sp = sciplot.SciPlotUI()
-sp.show()
-
-Example
--------
-sp.plot((0,1),(2,3),label='Line', x_label='X', y_label='Y', ls='--')
-sp.fill_between((0,1),(1,2),(3,4),label='Fill Between', color='r', alpha=0.25)
-
-Authors
--------
-* Charles H. Camp Jr. <charles.camp@nist.gov>
 """
+
 import sys as _sys
 import os as _os
 import pkg_resources as _pkg_resources
+
+from . import sciplotUI
 
 _sys.path.append(_os.path.abspath('../'))
 
 __version__ = _pkg_resources.require("sciplot-pyqt")[0].version
 
-__all__ = ['SciPlotUI']
+# __all__ = ['SciPlotUI']
 
-from .sciplotUI import SciPlotUI as main
+# from .sciplotUI import SciPlotUI as main
