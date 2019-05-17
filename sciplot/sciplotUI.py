@@ -58,16 +58,19 @@ from PyQt5.QtWidgets import (QApplication as _QApplication,
                              QTableView as _QTableView,
                              QSizePolicy as _QSizePolicy,
                              QTabWidget as _QTabWidget,
-                             QFileDialog as _QFileDialog)
+                             QFileDialog as _QFileDialog,
+                             QInputDialog as _QInputDialog)
 
 from PyQt5.QtCore import pyqtSignal as _pyqtSignal
+import PyQt5.QtCore as _QtCore
 
 import sciplot
 
 # Import from Designer-based GUI
 from sciplot.ui.qt_Plotter import Ui_MainWindow as Ui_Plotter
 from sciplot.ui.widget_mpl import MplCanvas as _MplCanvas
-#from sciplot.utils.mplstyle import MplStyleSheets, MplMarkers, MplLines
+from sciplot.ui.dialogs import DualEntry
+
 from sciplot.ui.models.lines import (TableModelLines as _TableModelLines,
                                      EditDelegateLines as _EditDelegateLines)
 
@@ -189,26 +192,22 @@ class SciPlotUI(_QMainWindow):
         self.app = None
         if _QApplication.instance() is None:
             print('\nNo QApplication instance (this is common with certain \
-version of Matplotlib). Creating one.\n\r\
-You will need to exec manually after you finish plotting.\n\
------------Example---------------\n\
-import sciplot\n\
-sp = sciplot.main()\n\n\
-# Plot a line\n\
-sp.plot((0,1),(0,1))\n\n\
-# Start the QApplication\n\
-sp.app.exec_()')
+            version of Matplotlib). Creating one.\n\r\
+            You will need to exec manually after you finish plotting.\n\
+            -----------Example---------------\n\
+            import sciplot\n\
+            sp = sciplot.main()\n\n\
+            # Plot a line\n\
+            sp.plot((0,1),(0,1))\n\n\
+            # Start the QApplication\n\
+            sp.app.exec_()')
             self.app = _QApplication(_sys.argv)
             self.app.setQuitOnLastWindowClosed(True)
 
         self.setup(limit_to=limit_to, parent=parent)
         if show:
             self.show()
-        # if app is not None:
-        # #     print('Here')
-        #     if app.exec_():
-        #         print('Here')
-
+       
     def closeEvent(self, event):
         pass
 
@@ -489,9 +488,11 @@ sp.app.exec_()')
             self.mpl_widget.ax.hold(True)
 
         # Insert MPL widget and toolbar
-        self.ui.verticalLayout.insertWidget(0, self.mpl_widget)
-        self.ui.verticalLayout.insertWidget(0, self.mpl_widget.toolbar)
+        self.ui.verticalLayout.insertWidget(0, self.mpl_widget, 0, _QtCore.Qt.AlignHCenter)
+        
+        self.ui.verticalLayout.insertWidget(0, self.mpl_widget.toolbar,0, _QtCore.Qt.AlignHCenter)
         self.updateAxisParameters()
+        self.updateFigureParameters()
         self.mpl_widget.draw()
 
         # Insert TabWidget
@@ -522,6 +523,12 @@ sp.app.exec_()')
         # Actions
         self.ui.pushButtonClearAll.pressed.connect(self.clearAll)
         self.ui.pushButtonDefaultView.pressed.connect(self.defaultView)
+
+        # Formatting Features
+        self.ui.actionFigureDPI.triggered.connect(self.figureDPI)
+        self.ui.actionFigureSavedDPI.triggered.connect(self.figureSaveDPI)
+        self.ui.actionFigure_Size_Display.triggered.connect(self.figureSizeDisplay)
+        self.ui.pushButtonApplyFigParams.pressed.connect(self.applyFigProps)
 
     def __plot(self, x, y, label=None, x_label=None, y_label=None, meta={}, 
                **kwargs):
@@ -675,7 +682,6 @@ sp.app.exec_()')
         remove the corresponding plot data
         """
         try:
-#            print('Plot id: {}'.format(plt_id))
             idx_to_remove = self.list_ids.index(plt_id)
             self.list_ids.pop(idx_to_remove)
             self.list_all.pop(idx_to_remove)
@@ -694,7 +700,6 @@ sp.app.exec_()')
         
         for itm in self.list_all:
             if isinstance(itm, _DataLine):
-#                print('Line')
                 if self._mpl_v1:
                     self.mpl_widget.ax.hold(True)
                 
@@ -791,6 +796,7 @@ sp.app.exec_()')
 
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
+        self.updateFigureParameters()
         self.axisAspect()
         self.mpl_widget.draw()
 
@@ -1159,6 +1165,7 @@ sp.app.exec_()')
         self.mpl_widget.ax.set_aspect(aspect)
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
+        self.updateFigureParameters()
         self.mpl_widget.draw()
 
     def axisScaling(self):
@@ -1169,6 +1176,7 @@ sp.app.exec_()')
         self.mpl_widget.ax.axis(ratio)
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
+        self.updateFigureParameters()
         self.mpl_widget.draw()
 
     def axisVisible(self):
@@ -1184,6 +1192,7 @@ sp.app.exec_()')
         self.mpl_widget.ax.axis(state)
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
+        self.updateFigureParameters()
         self.mpl_widget.draw()
 
     def axisLimits(self):
@@ -1205,6 +1214,7 @@ sp.app.exec_()')
 
         self.mpl_widget.fig.tight_layout()
         self.updateAxisParameters()
+        self.updateFigureParameters()
         self.mpl_widget.draw()
 
     def updateAxisParameters(self):
@@ -1214,10 +1224,25 @@ sp.app.exec_()')
         axis_visible = self.mpl_widget.ax.axison
         self.ui.checkBoxAxisVisible.setChecked(axis_visible)
         xmin, xmax, ymin, ymax = self.mpl_widget.ax.axis()
-        self.ui.lineEditXLimMin.setText(str(xmin))
-        self.ui.lineEditXLimMax.setText(str(xmax))
-        self.ui.lineEditYLimMin.setText(str(ymin))
-        self.ui.lineEditYLimMax.setText(str(ymax))
+        self.ui.lineEditXLimMin.setText(str(round(xmin,5)))
+        self.ui.lineEditXLimMax.setText(str(round(xmax,5)))
+        self.ui.lineEditYLimMin.setText(str(round(ymin,5)))
+        self.ui.lineEditYLimMax.setText(str(round(ymax,5)))
+
+    def updateFigureParameters(self):
+        """
+        Query current state of axis settings and update appropriate lineEdit's
+        """
+        fig_dpi = self.mpl_widget.fig.get_dpi()
+        save_dpi = _mpl.rcParams['savefig.dpi']
+        if save_dpi is 'figure':
+            save_dpi = fig_dpi
+        fig_size = self.mpl_widget.fig.get_size_inches()
+        
+        self.ui.spinBoxFigureDPI.setValue(fig_dpi)
+        self.ui.spinBoxFigureSavedDPI.setValue(save_dpi)
+        self.ui.spinBoxFigSizeWidth.setValue(fig_size[0])
+        self.ui.spinBoxFigSizeHeight.setValue(fig_size[1])
         
     def defaultView(self):
         """
@@ -1385,6 +1410,48 @@ sp.app.exec_()')
     def list_image_ids(self):
         return [x.id for x in self.list_all if isinstance(x, _DataImages)]
         
+    def figureDPI(self):
+        curr_dpi = self.mpl_widget.fig.get_dpi()
+        dpi, okPressed = _QInputDialog.getInt(self, "New Figure DPI","DPI:", curr_dpi, 10, 100000, 25)
+        if okPressed:
+            self.mpl_widget.fig.set_dpi(dpi)
+            self.mpl_widget.updateGeometry()
+            self.mpl_widget.draw()
+        self.updateFigureParameters()
+
+    def figureSaveDPI(self):
+        curr_dpi = _mpl.rcParams['savefig.dpi']
+        if not isinstance(curr_dpi, int):
+            # Savefig is set to 'figure'
+            curr_dpi = self.mpl_widget.fig.get_dpi()
+        
+        dpi, okPressed = _QInputDialog.getInt(self, "New DPI for Saved Figures","DPI:", curr_dpi, 10, 100000, 25)
+        if okPressed:
+            _mpl.rcParams['savefig.dpi'] = dpi
+        self.updateFigureParameters()
+
+    def figureSizeDisplay(self):
+        curr_size = self.mpl_widget.fig.get_size_inches()
+        new_size, okPressed = DualEntry.getDualEntries(curr_size[0], curr_size[1], input_type=float, text="Figure Size (W x H inches)", parent=self)
+        if okPressed:
+            self.mpl_widget.updateGeometry()
+            self.mpl_widget.fig.set_size_inches(new_size[0], new_size[1], forward=True)
+            self.mpl_widget.draw()
+        self.updateFigureParameters()
+
+    def applyFigProps(self):
+        """ Apply manually-entered figure properties (e.g., dpi) """
+        
+        new_fig_size = (self.ui.spinBoxFigSizeWidth.value(), self.ui.spinBoxFigSizeHeight.value())
+        new_fig_dpi = self.ui.spinBoxFigureDPI.value()
+        new_save_dpi = self.ui.spinBoxFigureSavedDPI.value()
+
+        self.mpl_widget.fig.set_dpi(new_fig_dpi)
+        self.mpl_widget.fig.set_size_inches(new_fig_size)
+        _mpl.rcParams['savefig.dpi'] = new_save_dpi
+        self.mpl_widget.updateGeometry()
+        self.mpl_widget.draw()
+
 if __name__ == '__main__':
 
     app = _QApplication(_sys.argv)

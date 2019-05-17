@@ -4,6 +4,14 @@ sciplot.utils package
 Submodules
 ----------
 
+sciplot.utils.general module
+----------------------------
+
+.. automodule:: sciplot.utils.general
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 sciplot.utils.mplstyle module
 -----------------------------
 

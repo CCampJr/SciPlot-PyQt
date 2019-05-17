@@ -1,5 +1,5 @@
-sciplot.ui.qt5-creator package
-==============================
+sciplot.ui.qt5\-creator package
+===============================
 
 Module contents
 ---------------

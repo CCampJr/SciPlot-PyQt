@@ -34,6 +34,7 @@ from sciplot.ui.models.abstract import (AbstractTableModelMpl as
                                         _AbstractTableModelMpl,
                                         AbstractEditDelegateMpl as
                                         _AbstractEditDelegateMpl)
+from sciplot.utils.general import round_list
 
 class TableModelBars(_AbstractTableModelMpl):
     _HEADERS = ['Facecolor',
@@ -109,11 +110,11 @@ class TableModelBars(_AbstractTableModelMpl):
 
         if role == _Qt.DisplayRole:
             if col == TableModelBars._COL_FACECOLOR:
-                return str(self._model_data[row]['facecolor'])
+                return str(round_list(self._model_data[row]['facecolor']))
             elif col == TableModelBars._COL_ALPHA:
                 return str(self._model_data[row]['alpha'])
             elif col == TableModelBars._COL_EDGECOLOR:
-                return str(self._model_data[row]['edgecolor'])
+                return str(round_list(self._model_data[row]['edgecolor']))
             elif col == TableModelBars._COL_LINEWIDTH:
                 return str(self._model_data[row]['linewidth'])
             elif col == TableModelBars._COL_WIDTH_FACTOR:

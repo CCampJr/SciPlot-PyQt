@@ -12,16 +12,24 @@ Subpackages
 Submodules
 ----------
 
-sciplot.ui.qt_Plotter module
-----------------------------
+sciplot.ui.dialogs module
+-------------------------
+
+.. automodule:: sciplot.ui.dialogs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sciplot.ui.qt\_Plotter module
+-----------------------------
 
 .. automodule:: sciplot.ui.qt_Plotter
     :members:
     :undoc-members:
     :show-inheritance:
 
-sciplot.ui.widget_mpl module
-----------------------------
+sciplot.ui.widget\_mpl module
+-----------------------------
 
 .. automodule:: sciplot.ui.widget_mpl
     :members:

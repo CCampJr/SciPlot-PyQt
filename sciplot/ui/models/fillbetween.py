@@ -31,6 +31,7 @@ from PyQt5.QtGui import (QPixmap as _QPixmap,
                          QColor as _QColor)
 
 from sciplot.utils.mplstyle import MplMarkers, MplLines
+from sciplot.utils.general import round_list
 
 from sciplot.ui.models.abstract import (AbstractTableModelMpl as
                                         _AbstractTableModelMpl,
@@ -124,11 +125,11 @@ class TableModelFillBetween(_AbstractTableModelMpl):
 
         if role == _Qt.DisplayRole:
             if col == TableModelFillBetween._COL_FACECOLOR:
-                return str(self._model_data[row]['facecolor'])
+                return str(round_list(self._model_data[row]['facecolor']))
             elif col == TableModelFillBetween._COL_ALPHA:
                 return str(self._model_data[row]['alpha'])
             elif col == TableModelFillBetween._COL_EDGECOLOR:
-                return str(self._model_data[row]['edgecolor'])
+                return str(round_list(self._model_data[row]['edgecolor']))
             elif col == TableModelFillBetween._COL_LINEWIDTH:
                 return str(self._model_data[row]['linewidth'])
             elif col == TableModelFillBetween._COL_LABEL:

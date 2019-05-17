@@ -82,3 +82,7 @@ Scrap/
 # Pickle file
 *.pickle
 *.pypirc
+
+# Sphinx documentation
+docs/build
+# docs/_static/
