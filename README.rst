@@ -1,11 +1,11 @@
 .. -*- mode: rst -*-
 
 
-.. image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=dev
+.. image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
     :alt: Travis CI Status
     :target: https://travis-ci.org/CCampJr/SciPlot-PyQt
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=dev&svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
     :alt: AppVeyor CI Status
     :target: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
