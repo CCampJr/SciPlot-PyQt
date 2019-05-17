@@ -6,3 +6,4 @@ include CHANGELOG.rst
 include *.png
 recursive-include docs *
 prune docs/build
+include sciplot/ui/qt5-creator/*.ui
