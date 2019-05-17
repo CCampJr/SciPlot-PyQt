@@ -20,6 +20,9 @@
 .. |PyQt5| image:: https://img.shields.io/badge/PyQt-5-ff69b4.svg
 .. _PyQt5: https://www.riverbankcomputing.com/software/pyqt/download5
 
+.. image:: https://img.shields.io/badge/License-NIST%20Public%20Domain-green.svg
+    :alt: NIST Public Domain
+    :target: https://github.com/CCampJr/SciPlot-PyQt/blob/master/LICENSE.md
 
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================

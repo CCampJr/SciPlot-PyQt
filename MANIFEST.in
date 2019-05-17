@@ -1,6 +1,8 @@
 include *.rst
 recursive-include docs *
-include NONLICENSE.md
+include LICENSE.md
 include README.rst
 include CHANGELOG.rst
 include *.png
+recursive-include docs *
+prune docs/build
