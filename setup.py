@@ -7,22 +7,24 @@ Created on Thu Jul 21 01:11:04 2016
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as f:
-      long_description = f.read()
+with open('README.rst', encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(name='sciplot-pyqt',
-      version = '0.2.1',
+      version = '0.2.2rc1',
       description = 'A small matplotlib wrapper/UI for creating \
                      publication-ready plots, graphs, and images',
       long_description = long_description,
       url = 'http://github.com/CCampJr/SciPlot-PyQt',
       author = 'Charles H. Camp Jr.',
       author_email = 'charles.camp@nist.gov',
-      license = 'NONLICENSE',
+      license = 'Public Domain',
       packages = find_packages(),
       zip_safe = False,
       include_package_data = True,
       install_requires=['numpy','matplotlib'],
+      setup_requires=['pytest-runner'],
+      tests_require=['pytest'],
       classifiers=['Development Status :: 3 - Alpha',
                    'Intended Audience :: Developers',
                    'Intended Audience :: Science/Research',

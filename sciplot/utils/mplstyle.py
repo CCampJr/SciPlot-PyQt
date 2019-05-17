@@ -9,6 +9,8 @@ from cycler import cycler
 import copy as _copy
 import numpy as _np
 import matplotlib as _mpl
+import matplotlib.markers
+import matplotlib.lines
 
 class MplMarkers:
     MARKER_DICT = _mpl.markers.MarkerStyle.markers

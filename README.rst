@@ -1,28 +1,28 @@
 .. -*- mode: rst -*-
 
-|Travis|_ |AppVeyor|_ |PyQt5|_ |Py34|_ |Py35|_ |Py36|_ |PyPi|_
+.. image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
+    :alt: Travis CI Status
+    :target: https://travis-ci.org/CCampJr/SciPlot-PyQt
 
-.. |Travis| image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
-.. _Travis: https://travis-ci.org/CCampJr/SciPlot-PyQt
+.. image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
+    :alt: AppVeyor CI Status
+    :target: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
 
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/CCampJr/SciPlot-PyQt?branch=master&svg=true
-.. _AppVeyor: https://ci.appveyor.com/project/CCampJr/sciplot-pyqt
+.. image:: https://img.shields.io/pypi/v/sciplot-pyqt.svg
+    :alt: PyPI Project Page
+    :target: https://pypi.org/project/sciplot-pyqt/
 
-.. |Py34| image:: https://img.shields.io/badge/Python-3.4-blue.svg
-.. _Py34: https://www.python.org/downloads/
+.. image:: https://img.shields.io/pypi/pyversions/sciplot-pyqt.svg
+    :alt: PyPI - Python Version
+    :target: https://pypi.org/project/sciplot-pyqt/
 
-.. |Py35| image:: https://img.shields.io/badge/Python-3.5-blue.svg
-.. _Py35: https://www.python.org/downloads/
+.. image:: https://img.shields.io/badge/PyQt-5-ff69b4.svg
+    :alt: PyQt5
+    :target: https://www.riverbankcomputing.com/software/pyqt/download5
 
-.. |Py36| image:: https://img.shields.io/badge/Python-3.6-blue.svg
-.. _Py36: https://www.python.org/downloads/
-
-.. |PyPi| image:: https://badge.fury.io/py/sciplot-pyqt.svg
-.. _PyPi: https://badge.fury.io/py/sciplot-pyqt
-
-.. |PyQt5| image:: https://img.shields.io/badge/PyQt-5-ff69b4.svg
-.. _PyQt5: https://www.riverbankcomputing.com/software/pyqt/download5
-
+.. image:: https://img.shields.io/badge/License-NIST%20Public%20Domain-green.svg
+    :alt: NIST Public Domain
+    :target: https://github.com/CCampJr/SciPlot-PyQt/blob/master/LICENSE.md
 
 SciPlot-PyQt: Publication-ready scientific plotting for Python 
 ===============================================================
@@ -45,28 +45,18 @@ packages may work.
 
 -   python >= 3.4
     
-    - Tested with 3.4.4, 3.5.2, 3.6.1
+    - Tested with 3.6.7, 3.7.1
 
--   numpy (1.9.3)
-    
-    - Tested with 1.11.3+mkl
+-   numpy 
 
 -   PyQT5 (5.5.* or 5.6.*)  
     
-    - Tested with 5.6, 5.8.1
+    - Tested with 5.6, 5.8.1, 5.12
 
--   matplotlib (1.5.0rc3, 2.0.0) (see below for MPL2)
-    
-    - Tested with 1.5.2, 2.0.0
+-   matplotlib (1.*, 2.*, 3.*)
 
 -   Sphinx (1.5.2) (Only for building documentation)
     
-    - Tested with 1.4.5, 1.6.4
-
--   numpydoc (0.6.0) (Only for building documentation)
-
--   sphinx_rtd_theme (0.2.5b2) (Only for building documentation)
-
 
 Known Issues
 ------------

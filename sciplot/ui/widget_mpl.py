@@ -40,6 +40,7 @@ class MplCanvas(FigureCanvas):
             pass
         else:
             _mpl.style.use(style)
+        self._mpl_v1 = _mpl.__version__.split('.')[0] == 1
 
         # Create figure and axes
         self.fig = _Figure(figsize=(width, height), dpi=dpi, 
@@ -54,8 +55,8 @@ class MplCanvas(FigureCanvas):
         self.compute_initial_figure()
 
         # Set canvas size policies and geometry
-        FigureCanvas.setSizePolicy(self, _QtWidgets.QSizePolicy.Expanding,
-                                   _QtWidgets.QSizePolicy.Expanding)
+        FigureCanvas.setSizePolicy(self, _QtWidgets.QSizePolicy.Fixed,
+                                   _QtWidgets.QSizePolicy.Fixed)
         FigureCanvas.updateGeometry(self)
 
         # Create the toolbar and connect to canvas (self)
@@ -88,7 +89,8 @@ class MplCanvas(FigureCanvas):
             self.ax = []
             for num, splt_num in enumerate(_np.arange(c_start, c_stop)):
                 self.ax.append(self.fig.add_subplot(splt_num, **kwargs))
-                self.ax[num].hold(False)
+                if self._mpl_v1:
+                    self.ax[num].hold(False)
             self.fig.tight_layout()
 
     def compute_initial_figure(self):
@@ -121,17 +123,7 @@ if __name__ == '__main__':
                                _QtWidgets.QSizePolicy.Expanding)
 
     qApp = _QtWidgets.QApplication(_sys.argv)
-    
-#    aw = ApplicationWindow(style='seaborn-deep')
-#    aw.mpl_widget.ax.plot((2,3),(4,-1), label='a')
-#    aw.mpl_widget.ax.hold(True)
-#    aw.mpl_widget.ax.plot((2,3),(4,-2), label='b')
-#    aw.mpl_widget.ax.set_xlabel('X')
-#    aw.mpl_widget.ax.set_ylabel('Y')
-#    aw.mpl_widget.ax.set_title('Title')
-#    aw.mpl_widget.ax.legend()
-#    aw.mpl_widget.fig.tight_layout()
-#    aw.show()
+ 
     
     aw2 = ApplicationWindow(style='seaborn-deep', subplot=211)
     aw2.mpl_widget.ax[0].set_title('0')

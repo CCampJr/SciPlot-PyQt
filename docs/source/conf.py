@@ -60,7 +60,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'SciPlot-PyQt'
-copyright = '2016, 2017, Charles H Camp Jr'
+# copyright = '2016, 2017, Charles H Camp Jr'
 author = 'Charles H. Camp Jr.'
 
 # The version info for the project you're documenting, acts as replacement for

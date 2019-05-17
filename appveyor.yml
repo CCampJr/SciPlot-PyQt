@@ -14,7 +14,7 @@ environment:
         PYTHON: "C:\\conda"
         MINICONDA_VERSION: "latest"
         PYTHON_ARCH: "64"
-        CONDA_DEPENDENCIES: "pyqt matplotlib"
+        CONDA_DEPENDENCIES: "pyqt matplotlib pytest"
         # PIP_DEPENDENCIES: "objgraph"
 
     matrix:
@@ -39,4 +39,4 @@ install:
 build: false
 
 test_script:
-    - "%CMD_IN_ENV% python setup.py test"
+    - "%CMD_IN_ENV% python -m pytest"
