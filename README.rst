@@ -1,6 +1,5 @@
 .. -*- mode: rst -*-
 
-
 .. image:: https://travis-ci.org/CCampJr/SciPlot-PyQt.svg?branch=master
     :alt: Travis CI Status
     :target: https://travis-ci.org/CCampJr/SciPlot-PyQt
@@ -17,8 +16,9 @@
     :alt: PyPI - Python Version
     :target: https://pypi.org/project/sciplot-pyqt/
 
-.. |PyQt5| image:: https://img.shields.io/badge/PyQt-5-ff69b4.svg
-.. _PyQt5: https://www.riverbankcomputing.com/software/pyqt/download5
+.. image:: https://img.shields.io/badge/PyQt-5-ff69b4.svg
+    :alt: PyQt5
+    :target: https://www.riverbankcomputing.com/software/pyqt/download5
 
 .. image:: https://img.shields.io/badge/License-NIST%20Public%20Domain-green.svg
     :alt: NIST Public Domain
