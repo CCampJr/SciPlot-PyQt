@@ -7,16 +7,41 @@
     <x>0</x>
     <y>0</y>
     <width>1208</width>
-    <height>892</height>
+    <height>911</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SciPlot PyQt</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,10">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetNoConstraint</enum>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>1000</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
@@ -32,7 +57,7 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="1">
+    <item>
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -42,108 +67,226 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>600</width>
         <height>16777215</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>300</width>
+        <height>0</height>
        </size>
       </property>
       <property name="title">
        <string/>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="10,10,10,10">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetNoConstraint</enum>
+       </property>
+       <item alignment="Qt::AlignLeft">
         <widget class="QToolBox" name="toolBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
            <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
+           <verstretch>1</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>300</width>
            <height>16777215</height>
           </size>
          </property>
-         <property name="currentIndex">
-          <number>0</number>
+         <property name="baseSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
          </property>
-         <widget class="QWidget" name="GeneralParameters">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="FigureParameters">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>176</width>
-            <height>297</height>
+            <width>200</width>
+            <height>610</height>
            </rect>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <attribute name="label">
-           <string>General Parameters</string>
+           <string>Figure Parameters</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Title</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEditTitle"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>X Label</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEditXLabel"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Y Label</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEditYLabel"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Aspect Ratio</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBoxAspect">
-               <item>
-                <property name="text">
-                 <string>auto</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>equal</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>DPI: Saved</string>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
+            <widget class="QSpinBox" name="spinBoxFigureDPI">
+             <property name="minimum">
+              <number>10</number>
+             </property>
+             <property name="maximum">
+              <number>100000000</number>
+             </property>
+             <property name="singleStep">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
             <spacer name="verticalSpacer_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Expanding</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
                <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>DPI: Display</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QSpinBox" name="spinBoxFigureSavedDPI">
+             <property name="minimum">
+              <number>10</number>
+             </property>
+             <property name="maximum">
+              <number>100000000</number>
+             </property>
+             <property name="singleStep">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::Box</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>1</number>
+              </property>
+              <property name="topMargin">
+               <number>1</number>
+              </property>
+              <property name="rightMargin">
+               <number>1</number>
+              </property>
+              <property name="bottomMargin">
+               <number>1</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Figure Size (inches)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Width x Height</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QDoubleSpinBox" name="spinBoxFigSizeWidth">
+                  <property name="maximum">
+                   <double>100.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="spinBoxFigSizeHeight">
+                  <property name="maximum">
+                   <double>100.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QPushButton" name="pushButtonApplyFigParams">
+             <property name="text">
+              <string>Apply New Parameters</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
               </size>
              </property>
             </spacer>
@@ -155,15 +298,15 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>176</width>
-            <height>297</height>
+            <width>200</width>
+            <height>610</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Axis Parameters</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
+           <item row="1" column="0">
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <widget class="QLabel" name="label_5">
@@ -174,6 +317,12 @@
              </item>
              <item>
               <widget class="QCheckBox" name="checkBoxAxisVisible">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -273,6 +422,73 @@
              </item>
             </layout>
            </item>
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Title</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditTitle"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>X Label</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditXLabel"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Y Label</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditYLabel"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Aspect Ratio</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBoxAspect">
+               <item>
+                <property name="text">
+                 <string>auto</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>equal</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </widget>
         </widget>
@@ -282,16 +498,31 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>100</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="pushButtonDefaultView">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>200</width>
+           <height>25</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Arial</family>
@@ -307,6 +538,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButtonClearAll">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Arial</family>
@@ -331,7 +574,7 @@
      <x>0</x>
      <y>0</y>
      <width>1208</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFormat">
@@ -348,8 +591,19 @@
      <addaction name="actionSingle_Column"/>
      <addaction name="actionDouble_Column"/>
     </widget>
+    <widget class="QMenu" name="menuFigure_Format_Settings">
+     <property name="title">
+      <string>Figure Format Settings</string>
+     </property>
+     <addaction name="actionFigureDPI"/>
+     <addaction name="actionFigureSavedDPI"/>
+     <addaction name="actionFigure_Size_Display"/>
+     <addaction name="actionFigure_Size_Saved"/>
+    </widget>
     <addaction name="actionStyle"/>
     <addaction name="menuFigure_Width_Format"/>
+    <addaction name="separator"/>
+    <addaction name="menuFigure_Format_Settings"/>
     <addaction name="separator"/>
     <addaction name="actionJournal_Styles"/>
     <addaction name="actionMacro_Schema"/>
@@ -437,6 +691,26 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionFigureDPI">
+   <property name="text">
+    <string>DPI: Display</string>
+   </property>
+  </action>
+  <action name="actionFigureSavedDPI">
+   <property name="text">
+    <string>DPI: Saved</string>
+   </property>
+  </action>
+  <action name="actionFigure_Size_Display">
+   <property name="text">
+    <string>Figure Size: Display</string>
+   </property>
+  </action>
+  <action name="actionFigure_Size_Saved">
+   <property name="text">
+    <string>Figure Size: Saved</string>
    </property>
   </action>
  </widget>
