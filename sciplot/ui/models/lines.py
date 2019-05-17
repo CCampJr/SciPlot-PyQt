@@ -31,6 +31,7 @@ from PyQt5.QtGui import (QPixmap as _QPixmap,
                          QColor as _QColor)
 
 from sciplot.utils.mplstyle import MplMarkers, MplLines
+from sciplot.utils.general import round_list
 
 from sciplot.ui.models.abstract import (AbstractTableModelMpl as
                                         _AbstractTableModelMpl,
@@ -114,7 +115,7 @@ class TableModelLines(_AbstractTableModelMpl):
 
         if role == _Qt.DisplayRole:
             if col == TableModelLines._COL_COLOR:
-                return str(self._model_data[row]['color'])
+                return str(round_list(self._model_data[row]['color']))
             elif col == TableModelLines._COL_ALPHA:
                 return str(self._model_data[row]['alpha'])
             elif col == TableModelLines._COL_LINEWIDTH:
