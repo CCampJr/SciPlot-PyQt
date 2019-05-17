@@ -21,8 +21,8 @@ sciplot.sciplotUI module
     :undoc-members:
     :show-inheritance:
 
-sciplot.sciplotUI_addon module
-------------------------------
+sciplot.sciplotUI\_addon module
+-------------------------------
 
 .. automodule:: sciplot.sciplotUI_addon
     :members:
