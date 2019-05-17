@@ -52,4 +52,4 @@ install:
 # - cd $TRAVIS_BUILD_DIR
 # - python setup.py install
 script:
-- pytest
+# - pytest
