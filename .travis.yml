@@ -46,6 +46,7 @@ install:
 - python setup.py install
 - pwd
 - ls
+- cd sciplot
 # - python setup.py sdist
 # - cd $TRAVIS_BUILD_DIR/docs/
 # - sphinx-apidoc -o ./source ../sciplot
@@ -54,5 +55,5 @@ install:
 # - cd $TRAVIS_BUILD_DIR
 # - python setup.py install
 script:
-# - pytest
+- pytest
 
