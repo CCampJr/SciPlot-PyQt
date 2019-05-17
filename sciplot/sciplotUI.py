@@ -779,11 +779,9 @@ class SciPlotUI(_QMainWindow):
             else:
                 print('Unknown')
 
-        # Only add a legend if a plot exists
-        # Only certain objects provide labels
-        label_object_count = len(self.list_all)
-
-        if label_object_count > 0:
+        # Only add legend if legend handles exist
+        h,l = self.mpl_widget.ax.get_legend_handles_labels()
+        if l:
             self.mpl_widget.ax.legend(loc='best')
 
         # Apply x- and y-labels and a title if they are set
