@@ -27,7 +27,7 @@ before_install:
 - if [[ "$TRAVIS_PYTHON_VERSION" != "3.4" && "$TRAVIS_PYTHON_VERSION" != "3.5" ]];
   then pip install pyqt5; else source $TRAVIS_BUILD_DIR/.travis/build_pyqt5.sh; fi
 - pip install matplotlib
-- python -c 'import matplotlib; print(matplotlib.__version__, matplotlib.__file__, print(matplotlib.get_backend()), print(matplotlib.use(\'Qt5Agg\')))'
+- python -c "import matplotlib; print(matplotlib.__version__, matplotlib.__file__, matplotlib.get_backend(), matplotlib.use('Qt5Agg'))"
 # - pip install sphinx
 # - pip install numpydoc
 # - pip install sphinx_rtd_theme
