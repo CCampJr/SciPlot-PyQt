@@ -30,8 +30,12 @@ from . import sciplotUI
 
 _sys.path.append(_os.path.abspath('../'))
 
-# __version__ = _pkg_resources.require("sciplot-pyqt")[0].version
-__version__ = '0.2.2'
+try:
+    __version__ = _pkg_resources.require("sciplot-pyqt")[0].version
+except:
+    pass
+    
+# __version__ = '0.2.2'
 
 # __all__ = ['SciPlotUI']
 
