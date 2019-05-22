@@ -15,7 +15,8 @@
 
 import sys
 import os
-import pkg_resources  # part of setuptools
+import sciplot
+# import pkg_resources  # part of setuptools
 
 sys.path.insert(0, os.path.abspath('../..'))
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -68,7 +69,8 @@ author = 'Charles H. Camp Jr.'
 # built documents.
 #
 # The short X.Y version.
-version = pkg_resources.require("sciplot-pyqt")[0].version
+# version = pkg_resources.require("sciplot-pyqt")[0].version
+version = sciplot.__version__
 print('Retrieved version number: {}'.format(version))
 
 # The full version, including alpha/beta/rc tags.
