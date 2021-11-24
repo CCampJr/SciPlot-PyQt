@@ -1233,7 +1233,7 @@ class SciPlotUI(_QMainWindow):
         """
         fig_dpi = self.mpl_widget.fig.get_dpi()
         save_dpi = _mpl.rcParams['savefig.dpi']
-        if save_dpi is 'figure':
+        if save_dpi == 'figure':
             save_dpi = fig_dpi
         fig_size = self.mpl_widget.fig.get_size_inches()
         
